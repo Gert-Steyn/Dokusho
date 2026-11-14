@@ -652,8 +652,8 @@ class ReaderActivity : BaseActivity() {
     private fun updateViewer() {
         val prevViewer = viewer
         val readingMode = viewModel.getMangaReadingMode()
-        settingsViewModel.setViewerReadingMode(ReadingMode.fromPreference(readingMode))
         val isText = isTextChapter(viewModel.state.value.viewerChapters)
+        settingsViewModel.setViewerReadingMode(if (isText) TextViewerMode else ReadingMode.fromPreference(readingMode))
         val newViewer = if (isText) TextViewer(this) else ReadingMode.toViewer(readingMode, this)
 
         setOrientation(viewModel.getMangaOrientation())
@@ -730,6 +730,7 @@ class ReaderActivity : BaseActivity() {
         val current = viewer
         if (isText && current !is TextViewer) {
             current?.destroy()
+            settingsViewModel.setViewerReadingMode(TextViewerMode)
             viewerFlow.value = TextViewer(this)
         } else if (!isText && current is TextViewer) {
             current.destroy()
@@ -938,3 +939,6 @@ private fun viewerColorFilter(grayscale: Boolean, invertedColors: Boolean): Colo
     }
     return ColorFilter.colorMatrix(matrix)
 }
+
+/** A text book scrolls down like a long strip, so it takes that mode's tap zones whatever the manga's mode is. */
+private val TextViewerMode = ReadingMode.WEBTOON

@@ -189,19 +189,6 @@
     <string name="theme_system">Pergal</string>
     <string name="theme_light">Ronak</string>
     <string name="theme_dark">Tarî</string>
-    <string name="theme_monet">Guherbar</string>
-    <string name="theme_catppuccin">Catppuccin</string>
-    <string name="theme_greenapple">Sêva Kesk</string>
-    <string name="theme_lavender">Lavanta</string>
-    <string name="theme_midnightdusk">Şevbixwîn</string>
-    <string name="theme_monochrome">Bêreng</string>
-    <string name="theme_nord">Nord</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_tealturquoise">Şinkesk &amp; Firuzeyî</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_tidalwave">Feyezan</string>
-    <string name="pref_dark_theme_pure_black">Tarîya ziftî</string>
     <string name="pref_relative_format">Demnîşanên rêjeyî</string>
     <string name="relative_time_today">Îro</string>
     <string name="pref_relative_format_summary">\"%1$s\" ji dêvla \"%2$s\"</string>
@@ -237,7 +224,6 @@
     <string name="tapping_inverted_horizontal">Asoyî</string>
     <string name="tapping_inverted_vertical">Stûnî</string>
     <string name="tapping_inverted_both">Herdu</string>
-    <string name="theme_strawberrydaiquiri">Daiquiriya Çîlekan</string>
     <string name="pref_category_display">Ekran</string>
     <string name="pref_library_columns">Babetên di her rêzê de</string>
     <string name="pref_category_library_update">Nûkirina giştî</string>

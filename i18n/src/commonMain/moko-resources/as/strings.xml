@@ -237,18 +237,6 @@
     <string name="theme_system">চিষ্টেম</string>
     <string name="theme_light">পোহৰ</string>
     <string name="theme_dark">আন্ধাৰ</string>
-    <string name="theme_monet">গতিশীল</string>
-    <string name="theme_greenapple">সেউজীয়া আপেল</string>
-    <string name="theme_lavender">লেভেণ্ডাৰ</string>
-    <string name="theme_midnightdusk">মধ্যৰাত্ৰি গোধূলি</string>
-    <string name="theme_nord">নৰ্ড</string>
-    <string name="theme_strawberrydaiquiri">ষ্ট্ৰবেৰী ডাইকিৰী</string>
-    <string name="theme_tako">টাকো</string>
-    <string name="theme_tealturquoise">টিল আৰু টাৰ্কয়েজ</string>
-    <string name="theme_yinyang">য়িন আৰু য়াং</string>
-    <string name="theme_yotsuba">য়োট্ছুবা</string>
-    <string name="theme_tidalwave">টাইডেল ৱে\'ভ</string>
-    <string name="pref_dark_theme_pure_black">বিশুদ্ধ ক\'লা আন্ধাৰ মোড</string>
     <string name="pref_relative_format">আপেক্ষিক টাইমষ্টেম্প</string>
     <string name="pref_relative_format_summary">\"%2$s\"ৰ সলনি \"%1$s\"</string>
     <string name="pref_date_format">তাৰিখ বিন্যাস</string>
@@ -793,7 +781,6 @@
     <string name="trackers_updated_summary">ট্ৰেকাৰসমূহ অধ্যায় %d লৈ আপডেট কৰা হৈছে</string>
     <string name="pref_incognito_mode_extension_summary">এক্সটেনশ্বনৰ বাবে পঢ়াৰ ইতিহাস বিৰাম দিয়ে</string>
     <string name="label_auto">স্বয়ংক্ৰিয়</string>
-    <string name="theme_monochrome">মোন\'ক্ৰম</string>
     <string name="clear_db_exclude_read">পঢ়া অধ্যায় থকা প্ৰৱিষ্টি ৰাখক</string>
     <string name="author">লেখক</string>
     <string name="artist">শিল্পী</string>
@@ -802,7 +789,6 @@
     <string name="action_notes">টোকা</string>
     <string name="action_edit_notes">টোকা সম্পাদনা কৰক</string>
     <string name="action_webview_close_tab">টেব বন্ধ কৰক</string>
-    <string name="theme_catppuccin">কেটপুকিন</string>
     <string name="pref_display_images_description">মাংগা বিৱৰণীত ছবি ৰেণ্ডাৰ কৰক</string>
     <string name="pref_behavior">ব্যৱহাৰ</string>
     <string name="pref_mark_duplicate_read_chapter_read">ডুপ্লিকেট পঢ়া অধ্যায় পঢ়া বুলি চিহ্নিত কৰক</string>

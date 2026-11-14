@@ -2,20 +2,28 @@
 <resources>
     <color name="cover_placeholder">#1F888888</color>
 
-    <!-- Default Theme -->
-    <color name="divider_default">@color/md_black_1000_12</color>
+    <color name="graphite_canvas">#FAFAFB</color>
+    <color name="graphite_surface">#FFFFFF</color>
+    <color name="graphite_raised">#FFFFFF</color>
+    <color name="graphite_hover">#F0F1F3</color>
+    <color name="graphite_pressed">#E6E7EA</color>
+    <color name="graphite_border_subtle">#E6E7EA</color>
+    <color name="graphite_border">#D5D7DC</color>
+    <color name="graphite_border_strong">#B4B7BE</color>
+    <color name="graphite_text">#17181B</color>
+    <color name="graphite_text_secondary">#50535B</color>
+    <color name="graphite_text_muted">#6C6F77</color>
+    <color name="graphite_text_disabled">#878B93</color>
+    <color name="graphite_accent">#4352E0</color>
+    <color name="graphite_accent_fill">#4F5EF5</color>
+    <color name="graphite_accent_subtle">#ECEEFF</color>
+    <color name="graphite_on_accent">#FFFFFF</color>
+    <color name="graphite_success">#17753F</color>
+    <color name="graphite_warning">#946200</color>
+    <color name="graphite_danger">#BC283E</color>
+    <color name="graphite_danger_fill">#D0364B</color>
+    <color name="graphite_danger_subtle">#FCE9EC</color>
+    <color name="graphite_on_danger">#FFFFFF</color>
 
-    <!-- AMOLED Mode -->
-    <color name="amoled_background">#000000</color>
-    <color name="amoled_onBackground">#FFFFFF</color>
-    <color name="amoled_surface">#000000</color>
-    <color name="amoled_onSurface">#FFFFFF</color>
-    <color name="amoled_surfaceContainer">#0C0C0C</color>
-    <color name="amoled_surfaceContainerHigh">#131313</color>
-    <color name="amoled_surfaceContainerHighest">#1B1B1B</color>
-
-    <!-- Material Design Colors -->
-    <color name="md_black_1000_12">#1F000000</color>
-    <color name="md_white_1000_12">#1FFFFFFF</color>
-
+    <color name="divider_default">@color/graphite_border_subtle</color>
 </resources>

@@ -493,15 +493,6 @@
     <string name="pref_hide_threshold">Sensibilità per nascondere il menù allo scorrimento</string>
     <string name="pref_inverted_colors">Inversa</string>
     <string name="relative_time_today">Oggi</string>
-    <string name="pref_dark_theme_pure_black">Modalità scura con nero puro</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin e Yang</string>
-    <string name="theme_tealturquoise">Verde Acqua e Turchese</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri alla Fragola</string>
-    <string name="theme_midnightdusk">Crepuscolo di Mezzanotte</string>
-    <string name="theme_greenapple">Mela Verde</string>
-    <string name="theme_monet">Dinamico</string>
     <string name="pref_app_theme">Tema applicazione</string>
     <string name="confirm_lock_change">Autenticarsi per confermare le modifiche</string>
     <string name="label_default">Predefinita</string>
@@ -586,7 +577,6 @@
     <string name="not_installed">Non installato</string>
     <string name="pref_app_language">Lingua dell\'applicazione</string>
     <string name="description_placeholder">Nessuna descrizione</string>
-    <string name="theme_lavender">Lavanda</string>
     <string name="internal_error">Errore Interno: Controllare i registri dei crash per ulteriori informazioni</string>
     <string name="delete_category_confirmation">Vuoi eliminare la categoria «%s»?</string>
     <string name="delete_category">Elimina categoria</string>
@@ -597,7 +587,6 @@
     <string name="appwidget_updates_description">Vedi le voci aggiornate di recente</string>
     <string name="update_already_running">È già in corso un aggiornamento</string>
     <string name="error_user_agent_string_blank">La sringa «user agent» non può essere vuota</string>
-    <string name="theme_tidalwave">Maremoto</string>
     <string name="download_ahead">Scarica i prossimi</string>
     <string name="auto_download_while_reading">Download automatico durante la lettura</string>
     <string name="download_ahead_info">Funziona se il capitolo corrente e quello successivo sono già stati scaricati.</string>
@@ -750,7 +739,6 @@
     <string name="manga_interval_expected_update_soon">Presto</string>
     <string name="manga_interval_custom_amount">Frequenza di aggiornamento personalizzata:</string>
     <string name="onboarding_storage_help_info">Sti aggiornando da una vecchia versione e non sai cosa selezionare? Consulta la guida all\'archiviazione per info.</string>
-    <string name="theme_nord">Nord</string>
     <string name="pref_library_update_smart_update">Aggiornamento intelligente</string>
     <string name="ext_revoke_trust">Revoca le estensioni sconosciute affidabili</string>
     <string name="invalid_backup_file_error">Errore completo:</string>
@@ -792,7 +780,6 @@
     <string name="pref_auto_update_manga_on_mark_read">Aggiorna il progresso quando segnato come letto</string>
     <string name="trackers_updated_summary">Tracker aggiornati al capitolo %d</string>
     <string name="label_auto">Automatico</string>
-    <string name="theme_monochrome">Monocromatico</string>
     <string name="export">Esporta</string>
     <string name="author">Autore</string>
     <string name="artist">Artista</string>
@@ -813,7 +800,6 @@
     <string name="pref_update_library_manga_titles_summary">Attenzione: se un manga viene rinominato, sarà rimosso dalla coda download (se presente).</string>
     <string name="logging_in">Autenticazione in corso…</string>
     <string name="possible_duplicates_title">Possibili duplicati</string>
-    <string name="theme_catppuccin">Gattuccino</string>
     <string name="migrationConfigScreen.selectNoneLabel">Annulla selezione</string>
     <string name="migrationConfigScreen.selectEnabledLabel">Seleziona fonti attive</string>
     <string name="migrationConfigScreen.selectPinnedLabel">Seleziona fonti fissate</string>
@@ -877,7 +863,6 @@
     <string name="label_support_us">Supportaci</string>
     <string name="pref_allowed_content_warnings">Avvisi sui contenuti consentiti</string>
     <string name="ext_content_warning_nsfw_description">Le fonti per questa estensione sono dirette principalmente a contenuti 18+.</string>
-    <string name="theme_tokyonight">Tokyo Notte</string>
     <string name="pref_category_extensions">Estensioni</string>
     <string name="ext_content_warning_mixed">Misto</string>
     <string name="ext_content_warning_safe">Sicuro</string>

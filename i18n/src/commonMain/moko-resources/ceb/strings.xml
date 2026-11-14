@@ -117,13 +117,6 @@
     <string name="pref_category_theme">Tema</string>
     <string name="theme_dark">Sa</string>
     <string name="pref_app_theme">Tema sa app</string>
-    <string name="theme_monet">Dinamiko</string>
-    <string name="theme_greenapple">Berde nga mansanas</string>
-    <string name="theme_midnightdusk">Sa tungang gabii sa kilumkilom</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_tealturquoise">Teal ug Turquoise</string>
-    <string name="theme_yinyang">Yin ug Yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
     <string name="pref_date_format">Pormat sa petsa</string>
     <string name="lock_with_biometrics">Kinahanglan nga ablihan</string>
     <string name="lock_when_idle">I-lock kung walay trabaho</string>
@@ -164,10 +157,8 @@
     <string name="action_webview_forward">Sa unahan</string>
     <string name="action_start_downloading_now">Sugdi ang pag-download karon</string>
     <string name="theme_system">Sunda ang sistema</string>
-    <string name="theme_strawberrydaiquiri">Strawberry Daiquiri</string>
     <string name="pref_manage_notifications">Pagdumala sa mga pahibalo</string>
     <string name="pref_category_security">Seguridad</string>
-    <string name="pref_dark_theme_pure_black">Purong itom nga dark mode</string>
     <string name="lock_always">Kanunay</string>
     <string name="secure_screen_summary">Ang luwas nga screen nagtago sa mga sulod sa app sa dihang nagbalhin-balhin og mga app ug nag-block sa mga screenshot</string>
     <string name="pref_library_update_interval">Awtomatikong mga update</string>
@@ -362,7 +353,6 @@
     <string name="delete_category">Pagtangtang sa kategorya</string>
     <string name="internal_error">Internal nga Sayop: Susiha ang mga crash log para sa dugang nga impormasyon</string>
     <string name="pref_navigate_pan">Pag-navigate sa pan</string>
-    <string name="theme_lavender">Lavender</string>
     <string name="action_remove_everything">Kuhaa ang tanan</string>
     <string name="pref_app_language">Pinulongan sa app</string>
     <string name="used_cache">Gigamit: %1$s</string>

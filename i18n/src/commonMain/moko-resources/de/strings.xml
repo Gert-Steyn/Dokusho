@@ -487,17 +487,9 @@
     <string name="action_start_downloading_now">Download jetzt starten</string>
     <string name="about_dont_kill_my_app">Einige Hersteller haben zusätzliche App-Beschränkungen, die Hintergrunddienste stoppen. Diese Webseite hat mehr Informationen darüber, wie man dies beheben kann.</string>
     <string name="restore_miui_warning">Die Sicherung/Wiederherstellung funktioniert möglicherweise nicht richtig, wenn die MIUI-Optimierung deaktiviert ist.</string>
-    <string name="pref_dark_theme_pure_black">Tiefschwarzer Dunkelmodus</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin &amp; Yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Erdbeer-Daiquiri</string>
-    <string name="theme_midnightdusk">Mitternachtsdämmerung</string>
-    <string name="theme_greenapple">Grüner Apfel</string>
     <string name="pref_app_theme">App-Design</string>
     <string name="enhanced_services">Erweiterte Tracker</string>
     <string name="enhanced_tracking_info">Bieten für bestimmte Quellen erweiterte Funktionen an. Einträge werden automatisch getrackt, wenn sie deiner Bibliothek hinzugefügt werden.</string>
-    <string name="theme_monet">Dynamisch</string>
     <string name="label_background_activity">Hintergrundaktivität</string>
     <string name="pref_lowest">Niedrigste</string>
     <string name="pref_low">Niedrig</string>
@@ -506,7 +498,6 @@
     <string name="pref_hide_threshold">Empfindlichkeit für das Menü-Ausblenden beim Scrollen</string>
     <string name="pref_inverted_colors">Invertiert</string>
     <string name="relative_time_today">Heute</string>
-    <string name="theme_tealturquoise">Blaugrün &amp; Türkis</string>
     <string name="pref_category_appearance">Erscheinungsbild</string>
     <string name="confirm_lock_change">Authentifiziere dich, um die Änderungen zu bestätigen</string>
     <string name="label_default">Standard</string>
@@ -585,7 +576,6 @@
     <string name="custom_cover">Benutzerdefiniertes Cover</string>
     <string name="not_installed">Nicht installiert</string>
     <string name="pref_app_language">App-Sprache</string>
-    <string name="theme_lavender">Lavendel</string>
     <string name="description_placeholder">Keine Beschreibung</string>
     <string name="delete_category_confirmation">Möchtest du die Kategorie „%s“ löschen?</string>
     <string name="delete_category">Kategorie löschen</string>
@@ -597,7 +587,6 @@
     <string name="appwidget_unavailable_locked">Widget ist nicht verfügbar, wenn die App-Sperre aktiviert ist</string>
     <string name="update_already_running">Ein Update ist bereits im Gange</string>
     <string name="error_user_agent_string_blank">User-Agent-Text darf nicht leer sein</string>
-    <string name="theme_tidalwave">Flutwelle</string>
     <string name="download_ahead">Im Voraus herunterladen</string>
     <string name="auto_download_while_reading">Automatisch während des Lesens herunterladen</string>
     <string name="download_ahead_info">Funktioniert nur, wenn das aktuelle Kapitel sowie das darauf folgende bereits heruntergeladen sind.</string>
@@ -752,7 +741,6 @@
     <string name="onboarding_storage_help_action">Speicherleitfaden</string>
     <string name="pref_library_update_smart_update">Intelligentes Aktualisieren</string>
     <string name="manga_interval_expected_update">Ca. %1$s bis zur Veröffentlichung neuer Kapitel, wird ca. alle %2$s überprüft.</string>
-    <string name="theme_nord">Nord</string>
     <string name="manga_interval_expected_update_soon">Bald</string>
     <string name="ext_revoke_trust">Zertifikatsbestätigungen zurücknehmen</string>
     <string name="pref_webtoon_disable_zoom_out">Rauszoomen deaktivieren</string>
@@ -793,7 +781,6 @@
     <string name="trackers_updated_summary">Tracker auf Kapitel %d aktualisiert</string>
     <string name="pref_incognito_mode_extension_summary">Leseverlauf für eine Erweiterung pausieren</string>
     <string name="label_auto">Automatisch</string>
-    <string name="theme_monochrome">Monochrom</string>
     <string name="tracked_privately">Privat getrackt</string>
     <string name="action_toggle_private_on">Privat tracken</string>
     <string name="action_toggle_private_off">Öffentlich tracken</string>
@@ -820,7 +807,6 @@
     <string name="pref_update_library_manga_titles">Mangatitel in der Bibliothek mit ihren Quellen abgleichen</string>
     <string name="pref_update_library_manga_titles_summary">Achtung: Sollte ein Manga umbenannt werden, wird er aus der Downloadwarteschlange entfernt (falls dort vorhanden).</string>
     <string name="logging_in">Einloggen…</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="migrationConfigScreen.selectAllLabel">Alle auswählen</string>
     <string name="migrationConfigScreen.selectEnabledLabel">Aktivierte Quellen auswählen</string>
     <string name="migrationConfigScreen.selectPinnedLabel">Angepinnte Quellen auswählen</string>
@@ -896,7 +882,6 @@
     <string name="pref_vertical_navigator">Verwende vertikalen Kapitelnavigator in</string>
     <string name="pref_vertical_navigator_height">Höhe des vertikalen Navigators</string>
     <string name="considering">Überlege ich zu lesen</string>
-    <string name="theme_tokyonight">Tokyo Night</string>
     <string name="downloading_with_progress">Wird heruntergeladen… (%d%%)</string>
     <string name="pref_filter_update_categories_details">Aktualisierungen in ausgeschlossen Kategorien werden nicht angezeigt, selbst wenn sie in eingeschlossenen Kategorien vorkommen.</string>
     <string name="pref_filter_upcoming_categories_details">Titel in ausgeschlossen Kategorien werden nicht angezeigt, selbst wenn sie in eingeschlossenen Kategorien vorkommen.</string>

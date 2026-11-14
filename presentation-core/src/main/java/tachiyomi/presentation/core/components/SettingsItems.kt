@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -54,17 +55,21 @@ import mihon.icons.lucide.icons.SquareX
 import tachiyomi.core.common.preference.Preference
 import tachiyomi.core.common.preference.TriState
 import tachiyomi.core.common.preference.toggle
-import tachiyomi.presentation.core.components.material.DISABLED_ALPHA
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
+import tachiyomi.presentation.core.components.graphite.graphiteRadioColors
+import tachiyomi.presentation.core.components.graphite.graphiteTextFieldColors
 import tachiyomi.presentation.core.components.material.Slider
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.theme.header
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.collectAsState
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 
 object SettingsItemsPaddings {
-    val Horizontal = 24.dp
-    val Vertical = 10.dp
+    val Horizontal = GSize.pagePad
+    val Vertical = GSpace.s3
 }
 
 @Composable
@@ -76,7 +81,8 @@ fun HeadingItem(labelRes: StringResource) {
 fun HeadingItem(text: String) {
     Text(
         text = text,
-        style = MaterialTheme.typography.header,
+        style = Graphite.type.caption,
+        color = Graphite.colors.textMuted,
         modifier = Modifier
             .fillMaxWidth()
             .padding(
@@ -110,10 +116,11 @@ fun BaseSortItem(label: String, icon: ImageVector?, onClick: () -> Unit) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = Graphite.colors.textMuted,
+                    modifier = Modifier.size(GSize.icon),
                 )
             } else {
-                Spacer(modifier = Modifier.size(24.dp))
+                Spacer(modifier = Modifier.size(GSize.icon))
             }
         },
         onClick = onClick,
@@ -138,6 +145,7 @@ fun CheckboxItem(label: String, checked: Boolean, onClick: () -> Unit) {
             Checkbox(
                 checked = checked,
                 onCheckedChange = null,
+                colors = graphiteCheckboxColors(),
             )
         },
         onClick = onClick,
@@ -152,6 +160,7 @@ fun RadioItem(label: String, selected: Boolean, onClick: () -> Unit) {
             RadioButton(
                 selected = selected,
                 onClick = null,
+                colors = graphiteRadioColors(),
             )
         },
         onClick = onClick,
@@ -166,8 +175,8 @@ fun SliderItem(
     onChange: (Int) -> Unit,
     steps: Int = with(valueRange) { (last - first) - 1 },
     valueString: String = value.toString(),
-    labelStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    pillColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    labelStyle: TextStyle = Graphite.type.body,
+    pillColor: Color = Graphite.colors.hover,
 ) {
     BaseSliderItem(
         value = value,
@@ -195,16 +204,16 @@ fun BaseSliderItem(
     subtitle: String? = null,
     steps: Int = with(valueRange) { (last - first) - 1 },
     valueString: String = value.toString(),
-    titleStyle: TextStyle = MaterialTheme.typography.titleLarge,
-    subtitleStyle: TextStyle = MaterialTheme.typography.bodySmall,
-    pillColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    titleStyle: TextStyle = Graphite.type.body,
+    subtitleStyle: TextStyle = Graphite.type.small,
+    pillColor: Color = Graphite.colors.hover,
 ) {
     val haptic = LocalHapticFeedback.current
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
-        verticalArrangement = Arrangement.spacedBy(2.dp),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s1),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -214,18 +223,19 @@ fun BaseSliderItem(
                 Text(
                     text = title,
                     style = titleStyle,
+                    color = Graphite.colors.text,
                 )
                 if (subtitle != null) {
                     Text(
                         text = subtitle,
                         style = subtitleStyle,
-                        modifier = Modifier.secondaryItemAlpha(),
+                        color = Graphite.colors.textMuted,
                     )
                 }
             }
             Pill(
                 text = valueString,
-                style = MaterialTheme.typography.bodyMedium,
+                style = Graphite.type.label,
                 color = pillColor,
             )
         }
@@ -294,13 +304,16 @@ fun SelectItem(
                     expanded = expanded,
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            shape = GRadius.control,
+            colors = graphiteTextFieldColors(),
         )
 
         ExposedDropdownMenu(
             modifier = Modifier.exposedDropdownSize(),
             expanded = expanded,
             onDismissRequest = { expanded = false },
+            shape = GRadius.card,
+            containerColor = Graphite.colors.raised,
         ) {
             options.forEachIndexed { index, text ->
                 DropdownMenuItem(
@@ -325,6 +338,7 @@ fun TriStateItem(
 ) {
     Row(
         modifier = Modifier
+            .heightIn(min = GSize.row)
             .clickable(
                 enabled = enabled && onClick != null,
                 onClick = {
@@ -341,9 +355,9 @@ fun TriStateItem(
                 vertical = SettingsItemsPaddings.Vertical,
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.large),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
     ) {
-        val stateAlpha = if (enabled && onClick != null) 1f else DISABLED_ALPHA
+        val active = enabled && onClick != null
 
         Icon(
             imageVector = when (state) {
@@ -352,19 +366,17 @@ fun TriStateItem(
                 TriState.ENABLED_NOT -> Lucide.Icons.SquareX
             },
             contentDescription = null,
-            tint = if (!enabled || state == TriState.DISABLED) {
-                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = stateAlpha)
-            } else {
-                when (onClick) {
-                    null -> MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLED_ALPHA)
-                    else -> MaterialTheme.colorScheme.primary
-                }
+            tint = when {
+                !active -> Graphite.colors.textDisabled
+                state == TriState.DISABLED -> Graphite.colors.textMuted
+                else -> Graphite.colors.accent
             },
+            modifier = Modifier.size(GSize.icon),
         )
         Text(
             text = label,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = stateAlpha),
-            style = MaterialTheme.typography.bodyMedium,
+            color = if (active) Graphite.colors.text else Graphite.colors.textDisabled,
+            style = Graphite.type.body,
         )
     }
 }
@@ -374,11 +386,13 @@ fun TextItem(label: String, value: String, onChange: (String) -> Unit) {
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = SettingsItemsPaddings.Horizontal, vertical = 4.dp),
+            .padding(horizontal = SettingsItemsPaddings.Horizontal, vertical = GSpace.s2),
         label = { Text(text = label) },
         value = value,
         onValueChange = onChange,
         singleLine = true,
+        shape = GRadius.control,
+        colors = graphiteTextFieldColors(),
     )
 }
 
@@ -425,6 +439,7 @@ private fun BaseSettingsItem(
 ) {
     Row(
         modifier = Modifier
+            .heightIn(min = GSize.row)
             .clickable(onClick = onClick)
             .fillMaxWidth()
             .padding(
@@ -432,12 +447,13 @@ private fun BaseSettingsItem(
                 vertical = SettingsItemsPaddings.Vertical,
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
     ) {
         widget(this)
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
+            color = Graphite.colors.text,
         )
     }
 }

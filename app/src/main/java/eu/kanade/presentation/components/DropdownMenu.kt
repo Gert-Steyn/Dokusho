@@ -1,6 +1,7 @@
 package eu.kanade.presentation.components
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.sizeIn
@@ -23,6 +24,9 @@ import mihon.icons.lucide.icons.Circle
 import mihon.icons.lucide.icons.CircleDot
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import androidx.compose.material3.DropdownMenu as ComposeDropdownMenu
 
 /**
@@ -42,10 +46,14 @@ fun DropdownMenu(
     ComposeDropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        modifier = modifier.sizeIn(minWidth = 196.dp, maxWidth = 196.dp),
+        modifier = modifier
+            .sizeIn(minWidth = 196.dp, maxWidth = 196.dp)
+            .border(GSize.border, Graphite.colors.border, GRadius.card),
         offset = offset,
         scrollState = scrollState,
         properties = properties,
+        shape = GRadius.card,
+        containerColor = Graphite.colors.raised,
         content = content,
     )
 }
@@ -65,12 +73,13 @@ fun RadioMenuItem(
                 Icon(
                     imageVector = Lucide.Icons.CircleDot,
                     contentDescription = stringResource(MR.strings.selected),
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = Graphite.colors.accent,
                 )
             } else {
                 Icon(
                     imageVector = Lucide.Icons.Circle,
                     contentDescription = stringResource(MR.strings.not_selected),
+                    tint = Graphite.colors.textMuted,
                 )
             }
         },

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -29,7 +28,14 @@ import mihon.icons.lucide.icons.Square
 import mihon.icons.lucide.icons.SquareCheck
 import mihon.icons.lucide.icons.SquareX
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 private enum class State {
     CHECKED,
@@ -59,7 +65,7 @@ fun <T> TriStateListDialog(
             }
             .toMutableStateList()
     }
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(text = title) },
         text = {
@@ -67,7 +73,7 @@ fun <T> TriStateListDialog(
                 if (message != null) {
                     Text(
                         text = message,
-                        modifier = Modifier.padding(bottom = 8.dp),
+                        modifier = Modifier.padding(bottom = GSpace.s3),
                     )
                 }
 
@@ -78,7 +84,7 @@ fun <T> TriStateListDialog(
                             val state = selected[index]
                             Row(
                                 modifier = Modifier
-                                    .clip(MaterialTheme.shapes.small)
+                                    .clip(GRadius.control)
                                     .clickable {
                                         selected[index] = when (state) {
                                             State.UNCHECKED -> State.CHECKED
@@ -86,21 +92,21 @@ fun <T> TriStateListDialog(
                                             State.INVERSED -> State.UNCHECKED
                                         }
                                     }
-                                    .defaultMinSize(minHeight = 48.dp)
+                                    .defaultMinSize(minHeight = GSize.minTarget)
                                     .fillMaxWidth(),
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 Icon(
-                                    modifier = Modifier.padding(end = 20.dp),
+                                    modifier = Modifier.padding(end = GSpace.s5),
                                     imageVector = when (state) {
                                         State.UNCHECKED -> Lucide.Icons.Square
                                         State.CHECKED -> Lucide.Icons.SquareCheck
                                         State.INVERSED -> Lucide.Icons.SquareX
                                     },
                                     tint = if (state == State.UNCHECKED) {
-                                        LocalContentColor.current
+                                        Graphite.colors.textMuted
                                     } else {
-                                        MaterialTheme.colorScheme.primary
+                                        Graphite.colors.accent
                                     },
                                     contentDescription = stringResource(
                                         when (state) {
@@ -110,7 +116,7 @@ fun <T> TriStateListDialog(
                                         },
                                     ),
                                 )
-                                Text(text = itemLabel(item))
+                                Text(text = itemLabel(item), style = Graphite.type.body)
                             }
                         }
                     }
@@ -121,12 +127,14 @@ fun <T> TriStateListDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
                 onClick = {
                     val included = items.mapIndexedNotNull { index, category ->
                         if (selected[index] == State.CHECKED) category else null
@@ -136,9 +144,7 @@ fun <T> TriStateListDialog(
                     }
                     onValueChanged(included, excluded)
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
     )
 }

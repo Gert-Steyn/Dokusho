@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun AlertDialogContent(
@@ -31,10 +32,9 @@ fun AlertDialogContent(
         content = {
             Column {
                 CompositionLocalProvider(
-                    LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                    LocalContentColor provides Graphite.colors.textSecondary,
                 ) {
-                    val textStyle = MaterialTheme.typography.bodyMedium
-                    ProvideTextStyle(textStyle) {
+                    ProvideTextStyle(Graphite.type.body) {
                         Box(
                             Modifier
                                 .weight(weight = 1f, fill = false)
@@ -57,10 +57,9 @@ fun AlertDialogContent(
                         .align(Alignment.End),
                 ) {
                     CompositionLocalProvider(
-                        LocalContentColor provides MaterialTheme.colorScheme.primary,
+                        LocalContentColor provides Graphite.colors.accent,
                     ) {
-                        val textStyle = MaterialTheme.typography.labelLarge
-                        ProvideTextStyle(value = textStyle, content = buttons)
+                        ProvideTextStyle(value = Graphite.type.label, content = buttons)
                     }
                 }
             }
@@ -91,7 +90,7 @@ fun AlertDialogContent(
             ) {
                 icon?.let {
                     CompositionLocalProvider(
-                        LocalContentColor provides MaterialTheme.colorScheme.secondary,
+                        LocalContentColor provides Graphite.colors.accent,
                     ) {
                         Box(
                             Modifier
@@ -104,10 +103,9 @@ fun AlertDialogContent(
                 }
                 title?.let {
                     CompositionLocalProvider(
-                        LocalContentColor provides MaterialTheme.colorScheme.onSurface,
+                        LocalContentColor provides Graphite.colors.text,
                     ) {
-                        val textStyle = MaterialTheme.typography.headlineSmall
-                        ProvideTextStyle(textStyle) {
+                        ProvideTextStyle(Graphite.type.title) {
                             Box(
                                 // Align the title to the center when an icon is present.
                                 Modifier
@@ -132,10 +130,10 @@ fun AlertDialogContent(
 }
 
 // Paddings for each of the dialog's parts.
-private val DialogPadding = 24.dp
-private val IconPadding = PaddingValues(bottom = 16.dp)
-private val TitlePadding = PaddingValues(bottom = 16.dp)
-private val TextPadding = PaddingValues(bottom = 24.dp)
+private val DialogPadding = GSpace.s5
+private val IconPadding = PaddingValues(bottom = GSpace.s5)
+private val TitlePadding = PaddingValues(bottom = GSpace.s3)
+private val TextPadding = PaddingValues(bottom = GSpace.s6)
 
 private val MinWidth = 280.dp
-private val MaxWidth = 560.dp
+private val MaxWidth = 420.dp

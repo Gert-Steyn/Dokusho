@@ -3,7 +3,6 @@ package tachiyomi.presentation.core.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -11,7 +10,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ActionButton(
@@ -25,7 +25,7 @@ fun ActionButton(
         onClick = onClick,
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+            verticalArrangement = Arrangement.spacedBy(GSpace.s2),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
@@ -34,6 +34,7 @@ fun ActionButton(
             )
             Text(
                 text = title,
+                style = Graphite.type.label,
                 textAlign = TextAlign.Center,
             )
         }

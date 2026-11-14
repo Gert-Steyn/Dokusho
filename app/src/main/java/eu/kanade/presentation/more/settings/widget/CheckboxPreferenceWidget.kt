@@ -5,6 +5,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
 
 @Composable
 fun CheckboxPreferenceWidget(
@@ -26,6 +27,7 @@ fun CheckboxPreferenceWidget(
                 checked = checked,
                 onCheckedChange = null,
                 enabled = enabled,
+                colors = graphiteCheckboxColors(),
                 modifier = Modifier.padding(start = TrailingWidgetBuffer),
             )
         },

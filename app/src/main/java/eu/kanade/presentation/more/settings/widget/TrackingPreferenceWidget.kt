@@ -31,6 +31,8 @@ import mihon.icons.lucide.icons.Check
 import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TrackingPreferenceWidget(
@@ -46,7 +48,7 @@ fun TrackingPreferenceWidget(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = PrefsHorizontalPadding, vertical = 8.dp),
+                .padding(horizontal = PrefsHorizontalPadding, vertical = GSpace.s3),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
@@ -66,9 +68,8 @@ fun TrackingPreferenceWidget(
                         text = tracker.name,
                         modifier = Modifier.padding(horizontal = 16.dp),
                         maxLines = 1,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = TitleFontSize,
-                        fontWeight = FontWeight.Medium,
+                        style = Graphite.type.body,
+                        color = Graphite.colors.text,
                     )
                     val displayName = tracker.getDisplayUsername()
                     if (isLoggedIn && displayName.isNotBlank()) {
@@ -76,7 +77,8 @@ fun TrackingPreferenceWidget(
                             text = displayName,
                             modifier = Modifier.padding(horizontal = 16.dp),
                             maxLines = 1,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Graphite.type.small,
+                            color = Graphite.colors.textMuted,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
@@ -96,12 +98,14 @@ fun TrackingPreferenceWidget(
                                 modifier = Modifier
                                     .padding(4.dp)
                                     .size(32.dp),
+                                tint = Graphite.colors.textMuted,
                                 contentDescription = stringResource(MR.strings.refresh_tracker_profile),
                             )
                         } else {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(24.dp),
                                 strokeWidth = 2.dp,
+                                color = Graphite.colors.textMuted,
                             )
                         }
                     }
@@ -111,7 +115,7 @@ fun TrackingPreferenceWidget(
                     modifier = Modifier
                         .padding(4.dp)
                         .size(32.dp),
-                    tint = Color(0xFF4CAF50),
+                    tint = Graphite.colors.success,
                     contentDescription = stringResource(MR.strings.login_success),
                 )
             }

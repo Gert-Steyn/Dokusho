@@ -2,6 +2,7 @@ package eu.kanade.presentation.more.settings.widget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,7 +15,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.Eye
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TextPreferenceWidget(
@@ -22,7 +24,7 @@ fun TextPreferenceWidget(
     title: String? = null,
     subtitle: String? = null,
     icon: ImageVector? = null,
-    iconTint: Color = MaterialTheme.colorScheme.primary,
+    iconTint: Color = Graphite.colors.textMuted,
     widget: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
     onPreferenceClick: (() -> Unit)? = null,
@@ -35,9 +37,9 @@ fun TextPreferenceWidget(
                 Text(
                     text = subtitle,
                     modifier = Modifier
-                        .padding(horizontal = PrefsHorizontalPadding)
-                        .secondaryItemAlpha(),
-                    style = MaterialTheme.typography.bodySmall,
+                        .padding(horizontal = PrefsHorizontalPadding),
+                    style = Graphite.type.small,
+                    color = Graphite.colors.textMuted,
                     maxLines = 10,
                 )
             }
@@ -50,6 +52,7 @@ fun TextPreferenceWidget(
                     imageVector = icon,
                     tint = iconTint,
                     contentDescription = null,
+                    modifier = Modifier.size(GSize.icon),
                 )
             }
         } else {

@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.more.settings.LocalPreferenceHighlighted
 import eu.kanade.presentation.more.settings.LocalPreferenceMinHeight
 import kotlinx.coroutines.delay
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -59,7 +62,7 @@ internal fun BasePreferenceWidget(
         if (icon != null) {
             Box(
                 modifier = Modifier
-                    .padding(start = PrefsHorizontalPadding, end = 8.dp)
+                    .padding(start = PrefsHorizontalPadding, end = GSpace.s3)
                     .alpha(contentAlpha),
                 content = { icon() },
             )
@@ -76,8 +79,8 @@ internal fun BasePreferenceWidget(
                     text = title,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontSize = TitleFontSize,
+                    style = Graphite.type.body,
+                    color = Graphite.colors.text,
                 )
             }
             subcomponent?.invoke(this)
@@ -103,7 +106,7 @@ internal fun Modifier.highlightBackground(highlighted: Boolean): Modifier {
     }
     val highlight by animateColorAsState(
         targetValue = if (highlightFlag) {
-            MaterialTheme.colorScheme.surfaceTint.copy(alpha = .12f)
+            Graphite.colors.accentSubtle
         } else {
             Color.Transparent
         },
@@ -125,8 +128,7 @@ internal fun Modifier.highlightBackground(highlighted: Boolean): Modifier {
     return this.background(color = highlight)
 }
 
-internal val TrailingWidgetBuffer = 16.dp
-internal val PrefsHorizontalPadding = 16.dp
-internal val PrefsVerticalPadding = 16.dp
-internal val TitleFontSize = 16.sp
+internal val TrailingWidgetBuffer = GSpace.s5
+internal val PrefsHorizontalPadding = GSize.pagePad
+internal val PrefsVerticalPadding = GSpace.s4
 internal val DisabledAlpha = 0.38f

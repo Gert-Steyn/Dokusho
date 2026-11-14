@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.Eye
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 
 @Composable
 fun SwitchPreferenceWidget(
@@ -32,6 +33,7 @@ fun SwitchPreferenceWidget(
                 checked = checked,
                 onCheckedChange = null,
                 enabled = enabled,
+                colors = graphiteSwitchColors(),
                 modifier = Modifier.padding(start = TrailingWidgetBuffer),
             )
         },

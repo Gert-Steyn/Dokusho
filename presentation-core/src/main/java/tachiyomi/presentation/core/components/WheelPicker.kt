@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -48,6 +47,9 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.clearFocusOnSoftKeyboardHide
 import tachiyomi.presentation.core.util.clickableNoIndication
 import tachiyomi.presentation.core.util.showSoftKeyboard
@@ -173,12 +175,12 @@ private fun <T> WheelPicker(
                     keyboardType = manualInputType!!,
                     imeAction = ImeAction.Done,
                 ),
-                textStyle = MaterialTheme.typography.titleMedium +
+                textStyle = Graphite.type.heading +
                     TextStyle(
-                        color = MaterialTheme.colorScheme.onSurface,
+                        color = Graphite.colors.text,
                         textAlign = TextAlign.Center,
                     ),
-                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                cursorBrush = SolidColor(Graphite.colors.accent),
             )
         } else {
             LazyColumn(
@@ -255,9 +257,9 @@ object WheelPickerDefaults {
         androidx.compose.material3.Surface(
             modifier = Modifier
                 .size(size.width, size.height / ROW_COUNT),
-            shape = RoundedCornerShape(MaterialTheme.padding.medium),
-            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+            shape = GRadius.control,
+            color = Graphite.colors.accentSubtle,
+            border = BorderStroke(GSize.border, Graphite.colors.accent),
             content = {},
         )
     }
@@ -266,7 +268,7 @@ object WheelPickerDefaults {
     fun Item(text: String) {
         Text(
             text = text,
-            style = MaterialTheme.typography.titleMedium,
+            style = Graphite.type.heading,
             maxLines = 1,
         )
     }

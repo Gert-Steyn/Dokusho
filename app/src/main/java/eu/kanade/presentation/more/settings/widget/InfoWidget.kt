@@ -3,6 +3,7 @@ package eu.kanade.presentation.more.settings.widget
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -16,7 +17,8 @@ import mihon.icons.lucide.icons.Info
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 internal fun InfoWidget(text: String) {
@@ -25,17 +27,19 @@ internal fun InfoWidget(text: String) {
             .padding(
                 horizontal = PrefsHorizontalPadding,
                 vertical = MaterialTheme.padding.medium,
-            )
-            .secondaryItemAlpha(),
+            ),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
     ) {
         Icon(
             imageVector = Lucide.Icons.Info,
             contentDescription = null,
+            tint = Graphite.colors.textMuted,
+            modifier = Modifier.size(GSize.icon),
         )
         Text(
             text = text,
-            style = MaterialTheme.typography.bodySmall,
+            style = Graphite.type.small,
+            color = Graphite.colors.textMuted,
         )
     }
 }

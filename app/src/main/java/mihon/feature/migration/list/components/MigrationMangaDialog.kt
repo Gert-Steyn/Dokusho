@@ -1,10 +1,11 @@
 package mihon.feature.migration.list.components
 
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -16,7 +17,7 @@ fun MigrationMangaDialog(
     skippedCount: Int,
     onMigrate: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(
@@ -43,22 +44,22 @@ fun MigrationMangaDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onMigrate) {
-                Text(
-                    text = stringResource(
-                        resource = if (copy) {
-                            MR.strings.migrationListScreen_migrateDialog_copyLabel
-                        } else {
-                            MR.strings.migrationListScreen_migrateDialog_migrateLabel
-                        },
-                    ),
-                )
-            }
+            GPrimaryButton(
+                text = stringResource(
+                    resource = if (copy) {
+                        MR.strings.migrationListScreen_migrateDialog_copyLabel
+                    } else {
+                        MR.strings.migrationListScreen_migrateDialog_migrateLabel
+                    },
+                ),
+                onClick = onMigrate,
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.migrationListScreen_migrateDialog_cancelLabel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.migrationListScreen_migrateDialog_cancelLabel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }

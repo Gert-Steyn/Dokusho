@@ -1,11 +1,12 @@
 package eu.kanade.presentation.browse.components
 
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.i18n.stringResource
 
 @Composable
@@ -14,22 +15,22 @@ fun RemoveMangaDialog(
     onConfirm: () -> Unit,
     mangaToRemove: Manga,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(
+            GDangerButton(
+                text = stringResource(MR.strings.action_remove),
                 onClick = {
                     onDismissRequest()
                     onConfirm()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_remove))
-            }
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.are_you_sure))

@@ -21,10 +21,8 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -37,6 +35,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -63,6 +64,9 @@ import mihon.icons.lucide.icons.ListX
 import mihon.icons.lucide.icons.Trash2
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -85,8 +89,8 @@ fun MangaBottomActionMenu(
         val scope = rememberCoroutineScope()
         Surface(
             modifier = modifier,
-            shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shape = RectangleShape,
+            color = Graphite.colors.surface,
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false, false) }
@@ -100,14 +104,18 @@ fun MangaBottomActionMenu(
                     if (isActive) confirm[toConfirmIndex] = false
                 }
             }
+            val borderColor = Graphite.colors.borderSubtle
             Row(
                 modifier = Modifier
+                    .drawBehind {
+                        drawLine(borderColor, Offset(0f, 0f), Offset(size.width, 0f), GSize.border.toPx())
+                    }
                     .padding(
                         WindowInsets.navigationBars
                             .only(WindowInsetsSides.Bottom)
                             .asPaddingValues(),
                     )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = GSpace.s3, vertical = GSpace.s4),
             ) {
                 if (onBookmarkClicked != null) {
                     Button(
@@ -192,7 +200,7 @@ private fun RowScope.Button(
     )
     Box(
         modifier = Modifier
-            .size(48.dp)
+            .size(GSize.minTarget)
             .weight(animatedWeight)
             .combinedClickable(
                 interactionSource = null,
@@ -209,6 +217,8 @@ private fun RowScope.Button(
             Icon(
                 imageVector = icon,
                 contentDescription = title,
+                modifier = Modifier.size(GSize.icon),
+                tint = Graphite.colors.textMuted,
             )
             AnimatedVisibility(
                 visible = toConfirm,
@@ -219,7 +229,8 @@ private fun RowScope.Button(
                     text = title,
                     overflow = TextOverflow.Visible,
                     maxLines = 1,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = Graphite.type.caption,
+                    color = Graphite.colors.textSecondary,
                 )
             }
         }
@@ -246,8 +257,8 @@ fun LibraryBottomActionMenu(
         val scope = rememberCoroutineScope()
         Surface(
             modifier = modifier,
-            shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shape = RectangleShape,
+            color = Graphite.colors.surface,
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false) }
@@ -262,13 +273,17 @@ fun LibraryBottomActionMenu(
                 }
             }
             val itemOverflow = onDownloadClicked != null
+            val borderColor = Graphite.colors.borderSubtle
             Row(
                 modifier = Modifier
+                    .drawBehind {
+                        drawLine(borderColor, Offset(0f, 0f), Offset(size.width, 0f), GSize.border.toPx())
+                    }
                     .windowInsetsPadding(
                         WindowInsets.navigationBars
                             .only(WindowInsetsSides.Bottom),
                     )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = GSpace.s3, vertical = GSpace.s4),
             ) {
                 Button(
                     title = stringResource(MR.strings.action_move_category),

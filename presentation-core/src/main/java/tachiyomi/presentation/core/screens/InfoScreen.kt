@@ -14,11 +14,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarDefaults
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,14 +23,16 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.Newspaper
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun InfoScreen(
@@ -50,40 +49,37 @@ fun InfoScreen(
 ) {
     Scaffold(
         bottomBar = {
-            val strokeWidth = Dp.Hairline
-            val borderColor = MaterialTheme.colorScheme.outline
+            val borderColor = Graphite.colors.borderSubtle
             Column(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
+                    .background(Graphite.colors.canvas)
                     .drawBehind {
                         drawLine(
                             borderColor,
                             Offset(0f, 0f),
                             Offset(size.width, 0f),
-                            strokeWidth.value,
+                            GSize.border.toPx(),
                         )
                     }
                     .windowInsetsPadding(NavigationBarDefaults.windowInsets)
                     .padding(
-                        horizontal = MaterialTheme.padding.medium,
-                        vertical = MaterialTheme.padding.small,
+                        horizontal = GSpace.s5,
+                        vertical = GSpace.s3,
                     ),
             ) {
-                Button(
+                GPrimaryButton(
                     modifier = Modifier.fillMaxWidth(),
                     enabled = canAccept,
                     onClick = onAcceptClick,
-                ) {
-                    Text(text = acceptText)
-                }
+                    text = acceptText,
+                )
                 if (rejectText != null && onRejectClick != null) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall)) {
-                        OutlinedButton(
+                    Row(horizontalArrangement = Arrangement.spacedBy(GSpace.s3)) {
+                        GSecondaryButton(
                             modifier = Modifier.weight(1f),
                             onClick = onRejectClick,
-                        ) {
-                            Text(text = rejectText)
-                        }
+                            text = rejectText,
+                        )
                         rejectAction?.invoke(this)
                     }
                 }
@@ -94,8 +90,7 @@ fun InfoScreen(
         Box(
             modifier = Modifier
                 .zIndex(2f)
-                .secondaryItemAlpha()
-                .background(MaterialTheme.colorScheme.background)
+                .background(Graphite.colors.canvas)
                 .fillMaxWidth()
                 .height(paddingValues.calculateTopPadding()),
         )
@@ -105,27 +100,27 @@ fun InfoScreen(
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
                 .padding(paddingValues)
-                .padding(top = 48.dp)
-                .padding(horizontal = MaterialTheme.padding.medium),
+                .padding(top = GSpace.s8)
+                .padding(horizontal = GSpace.s5),
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(bottom = MaterialTheme.padding.small)
+                    .padding(bottom = GSpace.s3)
                     .size(48.dp),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = Graphite.colors.textMuted,
             )
             Text(
                 text = headingText,
-                style = MaterialTheme.typography.headlineLarge,
+                style = Graphite.type.display,
+                color = Graphite.colors.text,
             )
             Text(
                 text = subtitleText,
-                modifier = Modifier
-                    .secondaryItemAlpha()
-                    .padding(vertical = MaterialTheme.padding.small),
-                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(vertical = GSpace.s3),
+                style = Graphite.type.label,
+                color = Graphite.colors.textSecondary,
             )
 
             content()

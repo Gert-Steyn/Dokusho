@@ -11,9 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -64,8 +61,12 @@ import mihon.icons.lucide.icons.Share2
 import mihon.icons.lucide.icons.X
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.clickableNoIndication
 import tachiyomi.source.local.isLocal
 
@@ -96,16 +97,15 @@ fun MangaCoverDialog(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp)
+                        .padding(GSpace.s2)
                         .navigationBarsPadding(),
                 ) {
                     ActionsPill {
-                        IconButton(onClick = onDismissRequest) {
-                            Icon(
-                                imageVector = Lucide.Icons.X,
-                                contentDescription = stringResource(MR.strings.action_close),
-                            )
-                        }
+                        GIconButton(
+                            icon = Lucide.Icons.X,
+                            contentDescription = stringResource(MR.strings.action_close),
+                            onClick = onDismissRequest,
+                        )
                     }
                     Spacer(modifier = Modifier.weight(1f))
                     ActionsPill {
@@ -126,7 +126,9 @@ fun MangaCoverDialog(
                         if (onEditClick != null) {
                             Box {
                                 var expanded by remember { mutableStateOf(false) }
-                                IconButton(
+                                GIconButton(
+                                    icon = Lucide.Icons.Pencil,
+                                    contentDescription = stringResource(MR.strings.action_edit_cover),
                                     onClick = {
                                         when {
                                             !manga.favorite && !manga.isLocal() -> {
@@ -136,16 +138,11 @@ fun MangaCoverDialog(
                                             else -> onEditClick(EditCoverAction.EDIT)
                                         }
                                     },
-                                ) {
-                                    Icon(
-                                        imageVector = Lucide.Icons.Pencil,
-                                        contentDescription = stringResource(MR.strings.action_edit_cover),
-                                    )
-                                }
+                                )
                                 DropdownMenu(
                                     expanded = expanded,
                                     onDismissRequest = { expanded = false },
-                                    offset = DpOffset(8.dp, 0.dp),
+                                    offset = DpOffset(GSpace.s3, 0.dp),
                                 ) {
                                     DropdownMenuItem(
                                         text = { Text(text = stringResource(MR.strings.action_edit)) },
@@ -269,8 +266,8 @@ fun MangaCoverDialog(
 private fun ActionsPill(content: @Composable () -> Unit) {
     Row(
         modifier = Modifier
-            .clip(MaterialTheme.shapes.extraLarge)
-            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.95f)),
+            .clip(GRadius.card)
+            .background(Graphite.colors.raised),
     ) {
         content()
     }

@@ -2,10 +2,7 @@ package eu.kanade.presentation.history.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,8 +12,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 @Composable
 fun HistoryDeleteDialog(
@@ -25,13 +25,13 @@ fun HistoryDeleteDialog(
 ) {
     var removeEverything by remember { mutableStateOf(false) }
 
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = stringResource(MR.strings.action_remove))
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                verticalArrangement = Arrangement.spacedBy(GSpace.s3),
             ) {
                 Text(text = stringResource(MR.strings.dialog_with_checkbox_remove_description))
 
@@ -44,17 +44,19 @@ fun HistoryDeleteDialog(
         },
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(onClick = {
-                onDelete(removeEverything)
-                onDismissRequest()
-            }) {
-                Text(text = stringResource(MR.strings.action_remove))
-            }
+            GDangerButton(
+                text = stringResource(MR.strings.action_remove),
+                onClick = {
+                    onDelete(removeEverything)
+                    onDismissRequest()
+                },
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }
@@ -64,7 +66,7 @@ fun HistoryDeleteAllDialog(
     onDismissRequest: () -> Unit,
     onDelete: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = stringResource(MR.strings.action_remove_everything))
         },
@@ -73,17 +75,19 @@ fun HistoryDeleteAllDialog(
         },
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(onClick = {
-                onDelete()
-                onDismissRequest()
-            }) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GDangerButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = {
+                    onDelete()
+                    onDismissRequest()
+                },
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }

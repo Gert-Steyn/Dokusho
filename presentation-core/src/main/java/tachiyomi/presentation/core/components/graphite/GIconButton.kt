@@ -3,6 +3,7 @@ package tachiyomi.presentation.core.components.graphite
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,7 +14,7 @@ import tachiyomi.presentation.core.theme.Graphite
 @Composable
 fun GIconButton(
     icon: ImageVector,
-    contentDescription: String,
+    contentDescription: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -21,7 +22,9 @@ fun GIconButton(
 ) {
     IconButton(
         onClick = onClick,
-        modifier = modifier.size(GSize.control),
+        modifier = modifier
+            .minimumInteractiveComponentSize()
+            .size(GSize.control),
         enabled = enabled,
     ) {
         Icon(

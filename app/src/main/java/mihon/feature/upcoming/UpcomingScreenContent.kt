@@ -9,14 +9,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Badge
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.font.FontWeight
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
@@ -37,9 +35,9 @@ import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
 import tachiyomi.presentation.core.components.TwoPanelBox
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.theme.active
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun UpcomingScreenContent(
@@ -111,7 +109,7 @@ private fun UpcomingToolbar(
                     AppBar.Action(
                         title = stringResource(MR.strings.action_filter),
                         icon = Lucide.Icons.ListFilter,
-                        iconTint = if (hasFilters) MaterialTheme.colorScheme.active else LocalContentColor.current,
+                        iconTint = if (hasFilters) Graphite.colors.accent else LocalContentColor.current,
                         onClick = onClickFilter,
                     ),
                     AppBar.Action(
@@ -137,15 +135,14 @@ private fun DateHeading(
         Text(
             text = relativeDateText(date),
             modifier = Modifier
-                .padding(MaterialTheme.padding.small)
-                .padding(start = MaterialTheme.padding.small),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            fontWeight = FontWeight.SemiBold,
-            style = MaterialTheme.typography.bodyMedium,
+                .padding(GSpace.s3)
+                .padding(start = GSpace.s3),
+            color = Graphite.colors.text,
+            style = Graphite.type.heading,
         )
         Badge(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = Graphite.colors.hover,
+            contentColor = Graphite.colors.textSecondary,
         ) {
             Text("$mangaCount")
         }

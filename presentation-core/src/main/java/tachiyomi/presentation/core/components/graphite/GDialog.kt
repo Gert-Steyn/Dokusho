@@ -19,6 +19,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import tachiyomi.presentation.core.theme.GRadius
 import tachiyomi.presentation.core.theme.GSize
 import tachiyomi.presentation.core.theme.GSpace
@@ -33,15 +34,17 @@ import tachiyomi.presentation.core.theme.Graphite
 @Composable
 fun GDialog(
     onDismissRequest: () -> Unit,
-    text: @Composable () -> Unit,
+    text: (@Composable () -> Unit)?,
     confirmButton: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     title: (@Composable () -> Unit)? = null,
     dismissButton: (@Composable () -> Unit)? = null,
+    properties: DialogProperties = DialogProperties(),
 ) {
     BasicAlertDialog(
         onDismissRequest = onDismissRequest,
         modifier = modifier,
+        properties = properties,
     ) {
         Surface(
             shape = GRadius.dialog,
@@ -64,9 +67,11 @@ fun GDialog(
                     }
                     Spacer(modifier = Modifier.height(GSpace.s3))
                 }
-                CompositionLocalProvider(LocalContentColor provides Graphite.colors.textSecondary) {
-                    ProvideTextStyle(Graphite.type.body) {
-                        text()
+                text?.let {
+                    CompositionLocalProvider(LocalContentColor provides Graphite.colors.textSecondary) {
+                        ProvideTextStyle(Graphite.type.body) {
+                            it()
+                        }
                     }
                 }
                 Row(

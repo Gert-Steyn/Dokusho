@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -21,7 +19,9 @@ import eu.kanade.presentation.reader.reportPress
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ReaderTransitionPage(
@@ -39,8 +39,8 @@ fun ReaderTransitionPage(
     ) {
         if (downloadState != null) {
             CompositionLocalProvider(
-                LocalTextStyle provides MaterialTheme.typography.bodySmall,
-                LocalContentColor provides MaterialTheme.colorScheme.onBackground,
+                LocalTextStyle provides Graphite.type.small,
+                LocalContentColor provides Graphite.colors.text,
             ) {
                 ChapterTransition(
                     transition,
@@ -60,8 +60,8 @@ fun ReaderTransitionPage(
                 CircularProgressIndicator()
                 Text(
                     text = stringResource(MR.strings.transition_pages_loading),
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyMedium,
+                    color = Graphite.colors.text,
+                    style = Graphite.type.body,
                 )
             }
             is ReaderChapter.State.Error -> Column(
@@ -70,15 +70,14 @@ fun ReaderTransitionPage(
             ) {
                 Text(
                     text = stringResource(MR.strings.transition_pages_error, state.error.message ?: ""),
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.bodyMedium,
+                    color = Graphite.colors.text,
+                    style = Graphite.type.body,
                 )
-                Button(
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_retry),
                     onClick = { onRetry(toChapter) },
                     modifier = Modifier.reportPress(onButtonPressChange),
-                ) {
-                    Text(stringResource(MR.strings.action_retry))
-                }
+                )
             }
             is ReaderChapter.State.Wait, is ReaderChapter.State.Loaded -> {}
         }

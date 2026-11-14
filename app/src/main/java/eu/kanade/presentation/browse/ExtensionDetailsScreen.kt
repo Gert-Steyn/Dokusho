@@ -14,16 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,9 +52,16 @@ import mihon.icons.lucide.icons.Glasses
 import mihon.icons.lucide.icons.Settings
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ExtensionDetailsScreen(
@@ -207,10 +207,10 @@ private fun DetailsHeader(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = MaterialTheme.padding.medium)
+                .padding(horizontal = GSpace.s5)
                 .padding(
-                    top = MaterialTheme.padding.medium,
-                    bottom = MaterialTheme.padding.small,
+                    top = GSpace.s5,
+                    bottom = GSpace.s3,
                 )
                 .clickable {
                     val extDebugInfo = buildString {
@@ -250,37 +250,37 @@ private fun DetailsHeader(
 
             Text(
                 text = extension.name,
-                style = MaterialTheme.typography.headlineSmall,
+                style = Graphite.type.title,
                 textAlign = TextAlign.Center,
             )
 
             Text(
                 text = extension.pkgName,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = Graphite.type.small,
+                color = Graphite.colors.textSecondary,
             )
 
             extension.store?.let { store ->
                 Text(
                     text = store.name,
                     modifier = Modifier
-                        .clip(MaterialTheme.shapes.small)
+                        .clip(GRadius.control)
                         .clickable(enabled = onClickStore != null) { onClickStore?.invoke() }
                         .padding(
-                            horizontal = MaterialTheme.padding.extraSmall,
-                            vertical = MaterialTheme.padding.extraSmall / 2,
+                            horizontal = GSpace.s2,
+                            vertical = GSpace.s1,
                         ),
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
+                    style = Graphite.type.label,
+                    color = Graphite.colors.accent,
                 )
             }
 
             if ((extension as? Extension.Loaded)?.isShared == false) {
                 ExtensionPill(
                     text = stringResource(MR.strings.ext_installer_private),
-                    modifier = Modifier.padding(top = MaterialTheme.padding.small),
+                    modifier = Modifier.padding(top = GSpace.s3),
                 )
             }
         }
@@ -289,8 +289,8 @@ private fun DetailsHeader(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    horizontal = MaterialTheme.padding.medium,
-                    vertical = MaterialTheme.padding.small,
+                    horizontal = GSpace.s5,
+                    vertical = GSpace.s3,
                 ),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
@@ -324,29 +324,27 @@ private fun DetailsHeader(
 
         Row(
             modifier = Modifier
-                .padding(horizontal = MaterialTheme.padding.medium)
-                .padding(top = MaterialTheme.padding.small),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
+                .padding(horizontal = GSpace.s5)
+                .padding(top = GSpace.s3),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
         ) {
-            OutlinedButton(
+            GSecondaryButton(
                 modifier = Modifier.weight(1f),
+                text = stringResource(MR.strings.ext_uninstall),
                 onClick = onClickUninstall,
-            ) {
-                Text(stringResource(MR.strings.ext_uninstall))
-            }
+            )
 
             if (onClickAppInfo != null) {
-                Button(
+                GSecondaryButton(
                     modifier = Modifier.weight(1f),
+                    text = stringResource(MR.strings.ext_app_info),
                     onClick = onClickAppInfo,
-                ) {
-                    Text(stringResource(MR.strings.ext_app_info))
-                }
+                )
             }
         }
 
         TextPreferenceWidget(
-            modifier = Modifier.padding(horizontal = MaterialTheme.padding.small),
+            modifier = Modifier.padding(horizontal = GSpace.s3),
             title = stringResource(MR.strings.pref_incognito_mode),
             subtitle = stringResource(MR.strings.pref_incognito_mode_extension_summary),
             icon = Lucide.Icons.Glasses,
@@ -358,6 +356,7 @@ private fun DetailsHeader(
                         checked = extIncognitoMode,
                         onCheckedChange = onExtIncognitoChange,
                         modifier = Modifier.padding(start = TrailingWidgetBuffer),
+                        colors = graphiteSwitchColors(),
                     )
                 }
             },
@@ -389,7 +388,7 @@ private fun InfoText(
         Text(
             text = primaryText,
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.titleSmall,
+            style = Graphite.type.label,
             color = primaryTextColor,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
@@ -398,8 +397,8 @@ private fun InfoText(
         Text(
             text = secondaryText + if (onClick != null) " ⓘ" else "",
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+            style = Graphite.type.small,
+            color = Graphite.colors.textMuted,
         )
     }
 }
@@ -408,8 +407,8 @@ private fun InfoText(
 private fun InfoDivider() {
     VerticalDivider(
         modifier = Modifier
-            .padding(horizontal = MaterialTheme.padding.small)
-            .height(24.dp),
+            .padding(horizontal = GSpace.s3)
+            .height(GSpace.s6),
     )
 }
 
@@ -434,19 +433,18 @@ private fun SourceSwitchPreference(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (source.source is ConfigurableSource) {
-                    IconButton(onClick = { onClickSourcePreferences(source.source.id) }) {
-                        Icon(
-                            imageVector = Lucide.Icons.Settings,
-                            contentDescription = stringResource(MR.strings.label_settings),
-                            tint = MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
+                    GIconButton(
+                        icon = Lucide.Icons.Settings,
+                        contentDescription = stringResource(MR.strings.label_settings),
+                        onClick = { onClickSourcePreferences(source.source.id) },
+                    )
                 }
 
                 Switch(
                     checked = source.enabled,
                     onCheckedChange = null,
                     modifier = Modifier.padding(start = TrailingWidgetBuffer),
+                    colors = graphiteSwitchColors(),
                 )
             }
         },
@@ -460,20 +458,21 @@ private fun ContentWarningDialog(
     description: StringResource,
     onClickConfirm: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(
                 text = stringResource(label),
-                style = MaterialTheme.typography.titleMedium,
+                style = Graphite.type.heading,
             )
         },
         text = {
             Text(text = stringResource(description))
         },
         confirmButton = {
-            TextButton(onClick = onClickConfirm) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = onClickConfirm,
+            )
         },
         onDismissRequest = onClickConfirm,
     )

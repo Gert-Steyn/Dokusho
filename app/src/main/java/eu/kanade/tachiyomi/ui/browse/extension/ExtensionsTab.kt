@@ -1,9 +1,7 @@
 package eu.kanade.tachiyomi.ui.browse.extension
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +20,9 @@ import eu.kanade.tachiyomi.ui.browse.extension.details.ExtensionDetailsScreen
 import eu.kanade.tachiyomi.ui.webview.WebViewScreen
 import eu.kanade.tachiyomi.util.system.isPackageInstalled
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.i18n.stringResource
 
 @Composable
@@ -113,7 +114,7 @@ private fun ExtensionUninstallConfirmation(
     onClickConfirm: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = stringResource(MR.strings.ext_confirm_remove))
         },
@@ -121,19 +122,19 @@ private fun ExtensionUninstallConfirmation(
             Text(text = stringResource(MR.strings.remove_private_extension_message, extensionName))
         },
         confirmButton = {
-            TextButton(
+            GDangerButton(
+                text = stringResource(MR.strings.ext_remove),
                 onClick = {
                     onClickConfirm()
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.ext_remove))
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         onDismissRequest = onDismissRequest,
     )

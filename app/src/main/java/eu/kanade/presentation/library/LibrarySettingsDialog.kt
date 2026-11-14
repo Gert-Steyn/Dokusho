@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -35,7 +32,9 @@ import tachiyomi.presentation.core.components.SettingsChipRow
 import tachiyomi.presentation.core.components.SliderItem
 import tachiyomi.presentation.core.components.SortItem
 import tachiyomi.presentation.core.components.TriStateItem
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.collectAsState
 
 @Composable
@@ -231,10 +230,10 @@ private fun ColumnScope.DisplayPage(
     val displayMode by viewModel.libraryPreferences.displayMode.collectAsState()
     SettingsChipRow(MR.strings.action_display_mode) {
         displayModes.map { (titleRes, mode) ->
-            FilterChip(
+            GChip(
+                text = stringResource(titleRes),
                 selected = displayMode == mode,
                 onClick = { viewModel.setDisplayMode(mode) },
-                label = { Text(stringResource(titleRes)) },
             )
         }
     }
@@ -260,7 +259,7 @@ private fun ColumnScope.DisplayPage(
                 stringResource(MR.strings.label_auto)
             },
             onChange = columnPreference::set,
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+            pillColor = Graphite.colors.surface,
         )
     }
 

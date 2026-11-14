@@ -23,6 +23,7 @@ import mihon.icons.lucide.icons.Copy
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 class BackupSchemaScreen : Screen() {
 
@@ -64,7 +65,7 @@ class BackupSchemaScreen : Screen() {
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
-                    .padding(16.dp),
+                    .padding(GSpace.s5),
                 fontFamily = FontFamily.Monospace,
             )
         }

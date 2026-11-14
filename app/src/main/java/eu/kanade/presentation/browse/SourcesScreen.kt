@@ -6,17 +6,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.browse.components.BaseSourceItem
 import eu.kanade.tachiyomi.ui.browse.source.SourcesViewModel
 import eu.kanade.tachiyomi.ui.browse.source.browse.BrowseSourceViewModel.Listing
@@ -28,13 +21,15 @@ import tachiyomi.domain.source.model.Pin
 import tachiyomi.domain.source.model.Source
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
-import tachiyomi.presentation.core.components.material.SECONDARY_ALPHA
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.LoadingScreen
-import tachiyomi.presentation.core.theme.header
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
 import tachiyomi.source.local.isLocal
 
@@ -101,8 +96,8 @@ private fun SourceHeader(
     Text(
         text = LocaleHelper.getSourceDisplayName(language, context),
         modifier = modifier
-            .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
-        style = MaterialTheme.typography.header,
+            .padding(horizontal = GSpace.s5, vertical = GSpace.s3),
+        style = Graphite.type.caption.copy(color = Graphite.colors.textMuted),
     )
 }
 
@@ -121,14 +116,10 @@ private fun SourceItem(
         onLongClickItem = { onLongClickItem(source) },
         action = {
             if (source.supportsLatest) {
-                TextButton(onClick = { onClickItem(source, Listing.Latest) }) {
-                    Text(
-                        text = stringResource(MR.strings.latest),
-                        style = LocalTextStyle.current.copy(
-                            color = MaterialTheme.colorScheme.primary,
-                        ),
-                    )
-                }
+                GGhostButton(
+                    text = stringResource(MR.strings.latest),
+                    onClick = { onClickItem(source, Listing.Latest) },
+                )
             }
             SourcePinButton(
                 isPinned = Pin.Pinned in source.pin,
@@ -145,20 +136,17 @@ private fun SourcePinButton(
 ) {
     val icon = if (isPinned) Lucide.Icons.Pin else Lucide.Icons.PinOff
     val tint = if (isPinned) {
-        MaterialTheme.colorScheme.primary
+        Graphite.colors.accent
     } else {
-        MaterialTheme.colorScheme.onBackground.copy(
-            alpha = SECONDARY_ALPHA,
-        )
+        Graphite.colors.textMuted
     }
     val description = if (isPinned) MR.strings.action_unpin else MR.strings.action_pin
-    IconButton(onClick = onClick) {
-        Icon(
-            imageVector = icon,
-            tint = tint,
-            contentDescription = stringResource(description),
-        )
-    }
+    GIconButton(
+        icon = icon,
+        contentDescription = stringResource(description),
+        onClick = onClick,
+        tint = tint,
+    )
 }
 
 @Composable
@@ -168,7 +156,7 @@ fun SourceOptionsDialog(
     onClickDisable: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = source.visualName)
         },
@@ -180,7 +168,7 @@ fun SourceOptionsDialog(
                     modifier = Modifier
                         .clickable(onClick = onClickPin)
                         .fillMaxWidth()
-                        .padding(vertical = 16.dp),
+                        .padding(vertical = GSpace.s5),
                 )
                 if (!source.isLocal()) {
                     Text(
@@ -188,7 +176,7 @@ fun SourceOptionsDialog(
                         modifier = Modifier
                             .clickable(onClick = onClickDisable)
                             .fillMaxWidth()
-                            .padding(vertical = 16.dp),
+                            .padding(vertical = GSpace.s5),
                     )
                 }
             }

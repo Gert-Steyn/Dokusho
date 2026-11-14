@@ -2,30 +2,30 @@ package eu.kanade.presentation.browse.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 internal fun ExtensionPill(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    color: Color = Graphite.colors.textSecondary,
 ) {
     Text(
         text = text,
         modifier = modifier
-            .background(color = color.copy(alpha = PILL_BACKGROUND_ALPHA), shape = MaterialTheme.shapes.small)
-            .padding(horizontal = MaterialTheme.padding.small, vertical = 2.dp),
+            .background(color = color.copy(alpha = PILL_BACKGROUND_ALPHA), shape = GRadius.tag)
+            .padding(horizontal = GSpace.s3, vertical = GSpace.s1),
         color = color,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.labelSmall,
+        style = Graphite.type.caption,
     )
 }
 

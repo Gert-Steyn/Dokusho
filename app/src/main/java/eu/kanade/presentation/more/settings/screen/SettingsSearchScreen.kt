@@ -18,9 +18,7 @@ import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -43,7 +41,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.UpIcon
@@ -53,9 +50,12 @@ import kotlinx.coroutines.flow.collectLatest
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.runOnEnterKeyPressed
 import cafe.adriel.voyager.core.screen.Screen as VoyagerScreen
 
@@ -108,18 +108,18 @@ class SettingsSearchScreen : Screen() {
                                     .fillMaxWidth()
                                     .focusRequester(focusRequester)
                                     .runOnEnterKeyPressed(action = focusManager::clearFocus),
-                                textStyle = MaterialTheme.typography.bodyLarge
-                                    .copy(color = MaterialTheme.colorScheme.onSurface),
+                                textStyle = Graphite.type.body
+                                    .copy(color = Graphite.colors.text),
                                 lineLimits = TextFieldLineLimits.SingleLine,
                                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                                 onKeyboardAction = { focusManager.clearFocus() },
-                                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                                cursorBrush = SolidColor(Graphite.colors.accent),
                                 decorator = {
                                     if (textFieldState.text.isEmpty()) {
                                         Text(
                                             text = stringResource(MR.strings.action_search_settings),
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            style = MaterialTheme.typography.bodyLarge,
+                                            color = Graphite.colors.textSecondary,
+                                            style = Graphite.type.body,
                                         )
                                     }
                                     it()
@@ -128,13 +128,12 @@ class SettingsSearchScreen : Screen() {
                         },
                         actions = {
                             if (textFieldState.text.isNotEmpty()) {
-                                IconButton(onClick = { textFieldState.clearText() }) {
-                                    Icon(
-                                        imageVector = Lucide.Icons.X,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
+                                GIconButton(
+                                    icon = Lucide.Icons.X,
+                                    contentDescription = null,
+                                    onClick = { textFieldState.clearText() },
+                                    tint = Graphite.colors.textSecondary,
+                                )
                             }
                         },
                     )
@@ -196,21 +195,21 @@ private fun SearchResult(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable { onItemClick(item) }
-                                .padding(horizontal = 24.dp, vertical = 14.dp),
+                                .padding(horizontal = GSpace.s6, vertical = GSpace.s4),
                         ) {
                             Text(
                                 text = item.title,
                                 overflow = TextOverflow.Ellipsis,
                                 maxLines = 1,
                                 fontWeight = FontWeight.Normal,
-                                style = MaterialTheme.typography.titleMedium,
+                                style = Graphite.type.heading,
                             )
                             Text(
                                 text = item.breadcrumbs,
-                                modifier = Modifier.paddingFromBaseline(top = 16.dp),
+                                modifier = Modifier.paddingFromBaseline(top = GSpace.s5),
                                 maxLines = 1,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                style = MaterialTheme.typography.bodySmall,
+                                color = Graphite.colors.textSecondary,
+                                style = Graphite.type.small,
                             )
                         }
                     }

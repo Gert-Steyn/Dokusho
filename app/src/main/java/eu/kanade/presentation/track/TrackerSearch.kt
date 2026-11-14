@@ -24,19 +24,14 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -50,7 +45,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.Clipboard
 import androidx.compose.ui.platform.LocalClipboard
@@ -78,14 +72,19 @@ import mihon.icons.lucide.icons.EyeOff
 import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
 import tachiyomi.presentation.core.util.runOnEnterKeyPressed
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 
 @Composable
 fun TrackerSearch(
@@ -110,13 +109,11 @@ fun TrackerSearch(
             Column {
                 TopAppBar(
                     navigationIcon = {
-                        IconButton(onClick = onDismissRequest) {
-                            Icon(
-                                imageVector = Lucide.AutoMirrored.ArrowLeft,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
+                        GIconButton(
+                            icon = Lucide.AutoMirrored.ArrowLeft,
+                            contentDescription = null,
+                            onClick = onDismissRequest,
+                        )
                     },
                     title = {
                         BasicTextField(
@@ -125,18 +122,18 @@ fun TrackerSearch(
                                 .fillMaxWidth()
                                 .focusRequester(focusRequester)
                                 .runOnEnterKeyPressed(action = dispatchQueryAndClearFocus),
-                            textStyle = MaterialTheme.typography.bodyLarge
-                                .copy(color = MaterialTheme.colorScheme.onSurface),
+                            textStyle = Graphite.type.body
+                                .copy(color = Graphite.colors.text),
                             lineLimits = TextFieldLineLimits.SingleLine,
                             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                             onKeyboardAction = { dispatchQueryAndClearFocus() },
-                            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                            cursorBrush = SolidColor(Graphite.colors.accent),
                             decorator = {
                                 if (state.text.isEmpty()) {
                                     Text(
                                         text = stringResource(MR.strings.action_search_hint),
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = Graphite.colors.textSecondary,
+                                        style = Graphite.type.body,
                                     )
                                 }
                                 it()
@@ -145,18 +142,14 @@ fun TrackerSearch(
                     },
                     actions = {
                         if (state.text.isNotEmpty()) {
-                            IconButton(
+                            GIconButton(
+                                icon = Lucide.Icons.X,
+                                contentDescription = null,
                                 onClick = {
                                     state.clearText()
                                     focusRequester.requestFocus()
                                 },
-                            ) {
-                                Icon(
-                                    imageVector = Lucide.Icons.X,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
+                            )
                         }
                     },
                 )
@@ -171,28 +164,22 @@ fun TrackerSearch(
             ) {
                 Row(
                     modifier = Modifier
-                        .padding(MaterialTheme.padding.small)
+                        .padding(GSpace.s3)
                         .windowInsetsPadding(WindowInsets.navigationBars)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                    horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
                 ) {
-                    Button(
+                    GPrimaryButton(
+                        text = stringResource(MR.strings.action_track),
                         onClick = { onConfirmSelection(false) },
                         modifier = Modifier.weight(1f),
-                        elevation = ButtonDefaults.elevatedButtonElevation(),
-                    ) {
-                        Text(text = stringResource(MR.strings.action_track))
-                    }
+                    )
                     if (supportsPrivateTracking) {
-                        Button(
+                        GSecondaryButton(
+                            text = stringResource(MR.strings.action_toggle_private_on),
                             onClick = { onConfirmSelection(true) },
-                            elevation = ButtonDefaults.elevatedButtonElevation(),
-                        ) {
-                            Icon(
-                                imageVector = Lucide.Icons.EyeOff,
-                                contentDescription = stringResource(MR.strings.action_toggle_private_on),
-                            )
-                        }
+                            icon = Lucide.Icons.EyeOff,
+                        )
                     }
                 }
             }
@@ -210,8 +197,8 @@ fun TrackerSearch(
                     )
                 } else {
                     ScrollbarLazyColumn(
-                        contentPadding = innerPadding + PaddingValues(vertical = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = innerPadding + PaddingValues(vertical = GSpace.s4),
+                        verticalArrangement = Arrangement.spacedBy(GSpace.s4),
                     ) {
                         items(
                             items = availableTracks,
@@ -249,18 +236,18 @@ private fun SearchResultItem(
     val type = trackSearch.publishing_type.toLowerCase(locale).capitalize(locale)
     val status = trackSearch.publishing_status.toLowerCase(locale).capitalize(locale)
     val description = trackSearch.summary.trim()
-    val shape = RoundedCornerShape(16.dp)
-    val borderColor = if (selected) MaterialTheme.colorScheme.outline else Color.Transparent
+    val shape = GRadius.card
+    val borderColor = if (selected) Graphite.colors.accent else Graphite.colors.borderSubtle
     var dropDownMenuExpanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp)
+            .padding(horizontal = GSpace.s4)
             .clip(shape)
-            .background(MaterialTheme.colorScheme.surface)
+            .background(Graphite.colors.canvas)
             .border(
-                width = 2.dp,
+                width = GSize.border,
                 color = borderColor,
                 shape = shape,
             )
@@ -271,14 +258,14 @@ private fun SearchResultItem(
                     onClick()
                 },
             )
-            .padding(12.dp),
+            .padding(GSpace.s4),
     ) {
         if (selected) {
             Icon(
                 imageVector = Lucide.Icons.CircleCheck,
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.TopEnd),
-                tint = MaterialTheme.colorScheme.primary,
+                tint = Graphite.colors.accent,
             )
         }
         Column {
@@ -287,14 +274,14 @@ private fun SearchResultItem(
                     data = trackSearch.cover_url,
                     modifier = Modifier.height(96.dp),
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(GSpace.s4))
                 Column {
                     Text(
                         text = trackSearch.title,
-                        modifier = Modifier.padding(end = 28.dp),
+                        modifier = Modifier.padding(end = GSpace.s7),
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = Graphite.type.heading,
                     )
                     SearchResultItemDropDownMenu(
                         expanded = dropDownMenuExpanded,
@@ -318,10 +305,10 @@ private fun SearchResultItem(
                     if (trackSearch.authors.isNotEmpty() || trackSearch.artists.isNotEmpty()) {
                         Text(
                             text = (trackSearch.authors + trackSearch.artists).distinct().joinToString(),
-                            modifier = Modifier.secondaryItemAlpha(),
+                            color = Graphite.colors.textSecondary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = Graphite.type.small,
                         )
                     }
                     if (type.isNotBlank()) {
@@ -353,12 +340,11 @@ private fun SearchResultItem(
             if (description.isNotBlank()) {
                 Text(
                     text = description,
-                    modifier = Modifier
-                        .paddingFromBaseline(top = 24.dp)
-                        .secondaryItemAlpha(),
+                    modifier = Modifier.paddingFromBaseline(top = GSpace.s6),
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = Graphite.type.small,
+                    color = Graphite.colors.textSecondary,
                 )
             }
         }
@@ -397,20 +383,19 @@ private fun SearchResultItemDetails(
     title: String,
     text: String,
 ) {
-    Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(GSpace.s2)) {
         Text(
             text = title,
             maxLines = 1,
-            style = MaterialTheme.typography.titleSmall,
+            style = Graphite.type.label,
         )
         Text(
             text = text,
-            modifier = Modifier
-                .weight(1f)
-                .secondaryItemAlpha(),
+            modifier = Modifier.weight(1f),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
+            color = Graphite.colors.textSecondary,
         )
     }
 }

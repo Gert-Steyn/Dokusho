@@ -1,9 +1,7 @@
 package eu.kanade.presentation.library
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,6 +11,9 @@ import dev.icerock.moko.resources.StringResource
 import tachiyomi.core.common.preference.CheckboxState
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.i18n.stringResource
 
 @Composable
@@ -31,16 +32,18 @@ fun DeleteLibraryMangaDialog(
             },
         )
     }
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(
+            GDangerButton(
                 enabled = list.any { it.isChecked },
+                text = stringResource(MR.strings.action_ok),
                 onClick = {
                     onDismissRequest()
                     onConfirm(
@@ -48,9 +51,7 @@ fun DeleteLibraryMangaDialog(
                         list.getOrElse(1) { CheckboxState.State.None(0) }.isChecked,
                     )
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.action_remove))

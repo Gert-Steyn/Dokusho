@@ -15,15 +15,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import eu.kanade.tachiyomi.util.storage.DiskUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.theme.header
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 import java.io.File
 
 @Composable
@@ -37,7 +37,7 @@ fun StorageInfo(
 
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s3),
     ) {
         storages.forEach {
             StorageInfo(it)
@@ -62,7 +62,7 @@ private fun StorageInfo(
     val totalText = remember(total) { Formatter.formatFileSize(context, total) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s2),
     ) {
         Text(
             text = file.absolutePath,
@@ -71,16 +71,16 @@ private fun StorageInfo(
 
         LinearProgressIndicator(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.small)
+                .clip(GRadius.control)
                 .fillMaxWidth()
-                .height(12.dp),
+                .height(GSpace.s2),
             progress = { if (total > 0) 1 - (available / total.toFloat()) else 0f },
         )
 
         Text(
             text = stringResource(MR.strings.available_disk_space_info, availableText, totalText),
-            modifier = Modifier.secondaryItemAlpha(),
-            style = MaterialTheme.typography.bodySmall,
+            color = Graphite.colors.textSecondary,
+            style = Graphite.type.small,
         )
     }
 }

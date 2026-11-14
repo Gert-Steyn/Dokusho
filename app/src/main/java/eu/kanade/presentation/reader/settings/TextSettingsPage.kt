@@ -1,8 +1,6 @@
 package eu.kanade.presentation.reader.settings
 
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -12,6 +10,7 @@ import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.CheckboxItem
 import tachiyomi.presentation.core.components.SettingsChipRow
 import tachiyomi.presentation.core.components.SliderItem
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.collectAsState
 import java.text.NumberFormat
@@ -51,10 +50,10 @@ internal fun ColumnScope.TextSettingsPage(viewModel: ReaderSettingsViewModel) {
     val font by preferences.textFont.collectAsState()
     SettingsChipRow(MR.strings.reader_text_font) {
         ReaderPreferences.TextFont.entries.map {
-            FilterChip(
+            GChip(
+                text = stringResource(it.titleRes),
                 selected = it == font,
                 onClick = { preferences.textFont.set(it) },
-                label = { Text(stringResource(it.titleRes)) },
             )
         }
     }

@@ -10,13 +10,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextObfuscationMode
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedSecureTextField
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -38,7 +31,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.domain.track.model.AutoTrackState
 import eu.kanade.presentation.more.settings.Preference
@@ -63,8 +55,13 @@ import mihon.icons.lucide.icons.Eye
 import mihon.icons.lucide.icons.EyeOff
 import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 object SettingsTrackingScreen : SearchableSettings {
 
@@ -75,12 +72,11 @@ object SettingsTrackingScreen : SearchableSettings {
     @Composable
     override fun RowScope.AppBarAction() {
         val uriHandler = LocalUriHandler.current
-        IconButton(onClick = { uriHandler.openUri("https://mihon.app/docs/guides/tracking") }) {
-            Icon(
-                imageVector = Lucide.AutoMirrored.CircleQuestionMark,
-                contentDescription = stringResource(MR.strings.tracking_guide),
-            )
-        }
+        GIconButton(
+            icon = Lucide.AutoMirrored.CircleQuestionMark,
+            contentDescription = stringResource(MR.strings.tracking_guide),
+            onClick = { uriHandler.openUri("https://mihon.app/docs/guides/tracking") },
+        )
     }
 
     @Composable
@@ -217,7 +213,7 @@ object SettingsTrackingScreen : SearchableSettings {
         var processing by remember { mutableStateOf(false) }
         var inputError by remember { mutableStateOf(false) }
 
-        AlertDialog(
+        GDialog(
             onDismissRequest = onDismissRequest,
             title = {
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -225,16 +221,15 @@ object SettingsTrackingScreen : SearchableSettings {
                         text = stringResource(MR.strings.login_title, tracker.name),
                         modifier = Modifier.weight(1f),
                     )
-                    IconButton(onClick = onDismissRequest) {
-                        Icon(
-                            imageVector = Lucide.Icons.X,
-                            contentDescription = stringResource(MR.strings.action_close),
-                        )
-                    }
+                    GIconButton(
+                        icon = Lucide.Icons.X,
+                        contentDescription = stringResource(MR.strings.action_close),
+                        onClick = onDismissRequest,
+                    )
                 }
             },
             text = {
-                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(GSpace.s4)) {
                     OutlinedTextField(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -254,16 +249,11 @@ object SettingsTrackingScreen : SearchableSettings {
                         state = password,
                         label = { Text(text = stringResource(MR.strings.password)) },
                         trailingIcon = {
-                            IconButton(onClick = { hidePassword = !hidePassword }) {
-                                Icon(
-                                    imageVector = if (hidePassword) {
-                                        Lucide.Icons.Eye
-                                    } else {
-                                        Lucide.Icons.EyeOff
-                                    },
-                                    contentDescription = null,
-                                )
-                            }
+                            GIconButton(
+                                icon = if (hidePassword) Lucide.Icons.Eye else Lucide.Icons.EyeOff,
+                                contentDescription = null,
+                                onClick = { hidePassword = !hidePassword },
+                            )
                         },
                         textObfuscationMode = if (hidePassword) {
                             TextObfuscationMode.Hidden
@@ -279,7 +269,8 @@ object SettingsTrackingScreen : SearchableSettings {
                 }
             },
             confirmButton = {
-                Button(
+                GPrimaryButton(
+                    text = stringResource(if (processing) MR.strings.logging_in else MR.strings.login),
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !processing && username.text.isNotBlank() && password.text.isNotBlank(),
                     onClick = {
@@ -296,10 +287,7 @@ object SettingsTrackingScreen : SearchableSettings {
                             processing = false
                         }
                     },
-                ) {
-                    val id = if (processing) MR.strings.logging_in else MR.strings.login
-                    Text(text = stringResource(id))
-                }
+                )
             },
         )
     }
@@ -327,7 +315,7 @@ object SettingsTrackingScreen : SearchableSettings {
         onDismissRequest: () -> Unit,
     ) {
         val context = LocalContext.current
-        AlertDialog(
+        GDialog(
             onDismissRequest = onDismissRequest,
             title = {
                 Text(
@@ -336,28 +324,23 @@ object SettingsTrackingScreen : SearchableSettings {
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
+            text = null,
             confirmButton = {
-                Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall)) {
-                    OutlinedButton(
-                        modifier = Modifier.weight(1f),
+                Row(horizontalArrangement = Arrangement.spacedBy(GSpace.s2)) {
+                    GSecondaryButton(
+                        text = stringResource(MR.strings.action_cancel),
                         onClick = onDismissRequest,
-                    ) {
-                        Text(text = stringResource(MR.strings.action_cancel))
-                    }
-                    Button(
                         modifier = Modifier.weight(1f),
+                    )
+                    GDangerButton(
+                        text = stringResource(MR.strings.logout),
                         onClick = {
                             tracker.logout()
                             onDismissRequest()
                             context.toast(MR.strings.logout_success)
                         },
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.error,
-                            contentColor = MaterialTheme.colorScheme.onError,
-                        ),
-                    ) {
-                        Text(text = stringResource(MR.strings.logout))
-                    }
+                        modifier = Modifier.weight(1f),
+                    )
                 }
             },
         )

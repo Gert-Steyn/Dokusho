@@ -15,8 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,7 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -41,9 +38,12 @@ import mihon.app.di.appGraph
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.Check
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.collectAsState
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 
 internal class PermissionStep : OnboardingStep {
 
@@ -120,8 +120,8 @@ internal class PermissionStep : OnboardingStep {
             if (!telemetryIncluded) return@Column
 
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.padding(vertical = GSpace.s3, horizontal = GSpace.s5),
+                color = Graphite.colors.borderSubtle,
             )
 
             val crashlyticsPref = privacyPreferences.crashlytics
@@ -155,19 +155,17 @@ internal class PermissionStep : OnboardingStep {
         ListItem(
             modifier = modifier,
             trailingContent = {
-                OutlinedButton(
-                    enabled = !granted,
-                    onClick = onButtonClick,
-                ) {
-                    if (granted) {
-                        Icon(
-                            imageVector = Lucide.Icons.Check,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    } else {
-                        Text(stringResource(MR.strings.onboarding_permission_action_grant))
-                    }
+                if (granted) {
+                    Icon(
+                        imageVector = Lucide.Icons.Check,
+                        contentDescription = null,
+                        tint = Graphite.colors.success,
+                    )
+                } else {
+                    GSecondaryButton(
+                        text = stringResource(MR.strings.onboarding_permission_action_grant),
+                        onClick = onButtonClick,
+                    )
                 }
             },
             supportingContent = { Text(text = subtitle) },
@@ -190,6 +188,7 @@ internal class PermissionStep : OnboardingStep {
                 Switch(
                     checked = granted,
                     onCheckedChange = onToggleChange,
+                    colors = graphiteSwitchColors(),
                 )
             },
             supportingContent = { Text(text = subtitle) },

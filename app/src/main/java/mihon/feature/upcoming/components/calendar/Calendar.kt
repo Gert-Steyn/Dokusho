@@ -6,17 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLocale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastForEach
 import com.cheonjaeung.compose.grid.SimpleGridCells
 import com.cheonjaeung.compose.grid.VerticalGrid
@@ -27,12 +24,12 @@ import kotlinx.datetime.plusMonth
 import kotlinx.datetime.toJavaDayOfWeek
 import mihon.core.designsystem.utils.isExpandedWidthWindow
 import mihon.core.designsystem.utils.isMediumWidthWindow
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.time.temporal.WeekFields
 
-private val FontSize = 16.sp
 private const val DAYS_OF_WEEK = 7
 
 @Composable
@@ -46,7 +43,7 @@ fun Calendar(
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s2),
     ) {
         CalenderHeader(
             yearMonth = selectedYearMonth,
@@ -54,8 +51,8 @@ fun Calendar(
             onNextClick = { setSelectedYearMonth(selectedYearMonth.plusMonth()) },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = MaterialTheme.padding.small)
-                .padding(start = MaterialTheme.padding.medium),
+                .padding(vertical = GSpace.s3)
+                .padding(start = GSpace.s5),
         )
         CalendarGrid(
             selectedYearMonth = selectedYearMonth,
@@ -93,8 +90,8 @@ private fun CalendarGrid(
             Text(
                 text = item.getDisplayName(TextStyle.NARROW, locale),
                 textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = FontSize,
+                color = Graphite.colors.textMuted,
+                style = Graphite.type.caption,
             )
         }
         repeat(emptyFieldCount) { Box { } }

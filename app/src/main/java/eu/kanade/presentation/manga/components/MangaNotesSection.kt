@@ -1,29 +1,21 @@
 package eu.kanade.presentation.manga.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.NotebookPen
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.Button
-import tachiyomi.presentation.core.components.material.ButtonDefaults
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun MangaNotesSection(
@@ -42,39 +34,21 @@ fun MangaNotesSection(
             modifier = modifier.fillMaxWidth(),
         )
         if (expanded) {
-            Button(
+            GGhostButton(
+                text = stringResource(MR.strings.action_edit_notes),
                 onClick = onEditNotes,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Transparent,
-                    contentColor = MaterialTheme.colorScheme.primary,
-                ),
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        imageVector = Lucide.Icons.NotebookPen,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(16.dp),
-                    )
-                    Text(
-                        stringResource(MR.strings.action_edit_notes),
-                    )
-                }
-            }
+                icon = Lucide.Icons.NotebookPen,
+                modifier = Modifier.padding(horizontal = GSpace.s5, vertical = GSpace.s2),
+            )
         }
 
         HorizontalDivider(
             modifier = Modifier
                 .padding(
-                    top = if (expanded) 0.dp else 12.dp,
-                    bottom = if (expanded) 16.dp else 12.dp,
+                    top = if (expanded) 0.dp else GSpace.s4,
+                    bottom = if (expanded) GSpace.s5 else GSpace.s4,
                 ),
+            color = Graphite.colors.borderSubtle,
         )
     }
 }

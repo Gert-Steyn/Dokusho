@@ -8,12 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.collectAsState
@@ -60,11 +57,17 @@ import tachiyomi.domain.source.model.Source
 import tachiyomi.domain.source.model.SourceWithCount
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LazyColumnWithAction
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.selectedBackground
 
 class ClearDatabaseScreen : Screen() {
@@ -82,18 +85,18 @@ class ClearDatabaseScreen : Screen() {
             is ClearDatabaseViewModel.State.Ready -> {
                 if (s.showConfirmation) {
                     var keepReadManga by remember { mutableStateOf(true) }
-                    AlertDialog(
+                    GDialog(
                         title = {
                             Text(text = stringResource(MR.strings.are_you_sure))
                         },
                         text = {
                             Column(
-                                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                                verticalArrangement = Arrangement.spacedBy(GSpace.s3),
                             ) {
                                 Text(text = stringResource(MR.strings.clear_database_text))
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+                                    horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Text(
@@ -103,20 +106,22 @@ class ClearDatabaseScreen : Screen() {
                                     Switch(
                                         checked = keepReadManga,
                                         onCheckedChange = { keepReadManga = it },
+                                        colors = graphiteSwitchColors(),
                                     )
                                 }
                                 if (!keepReadManga) {
                                     Text(
                                         text = stringResource(MR.strings.clear_database_history_warning),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.error,
+                                        style = Graphite.type.small,
+                                        color = Graphite.colors.danger,
                                     )
                                 }
                             }
                         },
                         onDismissRequest = viewModel::hideConfirmation,
                         confirmButton = {
-                            TextButton(
+                            GDangerButton(
+                                text = stringResource(MR.strings.action_ok),
                                 onClick = {
                                     scope.launch(Dispatchers.Main) {
                                         viewModel.removeMangaBySourceId(keepReadManga)
@@ -125,14 +130,13 @@ class ClearDatabaseScreen : Screen() {
                                         context.toast(MR.strings.clear_database_completed)
                                     }
                                 },
-                            ) {
-                                Text(text = stringResource(MR.strings.action_ok))
-                            }
+                            )
                         },
                         dismissButton = {
-                            TextButton(onClick = viewModel::hideConfirmation) {
-                                Text(text = stringResource(MR.strings.action_cancel))
-                            }
+                            GGhostButton(
+                                text = stringResource(MR.strings.action_cancel),
+                                onClick = viewModel::hideConfirmation,
+                            )
                         },
                     )
                 }
@@ -202,23 +206,24 @@ class ClearDatabaseScreen : Screen() {
             modifier = Modifier
                 .selectedBackground(isSelected)
                 .clickable(onClick = onClickSelect)
-                .padding(horizontal = 8.dp)
+                .padding(horizontal = GSpace.s3)
                 .height(56.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SourceIcon(source = source)
             Column(
                 modifier = Modifier
-                    .padding(start = 8.dp)
+                    .padding(start = GSpace.s3)
                     .weight(1f),
             ) {
                 Text(
                     text = source.visualName,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Graphite.type.body,
                 )
                 Text(text = stringResource(MR.strings.clear_database_source_item_count, count))
             }
             Checkbox(
+                colors = graphiteCheckboxColors(),
                 checked = isSelected,
                 onCheckedChange = { onClickSelect() },
             )

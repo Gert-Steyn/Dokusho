@@ -2,9 +2,6 @@ package eu.kanade.presentation.reader.settings
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
@@ -15,6 +12,7 @@ import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.CheckboxItem
 import tachiyomi.presentation.core.components.SettingsChipRow
 import tachiyomi.presentation.core.components.SliderItem
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.collectAsState
@@ -49,10 +47,10 @@ internal fun ColumnScope.GeneralPage(viewModel: ReaderSettingsViewModel) {
 
     SettingsChipRow(MR.strings.pref_reader_theme) {
         themes.map { (labelRes, value) ->
-            FilterChip(
+            GChip(
+                text = stringResource(labelRes),
                 selected = readerTheme == value,
                 onClick = { viewModel.preferences.readerTheme.set(value) },
-                label = { Text(stringResource(labelRes)) },
             )
         }
     }
@@ -66,7 +64,8 @@ internal fun ColumnScope.GeneralPage(viewModel: ReaderSettingsViewModel) {
 
     SettingsChipRow(MR.strings.pref_vertical_navigator) {
         ReadingMode.entries.filter { it != ReadingMode.DEFAULT }.forEach { mode ->
-            FilterChip(
+            GChip(
+                text = stringResource(mode.stringRes),
                 selected = verticalNavigatorModes.contains(mode),
                 onClick = {
                     val newModes = if (verticalNavigatorModes.contains(mode)) {
@@ -76,7 +75,6 @@ internal fun ColumnScope.GeneralPage(viewModel: ReaderSettingsViewModel) {
                     }
                     viewModel.preferences.verticalNavigator.set(newModes)
                 },
-                label = { Text(stringResource(mode.stringRes)) },
             )
         }
     }
@@ -143,7 +141,6 @@ internal fun ColumnScope.GeneralPage(viewModel: ReaderSettingsViewModel) {
             label = stringResource(MR.strings.pref_flash_duration),
             valueString = stringResource(MR.strings.pref_flash_duration_summary, flashMillis),
             onChange = { flashMillisPref.set(it * ReaderPreferences.MILLI_CONVERSION) },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
         )
         SliderItem(
             value = flashInterval,
@@ -153,14 +150,13 @@ internal fun ColumnScope.GeneralPage(viewModel: ReaderSettingsViewModel) {
             onChange = {
                 flashIntervalPref.set(it)
             },
-            pillColor = MaterialTheme.colorScheme.surfaceContainerHighest,
         )
         SettingsChipRow(MR.strings.pref_flash_with) {
             flashColors.map { (labelRes, value) ->
-                FilterChip(
+                GChip(
+                    text = stringResource(labelRes),
                     selected = flashColor == value,
                     onClick = { flashColorPref.set(value) },
-                    label = { Text(stringResource(labelRes)) },
                 )
             }
         }

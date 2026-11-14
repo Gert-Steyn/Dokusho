@@ -2,8 +2,6 @@ package eu.kanade.presentation.reader.appbars
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,7 +13,9 @@ import mihon.icons.lucide.icons.Crop
 import mihon.icons.lucide.icons.Scan
 import mihon.icons.lucide.icons.Settings
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ReaderBottomBar(
@@ -26,6 +26,7 @@ fun ReaderBottomBar(
     cropEnabled: Boolean,
     onClickCropBorder: () -> Unit,
     onClickSettings: () -> Unit,
+    isTextChapter: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -34,32 +35,34 @@ fun ReaderBottomBar(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        IconButton(onClick = onClickReadingMode) {
-            Icon(
-                imageVector = readingMode.icon,
+        // A text book is always read top to bottom in the text viewer, so reading mode and crop don't apply.
+        if (!isTextChapter) {
+            GIconButton(
+                icon = readingMode.icon,
                 contentDescription = stringResource(MR.strings.viewer),
+                onClick = onClickReadingMode,
             )
         }
 
-        IconButton(onClick = onClickOrientation) {
-            Icon(
-                imageVector = orientation.icon,
-                contentDescription = stringResource(MR.strings.rotation_type),
-            )
-        }
+        GIconButton(
+            icon = orientation.icon,
+            contentDescription = stringResource(MR.strings.rotation_type),
+            onClick = onClickOrientation,
+        )
 
-        IconButton(onClick = onClickCropBorder) {
-            Icon(
-                imageVector = if (cropEnabled) Lucide.Icons.Crop else Lucide.Icons.Scan,
+        if (!isTextChapter) {
+            GIconButton(
+                icon = if (cropEnabled) Lucide.Icons.Crop else Lucide.Icons.Scan,
                 contentDescription = stringResource(MR.strings.pref_crop_borders),
+                onClick = onClickCropBorder,
+                tint = if (cropEnabled) Graphite.colors.accent else Graphite.colors.textMuted,
             )
         }
 
-        IconButton(onClick = onClickSettings) {
-            Icon(
-                imageVector = Lucide.Icons.Settings,
-                contentDescription = stringResource(MR.strings.action_settings),
-            )
-        }
+        GIconButton(
+            icon = Lucide.Icons.Settings,
+            contentDescription = stringResource(MR.strings.action_settings),
+            onClick = onClickSettings,
+        )
     }
 }

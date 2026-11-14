@@ -2,7 +2,6 @@ package eu.kanade.presentation.browse
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,16 +12,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,9 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -64,14 +53,18 @@ import mihon.icons.lucide.icons.X
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.components.material.PullRefresh
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.EmptyScreenAction
 import tachiyomi.presentation.core.screens.LoadingScreen
-import tachiyomi.presentation.core.theme.header
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
 
 @Composable
@@ -178,14 +171,10 @@ private fun ExtensionContent(
                         val action: @Composable RowScope.() -> Unit =
                             if (header.textRes == MR.strings.ext_updates_pending) {
                                 {
-                                    Button(onClick = { onClickUpdateAll() }) {
-                                        Text(
-                                            text = stringResource(MR.strings.ext_update_all),
-                                            style = LocalTextStyle.current.copy(
-                                                color = MaterialTheme.colorScheme.onPrimary,
-                                            ),
-                                        )
-                                    }
+                                    GPrimaryButton(
+                                        text = stringResource(MR.strings.ext_update_all),
+                                        onClick = { onClickUpdateAll() },
+                                    )
                                 }
                             } else {
                                 {}
@@ -339,13 +328,13 @@ private fun ExtensionItemContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(start = MaterialTheme.padding.medium),
+        modifier = modifier.padding(start = GSpace.s5),
     ) {
         Text(
             text = extension.name,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
         )
 
         if (store != null) {
@@ -353,8 +342,8 @@ private fun ExtensionItemContent(
                 text = store.name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = Graphite.type.small,
+                color = Graphite.colors.textSecondary,
             )
         }
 
@@ -376,12 +365,13 @@ private fun ExtensionItemIcon(
         if (!idle) {
             CircularProgressIndicator(
                 modifier = Modifier.size(48.dp),
+                color = Graphite.colors.textMuted,
                 strokeWidth = 2.dp,
             )
         }
 
         val padding by animateDpAsState(
-            targetValue = if (idle) 0.dp else 8.dp,
+            targetValue = if (idle) 0.dp else GSpace.s3,
             label = "iconPadding",
         )
         ExtensionIcon(
@@ -405,8 +395,8 @@ private fun ExtensionItemMetadata(
 ) {
     FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall / 2),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s1),
         itemVerticalAlignment = Alignment.CenterVertically,
     ) {
         val facts = listOfNotNull(
@@ -421,8 +411,8 @@ private fun ExtensionItemMetadata(
                 text = facts.joinToString(" \u2022 "),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = Graphite.type.small,
+                color = Graphite.colors.textSecondary,
             )
         }
 
@@ -432,18 +422,18 @@ private fun ExtensionItemMetadata(
                 InstallStep.Downloading -> MR.strings.ext_downloading
                 InstallStep.Installing -> MR.strings.ext_installing
                 else -> null
-            }?.let { it to MaterialTheme.colorScheme.primary },
+            }?.let { it to Graphite.colors.accent },
             when {
                 extension is Extension.NotLoaded ->
-                    extension.reason.labelRes?.let { it to MaterialTheme.colorScheme.error }
+                    extension.reason.labelRes?.let { it to Graphite.colors.danger }
                 extension is Extension.Loaded && extension.isObsolete ->
-                    MR.strings.ext_obsolete to MaterialTheme.colorScheme.error
+                    MR.strings.ext_obsolete to Graphite.colors.danger
                 else -> null
             },
             extension.contentWarning.label?.let { it.title to it.color },
             (extension as? Extension.Loaded)
                 ?.takeIf { !it.isShared }
-                ?.let { MR.strings.ext_installer_private to MaterialTheme.colorScheme.onSurfaceVariant },
+                ?.let { MR.strings.ext_installer_private to Graphite.colors.textSecondary },
         )
         notable.forEach { (label, color) ->
             ExtensionPill(text = stringResource(label), color = color)
@@ -462,16 +452,15 @@ private fun ExtensionItemActions(
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         if (!installStep.isCompleted()) {
-            IconButton(onClick = { onClickItemCancel(extension) }) {
-                Icon(
-                    imageVector = Lucide.Icons.X,
-                    contentDescription = stringResource(MR.strings.action_cancel),
-                )
-            }
+            GIconButton(
+                icon = Lucide.Icons.X,
+                contentDescription = stringResource(MR.strings.action_cancel),
+                onClick = { onClickItemCancel(extension) },
+            )
             return@Row
         }
 
@@ -488,9 +477,11 @@ private fun ExtensionItemActions(
             }
         }
         secondaryAction?.let { (icon, label) ->
-            IconButton(onClick = { onClickItemSecondaryAction(extension) }) {
-                Icon(imageVector = icon, contentDescription = stringResource(label))
-            }
+            GIconButton(
+                icon = icon,
+                contentDescription = stringResource(label),
+                onClick = { onClickItemSecondaryAction(extension) },
+            )
         }
 
         val action = when {
@@ -502,9 +493,11 @@ private fun ExtensionItemActions(
             else -> null
         }
         action?.let { (icon, label) ->
-            IconButton(onClick = { onClickItemAction(extension) }) {
-                Icon(imageVector = icon, contentDescription = stringResource(label))
-            }
+            GIconButton(
+                icon = icon,
+                contentDescription = stringResource(label),
+                onClick = { onClickItemAction(extension) },
+            )
         }
     }
 }
@@ -529,15 +522,15 @@ private fun ExtensionHeader(
     action: @Composable RowScope.() -> Unit = {},
 ) {
     Row(
-        modifier = modifier.padding(horizontal = MaterialTheme.padding.medium),
+        modifier = modifier.padding(horizontal = GSpace.s5),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = text,
             modifier = Modifier
-                .padding(vertical = 8.dp)
+                .padding(vertical = GSpace.s3)
                 .weight(1f),
-            style = MaterialTheme.typography.header,
+            style = Graphite.type.caption.copy(color = Graphite.colors.textMuted),
         )
         action()
     }
@@ -575,46 +568,45 @@ private fun ExtensionNotLoadedDialog(
     onClickUninstall: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = stringResource(MR.strings.ext_not_loaded_dialog))
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small)) {
+            Column(verticalArrangement = Arrangement.spacedBy(GSpace.s3)) {
                 Text(text = stringResource(reason.descriptionRes))
 
                 if (reason is Extension.NotLoaded.Reason.Failed) {
                     Text(
                         text = reason.message,
-                        style = MaterialTheme.typography.bodySmall,
-                        fontFamily = FontFamily.Monospace,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = Graphite.type.mono,
+                        color = Graphite.colors.textSecondary,
                     )
 
                     val context = LocalContext.current
-                    TextButton(
+                    GGhostButton(
+                        text = stringResource(MR.strings.ext_copy_stacktrace),
                         onClick = {
                             context.copyToClipboard(
                                 label = context.stringResource(MR.strings.ext_copy_stacktrace),
                                 content = reason.stackTrace,
                             )
                         },
-                        contentPadding = PaddingValues(0.dp),
-                    ) {
-                        Text(text = stringResource(MR.strings.ext_copy_stacktrace))
-                    }
+                    )
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = onDismissRequest,
+            )
         },
         dismissButton = {
-            TextButton(onClick = onClickUninstall) {
-                Text(text = stringResource(MR.strings.ext_uninstall))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.ext_uninstall),
+                onClick = onClickUninstall,
+            )
         },
         onDismissRequest = onDismissRequest,
     )
@@ -626,7 +618,7 @@ private fun ExtensionTrustDialog(
     onClickDismiss: () -> Unit,
     onDismissRequest: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         title = {
             Text(text = stringResource(MR.strings.untrusted_extension))
         },
@@ -634,14 +626,16 @@ private fun ExtensionTrustDialog(
             Text(text = stringResource(MR.strings.untrusted_extension_message))
         },
         confirmButton = {
-            TextButton(onClick = onClickConfirm) {
-                Text(text = stringResource(MR.strings.ext_trust))
-            }
+            GPrimaryButton(
+                text = stringResource(MR.strings.ext_trust),
+                onClick = onClickConfirm,
+            )
         },
         dismissButton = {
-            TextButton(onClick = onClickDismiss) {
-                Text(text = stringResource(MR.strings.ext_uninstall))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.ext_uninstall),
+                onClick = onClickDismiss,
+            )
         },
         onDismissRequest = onDismissRequest,
     )

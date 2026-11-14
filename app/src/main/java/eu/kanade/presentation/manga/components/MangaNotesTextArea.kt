@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -34,7 +33,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditor
 import com.mohamedrejeb.richeditor.ui.material3.RichTextEditorDefaults.richTextEditorColors
@@ -51,8 +49,10 @@ import mihon.icons.lucide.icons.Italic
 import mihon.icons.lucide.icons.ListOrdered
 import mihon.icons.lucide.icons.Underline
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -63,7 +63,7 @@ fun MangaNotesTextArea(
 ) {
     val scope = rememberCoroutineScope()
     val richTextState = rememberRichTextState()
-    val primaryColor = MaterialTheme.colorScheme.primary
+    val primaryColor = Graphite.colors.accent
 
     DisposableEffect(scope, richTextState) {
         snapshotFlow { richTextState.annotatedString }
@@ -93,12 +93,12 @@ fun MangaNotesTextArea(
 
     Column(
         modifier = modifier
-            .padding(horizontal = MaterialTheme.padding.small)
+            .padding(horizontal = GSpace.s3)
             .fillMaxSize(),
     ) {
         RichTextEditor(
             state = richTextState,
-            textStyle = MaterialTheme.typography.bodyLarge,
+            textStyle = Graphite.type.body,
             placeholder = {
                 Text(text = stringResource(MR.strings.notes_placeholder))
             },
@@ -108,7 +108,7 @@ fun MangaNotesTextArea(
                 unfocusedIndicatorColor = Color.Transparent,
             ),
             contentPadding = PaddingValues(
-                horizontal = MaterialTheme.padding.medium,
+                horizontal = GSpace.s5,
             ),
             modifier = Modifier
                 .weight(1f)
@@ -119,12 +119,12 @@ fun MangaNotesTextArea(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .padding(vertical = MaterialTheme.padding.small)
+                .padding(vertical = GSpace.s3)
                 .fillMaxWidth(),
         ) {
             LazyRow(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                horizontalArrangement = Arrangement.spacedBy(GSpace.s1),
             ) {
                 item {
                     MangaNotesTextAreaButton(
@@ -154,8 +154,8 @@ fun MangaNotesTextArea(
                 item {
                     VerticalDivider(
                         modifier = Modifier
-                            .padding(horizontal = MaterialTheme.padding.extraSmall)
-                            .height(MaterialTheme.padding.large),
+                            .padding(horizontal = GSpace.s2)
+                            .height(GSpace.s6),
                     )
                 }
                 item {
@@ -179,7 +179,7 @@ fun MangaNotesTextArea(
             ) {
                 Text(
                     text = textLength.toString(),
-                    modifier = Modifier.padding(MaterialTheme.padding.extraSmall),
+                    modifier = Modifier.padding(GSpace.s2),
                 )
             }
         }
@@ -195,7 +195,8 @@ fun MangaNotesTextAreaButton(
 ) {
     Box(
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(GRadius.control)
+            .background(if (isSelected) Graphite.colors.accentSubtle else Color.Transparent)
             .clickable(
                 onClick = onClick,
                 enabled = true,
@@ -206,10 +207,9 @@ fun MangaNotesTextAreaButton(
         Icon(
             imageVector = icon,
             contentDescription = icon.name,
-            tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+            tint = if (isSelected) Graphite.colors.accent else Graphite.colors.textMuted,
             modifier = Modifier
-                .background(color = if (isSelected) MaterialTheme.colorScheme.onBackground else Color.Transparent)
-                .padding(MaterialTheme.padding.extraSmall),
+                .padding(GSpace.s2),
         )
     }
 }

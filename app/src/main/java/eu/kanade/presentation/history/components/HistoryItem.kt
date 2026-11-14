@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +26,10 @@ import mihon.icons.lucide.icons.Heart
 import mihon.icons.lucide.icons.Trash2
 import tachiyomi.domain.history.model.HistoryWithRelations
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
@@ -50,7 +49,7 @@ fun HistoryItem(
         modifier = modifier
             .clickable(onClick = onClickResume)
             .height(HistoryItemHeight)
-            .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
+            .padding(horizontal = GSpace.s5, vertical = GSpace.s3),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MangaCover.Book(
@@ -61,9 +60,9 @@ fun HistoryItem(
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(start = MaterialTheme.padding.medium, end = MaterialTheme.padding.small),
+                .padding(start = GSpace.s5, end = GSpace.s3),
         ) {
-            val textStyle = MaterialTheme.typography.bodyMedium
+            val textStyle = Graphite.type.body
             Text(
                 text = history.title,
                 fontWeight = FontWeight.SemiBold,
@@ -84,28 +83,24 @@ fun HistoryItem(
                 } else {
                     readAt
                 },
-                modifier = Modifier.padding(top = 4.dp),
+                modifier = Modifier.padding(top = GSpace.s2),
                 style = textStyle,
             )
         }
 
         if (!history.coverData.isMangaFavorite) {
-            IconButton(onClick = onClickFavorite) {
-                Icon(
-                    imageVector = Lucide.Icons.Heart,
-                    contentDescription = stringResource(MR.strings.add_to_library),
-                    tint = MaterialTheme.colorScheme.onSurface,
-                )
-            }
-        }
-
-        IconButton(onClick = onClickDelete) {
-            Icon(
-                imageVector = Lucide.Icons.Trash2,
-                contentDescription = stringResource(MR.strings.action_delete),
-                tint = MaterialTheme.colorScheme.onSurface,
+            GIconButton(
+                icon = Lucide.Icons.Heart,
+                contentDescription = stringResource(MR.strings.add_to_library),
+                onClick = onClickFavorite,
             )
         }
+
+        GIconButton(
+            icon = Lucide.Icons.Trash2,
+            contentDescription = stringResource(MR.strings.action_delete),
+            onClick = onClickDelete,
+        )
     }
 }
 

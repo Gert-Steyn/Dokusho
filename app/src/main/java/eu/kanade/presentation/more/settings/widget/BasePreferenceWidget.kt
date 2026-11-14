@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,11 +24,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.more.settings.LocalPreferenceHighlighted
 import eu.kanade.presentation.more.settings.LocalPreferenceMinHeight
 import kotlinx.coroutines.delay
@@ -48,7 +44,6 @@ internal fun BasePreferenceWidget(
     widget: @Composable (() -> Unit)? = null,
     enabled: Boolean = true,
 ) {
-    val contentAlpha = if (enabled) 1f else DisabledAlpha
     val highlighted = LocalPreferenceHighlighted.current
     val minHeight = LocalPreferenceMinHeight.current
     Row(
@@ -62,16 +57,14 @@ internal fun BasePreferenceWidget(
         if (icon != null) {
             Box(
                 modifier = Modifier
-                    .padding(start = PrefsHorizontalPadding, end = GSpace.s3)
-                    .alpha(contentAlpha),
+                    .padding(start = PrefsHorizontalPadding, end = GSpace.s3),
                 content = { icon() },
             )
         }
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(vertical = PrefsVerticalPadding)
-                .alpha(contentAlpha),
+                .padding(vertical = PrefsVerticalPadding),
         ) {
             if (!title.isNullOrBlank()) {
                 Text(
@@ -80,7 +73,7 @@ internal fun BasePreferenceWidget(
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     style = Graphite.type.body,
-                    color = Graphite.colors.text,
+                    color = if (enabled) Graphite.colors.text else Graphite.colors.textDisabled,
                 )
             }
             subcomponent?.invoke(this)
@@ -131,4 +124,3 @@ internal fun Modifier.highlightBackground(highlighted: Boolean): Modifier {
 internal val TrailingWidgetBuffer = GSpace.s5
 internal val PrefsHorizontalPadding = GSize.pagePad
 internal val PrefsVerticalPadding = GSpace.s4
-internal val DisabledAlpha = 0.38f

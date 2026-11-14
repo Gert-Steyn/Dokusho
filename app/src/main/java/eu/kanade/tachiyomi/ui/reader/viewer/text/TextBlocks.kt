@@ -37,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mihon.core.archive.book.BookBlock
 import mihon.core.archive.book.BookText
+import tachiyomi.presentation.core.theme.GSpace
 
 /** Text appearance from the text settings, [fontSize] and [lineSpacing] as the preferences hold them. */
 data class TextSettings(
@@ -45,6 +46,8 @@ data class TextSettings(
     val family: FontFamily,
     val justify: Boolean,
     val color: Color,
+    val quoteColor: Color,
+    val ruleColor: Color,
 )
 
 @Composable
@@ -61,8 +64,8 @@ fun TextBlockItem(block: BookBlock, settings: TextSettings, loader: TextPageLoad
         }
         is BookBlock.Paragraph -> {
             val text = remember(block) { block.text.toAnnotatedString() }
-            val color = if (block.quote) settings.color.copy(alpha = 0.7f) else settings.color
-            val modifier = Modifier.padding(start = if (block.quote) 24.dp else 0.dp, bottom = spacing)
+            val color = if (block.quote) settings.quoteColor else settings.color
+            val modifier = Modifier.padding(start = if (block.quote) GSpace.s6 else 0.dp, bottom = spacing)
             if (block.preformatted) {
                 Text(
                     text = text,
@@ -94,7 +97,7 @@ fun TextBlockItem(block: BookBlock, settings: TextSettings, loader: TextPageLoad
                 .padding(vertical = spacing),
             contentAlignment = Alignment.Center,
         ) {
-            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.4f))
+            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.4f), color = settings.ruleColor)
         }
     }
 }

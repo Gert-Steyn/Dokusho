@@ -45,6 +45,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import mihon.app.di.appGraph
 import mihon.core.archive.book.BookBlock
+import tachiyomi.presentation.core.theme.GSpace
 import tachiyomi.presentation.core.theme.GraphiteDark
 import tachiyomi.presentation.core.theme.GraphiteLight
 import tachiyomi.presentation.core.util.collectAsState
@@ -78,14 +79,17 @@ class TextViewer(val activity: ReaderActivity) : Viewer {
         val font by readerPreferences.textFont.collectAsState()
         val justify by readerPreferences.textJustify.collectAsState()
 
-        // Text is drawn over the reader background, so it takes the colour that contrasts with it.
+        // Text is drawn over the reader background, so it takes the palette that contrasts with it.
         val background = remember(general.theme) { Color(activity.readerBackgroundColor(general.theme)) }
+        val palette = if (background.luminance() < 0.5f) GraphiteDark else GraphiteLight
         val settings = TextSettings(
             fontSize = fontSize,
             lineSpacing = lineSpacing,
             family = font.toFontFamily(),
             justify = justify,
-            color = if (background.luminance() < 0.5f) GraphiteDark.text else GraphiteLight.text,
+            color = palette.text,
+            quoteColor = palette.textSecondary,
+            ruleColor = palette.border,
         )
         val themedContext = remember(general.theme) { activity.createReaderThemeContext() }
 
@@ -116,7 +120,7 @@ class TextViewer(val activity: ReaderActivity) : Viewer {
                         )
                     }
                 },
-            contentPadding = PaddingValues(horizontal = sideMargin.dp, vertical = 16.dp),
+            contentPadding = PaddingValues(horizontal = sideMargin.dp, vertical = GSpace.s5),
         ) {
             itemsIndexed(current.rows) { _, row ->
                 TextBlockItem(row.block, settings, current.loader)
@@ -146,7 +150,7 @@ class TextViewer(val activity: ReaderActivity) : Viewer {
                 downloadState = downloadState,
                 onRetry = activity::requestPreloadChapter,
                 onButtonPressChange = {},
-                statusPadding = PaddingValues(vertical = 16.dp),
+                statusPadding = PaddingValues(vertical = GSpace.s5),
             )
         }
     }

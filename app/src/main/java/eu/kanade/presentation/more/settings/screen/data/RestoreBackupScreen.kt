@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -49,8 +48,8 @@ import tachiyomi.presentation.core.components.LabeledCheckbox
 import tachiyomi.presentation.core.components.LazyColumnWithAction
 import tachiyomi.presentation.core.components.SectionCard
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 class RestoreBackupScreen(
     private val uri: String,
@@ -116,8 +115,8 @@ class RestoreBackupScreen(
         item {
             SectionCard {
                 Column(
-                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
-                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                    modifier = Modifier.padding(horizontal = GSpace.s5),
+                    verticalArrangement = Arrangement.spacedBy(GSpace.s3),
                 ) {
                     val msg = buildAnnotatedString {
                         when (error) {
@@ -125,7 +124,7 @@ class RestoreBackupScreen(
                                 appendLine(stringResource(MR.strings.backup_restore_content_full))
                                 if (error.sources.isNotEmpty()) {
                                     appendLine()
-                                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                    withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
                                         appendLine(stringResource(MR.strings.backup_restore_missing_sources))
                                     }
                                     error.sources.joinTo(
@@ -136,7 +135,7 @@ class RestoreBackupScreen(
                                 }
                                 if (error.trackers.isNotEmpty()) {
                                     appendLine()
-                                    withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                    withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
                                         appendLine(stringResource(MR.strings.backup_restore_missing_trackers))
                                     }
                                     error.trackers.joinTo(
@@ -148,14 +147,14 @@ class RestoreBackupScreen(
                             }
 
                             is InvalidRestore -> {
-                                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
                                     appendLine(stringResource(MR.strings.invalid_backup_file))
                                 }
                                 appendLine(error.uri.toString())
 
                                 appendLine()
 
-                                withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                                withStyle(SpanStyle(fontWeight = FontWeight.SemiBold)) {
                                     appendLine(stringResource(MR.strings.invalid_backup_file_error))
                                 }
                                 appendLine(error.message)

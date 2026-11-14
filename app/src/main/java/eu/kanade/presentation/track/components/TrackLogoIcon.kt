@@ -2,7 +2,6 @@ package eu.kanade.presentation.track.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -12,6 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.tachiyomi.data.track.Tracker
+import tachiyomi.presentation.core.theme.GRadius
 import tachiyomi.presentation.core.util.clickableNoIndication
 
 @Composable
@@ -31,7 +31,7 @@ fun TrackLogoIcon(
         contentDescription = tracker.name,
         modifier = modifier
             .size(48.dp)
-            .clip(MaterialTheme.shapes.medium),
+            .clip(GRadius.card),
     )
 }
 

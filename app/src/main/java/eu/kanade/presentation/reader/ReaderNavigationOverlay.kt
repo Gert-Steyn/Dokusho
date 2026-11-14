@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerNavigation
 import eu.kanade.tachiyomi.ui.reader.viewer.navigation.DisabledNavigation
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GraphiteDark
 
 @Composable
 fun ReaderNavigationOverlay(
@@ -41,10 +41,10 @@ fun ReaderNavigationOverlay(
         val textMeasurer = rememberTextMeasurer()
         val density = LocalDensity.current
         val textStyle = remember(density) {
-            TextStyle(color = Color.White, fontSize = with(density) { 64f.toSp() })
+            TextStyle(color = GraphiteDark.onAccent, fontSize = with(density) { 64f.toSp() })
         }
         val borderStyle = remember(textStyle) {
-            textStyle.copy(color = Color.Black, drawStyle = Stroke(width = 8f))
+            textStyle.copy(color = GraphiteDark.canvas, drawStyle = Stroke(width = 8f))
         }
 
         Canvas(modifier = Modifier.fillMaxSize()) {

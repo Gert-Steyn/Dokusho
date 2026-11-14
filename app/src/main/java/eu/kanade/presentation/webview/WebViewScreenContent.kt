@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -31,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import cafe.adriel.voyager.core.stack.mutableStateStackOf
 import com.kevinnzou.web.AccompanistWebChromeClient
@@ -60,6 +58,8 @@ import tachiyomi.core.common.util.system.logcat
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
 
 class WebViewWindow(webContent: WebContent, val navigator: WebViewNavigator) {
     var state by mutableStateOf(WebViewState(webContent))
@@ -310,12 +310,12 @@ fun WebViewScreenContent(
 
                     if (showCloudflareHelp) {
                         Surface(
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(GSpace.s3),
                         ) {
                             WarningBanner(
                                 textRes = MR.strings.information_cloudflare_help,
                                 modifier = Modifier
-                                    .clip(MaterialTheme.shapes.small)
+                                    .clip(GRadius.control)
                                     .clickable {
                                         uriHandler.openUri(
                                             "https://mihon.app/docs/guides/troubleshooting/#cloudflare",

@@ -14,15 +14,12 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -30,16 +27,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.WheelNumberPicker
 import tachiyomi.presentation.core.components.WheelTextPicker
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.graphiteRadioColors
 import tachiyomi.presentation.core.components.material.AlertDialogContent
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TrackStatusSelector(
@@ -60,7 +61,7 @@ fun TrackStatusSelector(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
+                                .clip(GRadius.card)
                                 .selectable(
                                     selected = isSelected,
                                     onClick = { onSelectionChange(key) },
@@ -71,11 +72,12 @@ fun TrackStatusSelector(
                             RadioButton(
                                 selected = isSelected,
                                 onClick = null,
+                                colors = graphiteRadioColors(),
                             )
                             Text(
                                 text = value?.let { stringResource(it) } ?: "",
-                                style = MaterialTheme.typography.bodyLarge.merge(),
-                                modifier = Modifier.padding(start = 24.dp),
+                                style = Graphite.type.body.merge(),
+                                modifier = Modifier.padding(start = GSpace.s6),
                             )
                         }
                     }
@@ -163,21 +165,24 @@ fun TrackDateSelector(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 12.dp, top = 8.dp, end = 12.dp, bottom = 24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small, Alignment.End),
+                        .padding(start = GSpace.s4, top = GSpace.s3, end = GSpace.s4, bottom = GSpace.s6),
+                    horizontalArrangement = Arrangement.spacedBy(GSpace.s3, Alignment.End),
                 ) {
                     if (onRemove != null) {
-                        TextButton(onClick = onRemove) {
-                            Text(text = stringResource(MR.strings.action_remove))
-                        }
+                        GGhostButton(
+                            text = stringResource(MR.strings.action_remove),
+                            onClick = onRemove,
+                        )
                         Spacer(modifier = Modifier.weight(1f))
                     }
-                    TextButton(onClick = onDismissRequest) {
-                        Text(text = stringResource(MR.strings.action_cancel))
-                    }
-                    TextButton(onClick = { onConfirm(pickerState.selectedDateMillis!!) }) {
-                        Text(text = stringResource(MR.strings.action_ok))
-                    }
+                    GGhostButton(
+                        text = stringResource(MR.strings.action_cancel),
+                        onClick = onDismissRequest,
+                    )
+                    GPrimaryButton(
+                        text = stringResource(MR.strings.action_ok),
+                        onClick = { onConfirm(pickerState.selectedDateMillis!!) },
+                    )
                 }
             }
         },
@@ -204,18 +209,20 @@ private fun BaseSelector(
         buttons = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small, Alignment.End),
+                horizontalArrangement = Arrangement.spacedBy(GSpace.s3, Alignment.End),
             ) {
                 if (thirdButton != null) {
                     thirdButton()
                     Spacer(modifier = Modifier.weight(1f))
                 }
-                TextButton(onClick = onDismissRequest) {
-                    Text(text = stringResource(MR.strings.action_cancel))
-                }
-                TextButton(onClick = onConfirm) {
-                    Text(text = stringResource(MR.strings.action_ok))
-                }
+                GGhostButton(
+                    text = stringResource(MR.strings.action_cancel),
+                    onClick = onDismissRequest,
+                )
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_ok),
+                    onClick = onConfirm,
+                )
             }
         },
     )

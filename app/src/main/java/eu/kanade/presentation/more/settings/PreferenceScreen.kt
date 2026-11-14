@@ -15,6 +15,7 @@ import eu.kanade.presentation.more.settings.screen.SearchableSettings
 import eu.kanade.presentation.more.settings.widget.PreferenceGroupHeader
 import kotlinx.coroutines.delay
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
+import tachiyomi.presentation.core.theme.GSpace
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -68,7 +69,7 @@ fun PreferenceScreen(
                     }
                     item {
                         if (i < items.lastIndex) {
-                            Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(GSpace.s4))
                         }
                     }
                 }

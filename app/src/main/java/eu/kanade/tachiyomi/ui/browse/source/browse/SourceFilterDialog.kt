@@ -8,13 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.AdaptiveSheet
 import eu.kanade.tachiyomi.source.model.Filter
 import eu.kanade.tachiyomi.source.model.FilterList
@@ -27,8 +23,11 @@ import tachiyomi.presentation.core.components.SelectItem
 import tachiyomi.presentation.core.components.SortItem
 import tachiyomi.presentation.core.components.TextItem
 import tachiyomi.presentation.core.components.TriStateItem
-import tachiyomi.presentation.core.components.material.Button
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun SourceFilterDialog(
@@ -45,26 +44,23 @@ fun SourceFilterDialog(
             stickyHeader {
                 Row(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background)
-                        .padding(8.dp),
+                        .background(Graphite.colors.canvas)
+                        .padding(GSpace.s3),
                 ) {
-                    TextButton(onClick = onReset) {
-                        Text(
-                            text = stringResource(MR.strings.action_reset),
-                            style = LocalTextStyle.current.copy(
-                                color = MaterialTheme.colorScheme.primary,
-                            ),
-                        )
-                    }
+                    GGhostButton(
+                        text = stringResource(MR.strings.action_reset),
+                        onClick = onReset,
+                    )
 
                     Spacer(modifier = Modifier.weight(1f))
 
-                    Button(onClick = {
-                        onFilter()
-                        onDismissRequest()
-                    }) {
-                        Text(stringResource(MR.strings.action_filter))
-                    }
+                    GPrimaryButton(
+                        text = stringResource(MR.strings.action_filter),
+                        onClick = {
+                            onFilter()
+                            onDismissRequest()
+                        },
+                    )
                 }
                 HorizontalDivider()
             }

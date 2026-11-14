@@ -9,15 +9,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
@@ -30,8 +24,11 @@ import mihon.icons.lucide.icons.CheckCheck
 import mihon.icons.lucide.icons.ListFilter
 import mihon.icons.lucide.icons.Pin
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun GlobalSearchToolbar(
@@ -48,7 +45,7 @@ fun GlobalSearchToolbar(
     onToggleResults: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior,
 ) {
-    Column(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
+    Column(modifier = Modifier.background(Graphite.colors.canvas)) {
         Box {
             SearchToolbar(
                 searchQuery = searchQuery,
@@ -71,60 +68,33 @@ fun GlobalSearchToolbar(
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(horizontal = MaterialTheme.padding.small),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                .padding(horizontal = GSpace.s3),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             // TODO: make this UX better; it only applies when triggering a new search
             if (!hideSourceFilter) {
-                FilterChip(
+                GChip(
+                    text = stringResource(MR.strings.pinned_sources),
                     selected = sourceFilter == SourceFilter.PinnedOnly,
                     onClick = { onChangeSearchFilter(SourceFilter.PinnedOnly) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Lucide.Icons.Pin,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(FilterChipDefaults.IconSize),
-                        )
-                    },
-                    label = {
-                        Text(text = stringResource(MR.strings.pinned_sources))
-                    },
+                    icon = Lucide.Icons.Pin,
                 )
-                FilterChip(
+                GChip(
+                    text = stringResource(MR.strings.all),
                     selected = sourceFilter == SourceFilter.All,
                     onClick = { onChangeSearchFilter(SourceFilter.All) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Lucide.Icons.CheckCheck,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(FilterChipDefaults.IconSize),
-                        )
-                    },
-                    label = {
-                        Text(text = stringResource(MR.strings.all))
-                    },
+                    icon = Lucide.Icons.CheckCheck,
                 )
 
-                VerticalDivider(modifier = Modifier.height(FilterChipDefaults.Height))
+                VerticalDivider(modifier = Modifier.height(GSize.controlSm))
             }
 
-            FilterChip(
+            GChip(
+                text = stringResource(MR.strings.has_results),
                 selected = onlyShowHasResults,
                 onClick = { onToggleResults() },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Lucide.Icons.ListFilter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(FilterChipDefaults.IconSize),
-                    )
-                },
-                label = {
-                    Text(text = stringResource(MR.strings.has_results))
-                },
+                icon = Lucide.Icons.ListFilter,
             )
         }
 

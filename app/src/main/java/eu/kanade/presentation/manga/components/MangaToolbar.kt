@@ -1,8 +1,6 @@
 package eu.kanade.presentation.manga.components
 
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.components.AppBarActions
 import eu.kanade.presentation.components.AppBarTitle
@@ -23,7 +20,7 @@ import mihon.icons.lucide.icons.ListFilter
 import mihon.icons.lucide.icons.SquareCheckBig
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.theme.active
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun MangaToolbar(
@@ -58,9 +55,7 @@ fun MangaToolbar(
             }
         },
         modifier = modifier,
-        backgroundColor = MaterialTheme.colorScheme
-            .surfaceColorAtElevation(3.dp)
-            .copy(alpha = if (isActionMode) 1f else backgroundAlphaProvider()),
+        backgroundColor = Graphite.colors.canvas.copy(alpha = if (isActionMode) 1f else backgroundAlphaProvider()),
         navigateUp = navigateUp,
         actions = {
             var downloadExpanded by remember { mutableStateOf(false) }
@@ -73,7 +68,7 @@ fun MangaToolbar(
                 )
             }
 
-            val filterTint = if (hasFilters) MaterialTheme.colorScheme.active else LocalContentColor.current
+            val filterTint = if (hasFilters) Graphite.colors.accent else LocalContentColor.current
             AppBarActions(
                 actions = buildList {
                     if (isActionMode) {

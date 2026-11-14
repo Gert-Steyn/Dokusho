@@ -1,16 +1,9 @@
 package eu.kanade.presentation.more
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,9 +20,13 @@ import mihon.icons.lucide.icons.BadgeCheck
 import mihon.icons.lucide.icons.RefreshCwOff
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.InfoScreen
+import tachiyomi.presentation.core.theme.GSpace
 
 @Composable
 fun NewUpdateScreen(
@@ -45,24 +42,24 @@ fun NewUpdateScreen(
     var showSkipDialog by remember { mutableStateOf(false) }
     if (showSkipDialog) {
         val dismiss = { showSkipDialog = false }
-        AlertDialog(
+        GDialog(
             onDismissRequest = dismiss,
             title = { Text(text = stringResource(MR.strings.update_check_skip_title, versionName)) },
             text = { Text(text = stringResource(MR.strings.update_check_skip_message)) },
             dismissButton = {
-                TextButton(onClick = dismiss) {
-                    Text(text = stringResource(MR.strings.action_cancel))
-                }
+                GGhostButton(
+                    text = stringResource(MR.strings.action_cancel),
+                    onClick = dismiss,
+                )
             },
             confirmButton = {
-                TextButton(
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_ok),
                     onClick = {
                         dismiss()
                         onSkipUpdate()
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.action_ok))
-                }
+                )
             },
         )
     }
@@ -85,32 +82,29 @@ fun NewUpdateScreen(
         rejectText = stringResource(MR.strings.action_not_now),
         onRejectClick = onRejectUpdate,
         rejectAction = {
-            OutlinedButton(onClick = { showSkipDialog = true }) {
-                Icon(
-                    imageVector = Lucide.Icons.RefreshCwOff,
-                    contentDescription = stringResource(MR.strings.update_check_skip),
-                )
-            }
+            GIconButton(
+                icon = Lucide.Icons.RefreshCwOff,
+                contentDescription = stringResource(MR.strings.update_check_skip),
+                onClick = { showSkipDialog = true },
+            )
         },
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = MaterialTheme.padding.large),
+                .padding(vertical = GSpace.s6),
         ) {
             MarkdownRender(
                 content = changelogInfo,
                 flavour = remember { GFMFlavourDescriptor() },
             )
 
-            TextButton(
+            GGhostButton(
+                text = stringResource(MR.strings.update_check_open),
                 onClick = onOpenInBrowser,
-                modifier = Modifier.padding(top = MaterialTheme.padding.small),
-            ) {
-                Text(text = stringResource(MR.strings.update_check_open))
-                Spacer(modifier = Modifier.width(MaterialTheme.padding.extraSmall))
-                Icon(imageVector = Lucide.AutoMirrored.ExternalLink, contentDescription = null)
-            }
+                icon = Lucide.AutoMirrored.ExternalLink,
+                modifier = Modifier.padding(top = GSpace.s3),
+            )
         }
     }
 }

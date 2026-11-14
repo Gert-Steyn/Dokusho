@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +54,6 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.keepScreenOn
-import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
@@ -122,7 +120,9 @@ import tachiyomi.core.common.Constants
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDialog
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
 import tachiyomi.presentation.core.util.collectAsState
 
 class ReaderActivity : BaseActivity() {
@@ -268,12 +268,12 @@ class ReaderActivity : BaseActivity() {
             }
 
             if (state.isLoadingAdjacentChapter) {
-                AlertDialog(
+                GDialog(
                     onDismissRequest = {},
                     confirmButton = {},
                     text = {
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             CircularProgressIndicator()
@@ -630,6 +630,7 @@ class ReaderActivity : BaseActivity() {
                 menuToggleToast = toast(if (enabled) MR.strings.on else MR.strings.off)
             },
             onClickSettings = viewModel::openSettingsDialog,
+            isTextChapter = isTextChapter(state.viewerChapters),
         )
     }
 

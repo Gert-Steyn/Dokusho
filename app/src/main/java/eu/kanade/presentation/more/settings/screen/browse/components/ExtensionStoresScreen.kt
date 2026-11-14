@@ -3,9 +3,6 @@ package eu.kanade.presentation.more.settings.screen.browse.components
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import eu.kanade.presentation.category.components.CategoryFloatingActionButton
@@ -15,11 +12,12 @@ import mihon.domain.extension.model.ExtensionStore
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
+import tachiyomi.presentation.core.theme.GSpace
 import tachiyomi.presentation.core.util.plus
 
 @Composable
@@ -41,12 +39,11 @@ fun ExtensionStoresScreen(
                 title = stringResource(MR.strings.extensionStores),
                 scrollBehavior = scrollBehavior,
                 actions = {
-                    IconButton(onClick = onClickRefresh) {
-                        Icon(
-                            imageVector = Lucide.Icons.RefreshCw,
-                            contentDescription = stringResource(resource = MR.strings.action_webview_refresh),
-                        )
-                    }
+                    GIconButton(
+                        icon = Lucide.Icons.RefreshCw,
+                        contentDescription = stringResource(resource = MR.strings.action_webview_refresh),
+                        onClick = onClickRefresh,
+                    )
                 },
             )
         },
@@ -69,7 +66,7 @@ fun ExtensionStoresScreen(
             repos = state.stores,
             lazyListState = lazyListState,
             paddingValues = paddingValues + topSmallPaddingValues +
-                PaddingValues(horizontal = MaterialTheme.padding.medium),
+                PaddingValues(horizontal = GSpace.s5),
             onCopy = onCopy,
             onOpenWebsite = onOpenWebsite,
             onOpenDiscord = onOpenDiscord,

@@ -6,10 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -19,9 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 @Composable
 fun ExtensionStoreCreateDialog(
@@ -41,7 +43,7 @@ fun ExtensionStoreCreateDialog(
 
     val focusRequester = remember { FocusRequester() }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(text = stringResource(MR.strings.extensionStoresScreen_addStore_title))
@@ -69,25 +71,23 @@ fun ExtensionStoreCreateDialog(
             )
         },
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(
+                    resource = if (processing) {
+                        MR.strings.extensionStoresScreen_addStore_processing
+                    } else {
+                        MR.strings.action_add
+                    },
+                ),
                 onClick = { onCreate(state.text.toString()) },
                 enabled = !processing && state.text.isNotEmpty() && !storeAlreadyExists,
-            ) {
-                Text(
-                    text = stringResource(
-                        resource = if (processing) {
-                            MR.strings.extensionStoresScreen_addStore_processing
-                        } else {
-                            MR.strings.action_add
-                        },
-                    ),
-                )
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 
@@ -103,7 +103,7 @@ fun ExtensionStoreDeleteDialog(
     storeName: String,
     storeIndexUrl: String,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(text = stringResource(MR.strings.extensionStoresScreen_deleteStore_title))
@@ -112,17 +112,19 @@ fun ExtensionStoreDeleteDialog(
             Text(text = stringResource(MR.strings.extensionStoresScreen_deleteStore_body, storeName, storeIndexUrl))
         },
         confirmButton = {
-            TextButton(onClick = {
-                onDelete()
-                onDismissRequest()
-            }) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GDangerButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = {
+                    onDelete()
+                    onDismissRequest()
+                },
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }
@@ -137,13 +139,13 @@ fun ExtensionStoreConfirmDialog(
     errorMessage: String?,
 ) {
     val state = rememberTextFieldState(initialText = storeIndexUrl)
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(text = stringResource(MR.strings.extensionStoresScreen_addStore_title))
         },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(GSpace.s2)) {
                 Text(text = stringResource(MR.strings.extensionStoresScreen_addStoreDeeplink_bodyText))
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -167,22 +169,23 @@ fun ExtensionStoreConfirmDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onCreate, enabled = !storeAlreadyExists && !processing) {
-                Text(
-                    text = stringResource(
-                        resource = if (processing) {
-                            MR.strings.extensionStoresScreen_addStore_processing
-                        } else {
-                            MR.strings.action_add
-                        },
-                    ),
-                )
-            }
+            GPrimaryButton(
+                text = stringResource(
+                    resource = if (processing) {
+                        MR.strings.extensionStoresScreen_addStore_processing
+                    } else {
+                        MR.strings.action_add
+                    },
+                ),
+                onClick = onCreate,
+                enabled = !storeAlreadyExists && !processing,
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -15,10 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -66,7 +62,8 @@ import org.intellij.markdown.parser.markerblocks.providers.CodeFenceProvider
 import org.intellij.markdown.parser.markerblocks.providers.HorizontalRuleProvider
 import org.intellij.markdown.parser.markerblocks.providers.ListMarkerProvider
 import org.intellij.markdown.parser.markerblocks.providers.SetextHeaderProvider
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 const val MARKDOWN_INLINE_IMAGE_TAG = "MARKDOWN_INLINE_IMAGE"
 
@@ -98,23 +95,23 @@ fun MarkdownRender(
 @Composable
 @ReadOnlyComposable
 private fun getMarkdownColors(): MarkdownColors {
-    val codeBackground = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+    val codeBackground = Graphite.colors.hover
     return DefaultMarkdownColors(
-        text = MaterialTheme.colorScheme.onSurface,
+        text = Graphite.colors.text,
         codeBackground = codeBackground,
         inlineCodeBackground = codeBackground,
-        dividerColor = MaterialTheme.colorScheme.outlineVariant,
-        tableBackground = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.05f),
-        highlightText = MaterialTheme.colorScheme.onSecondaryContainer,
-        highlightBackground = MaterialTheme.colorScheme.secondaryContainer,
+        dividerColor = Graphite.colors.borderSubtle,
+        tableBackground = Graphite.colors.surface,
+        highlightText = Graphite.colors.accent,
+        highlightBackground = Graphite.colors.accentSubtle,
     )
 }
 
 @Composable
 @ReadOnlyComposable
-fun getMarkdownLinkStyle() = MaterialTheme.typography.bodyMedium.copy(
-    color = MaterialTheme.colorScheme.primary,
-    fontWeight = FontWeight.Bold,
+fun getMarkdownLinkStyle() = Graphite.type.body.copy(
+    color = Graphite.colors.accent,
+    fontWeight = FontWeight.SemiBold,
 )
 
 @Composable
@@ -122,39 +119,39 @@ fun getMarkdownLinkStyle() = MaterialTheme.typography.bodyMedium.copy(
 private fun getMarkdownTypography(): MarkdownTypography {
     val link = getMarkdownLinkStyle()
     return DefaultMarkdownTypography(
-        h1 = MaterialTheme.typography.headlineMedium,
-        h2 = MaterialTheme.typography.headlineSmall,
-        h3 = MaterialTheme.typography.titleLarge,
-        h4 = MaterialTheme.typography.titleMedium,
-        h5 = MaterialTheme.typography.titleSmall,
-        h6 = MaterialTheme.typography.bodyLarge,
-        text = MaterialTheme.typography.bodyMedium,
-        code = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-        inlineCode = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-        quote = MaterialTheme.typography.bodyMedium.plus(SpanStyle(fontStyle = FontStyle.Italic)),
-        paragraph = MaterialTheme.typography.bodyMedium,
-        ordered = MaterialTheme.typography.bodyMedium,
-        bullet = MaterialTheme.typography.bodyMedium,
-        list = MaterialTheme.typography.bodyMedium,
+        h1 = Graphite.type.title,
+        h2 = Graphite.type.title,
+        h3 = Graphite.type.title,
+        h4 = Graphite.type.heading,
+        h5 = Graphite.type.label,
+        h6 = Graphite.type.body,
+        text = Graphite.type.body,
+        code = Graphite.type.mono,
+        inlineCode = Graphite.type.mono,
+        quote = Graphite.type.body.copy(color = Graphite.colors.textSecondary),
+        paragraph = Graphite.type.body,
+        ordered = Graphite.type.body,
+        bullet = Graphite.type.body,
+        list = Graphite.type.body,
         textLink = TextLinkStyles(style = link.toSpanStyle()),
-        table = MaterialTheme.typography.bodyMedium,
+        table = Graphite.type.body,
     )
 }
 
 private val markdownPadding = object : MarkdownPadding {
     override val alert: MarkdownAlertPadding = markdownAlertPadding()
-    override val block: Dp = 2.dp
-    override val blockQuote: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 0.dp)
+    override val block: Dp = GSpace.s1
+    override val blockQuote: PaddingValues = PaddingValues(horizontal = GSpace.s5, vertical = 0.dp)
     override val blockQuoteBar: PaddingValues.Absolute = PaddingValues.Absolute(
-        left = 4.dp,
-        top = 2.dp,
-        right = 4.dp,
-        bottom = 2.dp,
+        left = GSpace.s2,
+        top = GSpace.s1,
+        right = GSpace.s2,
+        bottom = GSpace.s1,
     )
-    override val blockQuoteText: PaddingValues = PaddingValues(vertical = 4.dp)
-    override val codeBlock: PaddingValues = PaddingValues(8.dp)
+    override val blockQuoteText: PaddingValues = PaddingValues(vertical = GSpace.s2)
+    override val codeBlock: PaddingValues = PaddingValues(GSpace.s3)
     override val list: Dp = 0.dp
-    override val listIndent: Dp = 8.dp
+    override val listIndent: Dp = GSpace.s3
     override val listItemBottom: Dp = 0.dp
     override val listItemTop: Dp = 0.dp
 }
@@ -163,12 +160,12 @@ private val markdownComponents = markdownComponents(
     horizontalRule = {
         MarkdownDivider(
             modifier = Modifier
-                .padding(vertical = MaterialTheme.padding.extraSmall)
+                .padding(vertical = GSpace.s2)
                 .fillMaxWidth(),
         )
     },
     orderedList = { ol ->
-        Column(modifier = Modifier.padding(start = MaterialTheme.padding.small)) {
+        Column(modifier = Modifier.padding(start = GSpace.s3)) {
             MarkdownOrderedList(
                 content = ol.content,
                 node = ol.node,
@@ -185,7 +182,7 @@ private val markdownComponents = markdownComponents(
         CompositionLocalProvider(
             LocalBulletListHandler provides { _, _, _, _, _ -> "${markers[ul.listDepth % markers.size]} " },
         ) {
-            Column(modifier = Modifier.padding(start = MaterialTheme.padding.small)) {
+            Column(modifier = Modifier.padding(start = GSpace.s3)) {
                 MarkdownBulletList(
                     content = ul.content,
                     node = ul.node,
@@ -238,15 +235,15 @@ private fun getMarkdownInlineContent() = DefaultMarkdownInlineContent(
     inlineContent = mapOf(
         MARKDOWN_INLINE_IMAGE_TAG to InlineTextContent(
             placeholder = Placeholder(
-                width = MaterialTheme.typography.bodyMedium.fontSize * 1.25,
-                height = MaterialTheme.typography.bodyMedium.fontSize * 1.25,
+                width = Graphite.type.body.fontSize * 1.25,
+                height = Graphite.type.body.fontSize * 1.25,
                 placeholderVerticalAlign = PlaceholderVerticalAlign.TextCenter,
             ),
             children = {
                 Icon(
                     imageVector = Lucide.Icons.Image,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = Graphite.colors.accent,
                 )
             },
         ),

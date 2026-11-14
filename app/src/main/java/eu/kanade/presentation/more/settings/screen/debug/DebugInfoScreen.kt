@@ -1,9 +1,6 @@
 package eu.kanade.presentation.more.settings.screen.debug
 
 import android.os.Build
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
@@ -29,6 +26,7 @@ import mihon.core.common.FeatureFlags
 import mihon.icons.lucide.Lucide
 import mihon.icons.lucide.icons.RefreshCcw
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.util.collectAsState
 
 class DebugInfoScreen : Screen() {
@@ -82,19 +80,15 @@ class DebugInfoScreen : Screen() {
                     title = "Installation ID",
                     subtitle = installationId,
                     widget = {
-                        IconButton(
+                        GIconButton(
+                            icon = Lucide.Icons.RefreshCcw,
+                            contentDescription = null,
                             onClick = {
                                 scope.launch {
                                     installationIdPref.set(FeatureFlags.newInstallationId())
                                 }
                             },
-                        ) {
-                            Icon(
-                                imageVector = Lucide.Icons.RefreshCcw,
-                                tint = MaterialTheme.colorScheme.primary,
-                                contentDescription = null,
-                            )
-                        }
+                        )
                     },
                     onClick = {
                         context.copyToClipboard(installationId, installationId)

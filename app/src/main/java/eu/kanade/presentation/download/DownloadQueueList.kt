@@ -17,10 +17,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +38,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.DropdownMenu
 import eu.kanade.tachiyomi.data.download.model.Download
@@ -59,8 +55,10 @@ import sh.calvin.reorderable.rememberReorderableLazyListState
 import sh.calvin.reorderable.rememberScroller
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ListGroupHeader
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun DownloadQueueList(
@@ -278,12 +276,12 @@ private fun ReorderableCollectionItemScope.DownloadQueueHeader(
     onDragStopped: () -> Unit,
 ) {
     Surface(
-        modifier = Modifier.padding(top = MaterialTheme.padding.small),
+        modifier = Modifier.padding(top = GSpace.s3),
         color = listItemContainerColor(isDragging),
-        shadowElevation = listItemElevation(isDragging),
+        shadowElevation = 0.dp,
     ) {
         Row(
-            modifier = Modifier.padding(end = MaterialTheme.padding.small),
+            modifier = Modifier.padding(end = GSpace.s3),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             ListGroupHeader(
@@ -315,12 +313,12 @@ private fun ReorderableCollectionItemScope.DownloadQueueItem(
     Surface(
         modifier = modifier,
         color = listItemContainerColor(isDragging),
-        shadowElevation = listItemElevation(isDragging),
+        shadowElevation = 0.dp,
     ) {
         Row(
             modifier = Modifier.padding(
-                start = MaterialTheme.padding.small,
-                end = MaterialTheme.padding.extraSmall,
+                start = GSpace.s3,
+                end = GSpace.s2,
             ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -328,22 +326,22 @@ private fun ReorderableCollectionItemScope.DownloadQueueItem(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(vertical = MaterialTheme.padding.small),
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+                    .padding(vertical = GSpace.s3),
+                verticalArrangement = Arrangement.spacedBy(GSpace.s2),
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(GSpace.s3)) {
                     Text(
                         text = download.manga.title,
                         modifier = Modifier.weight(1f),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = Graphite.type.body,
                     )
                     progress?.let {
                         Text(
                             text = "${it.downloadedPages}/${it.pageCount}",
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            style = MaterialTheme.typography.bodySmall,
+                            color = Graphite.colors.textSecondary,
+                            style = Graphite.type.small,
                         )
                     }
                 }
@@ -351,13 +349,13 @@ private fun ReorderableCollectionItemScope.DownloadQueueItem(
                     text = download.chapter.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = Graphite.type.small,
                 )
                 LinearProgressIndicator(
                     progress = { animatedProgress },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = MaterialTheme.padding.extraSmall),
+                        .padding(top = GSpace.s2),
                 )
             }
             DownloadQueueItemMenu(
@@ -382,7 +380,7 @@ private fun ReorderableCollectionItemScope.DragHandle(onDragStarted: () -> Unit,
                 onDragStarted = { onDragStarted() },
                 onDragStopped = onDragStopped,
             )
-            .padding(MaterialTheme.padding.small),
+            .padding(GSpace.s3),
     )
 }
 
@@ -398,12 +396,11 @@ private fun DownloadQueueItemMenu(
     var expanded by remember { mutableStateOf(false) }
     val closeMenu = { expanded = false }
     Box {
-        IconButton(onClick = { expanded = true }) {
-            Icon(
-                imageVector = Lucide.Icons.EllipsisVertical,
-                contentDescription = stringResource(MR.strings.action_menu),
-            )
-        }
+        GIconButton(
+            icon = Lucide.Icons.EllipsisVertical,
+            contentDescription = stringResource(MR.strings.action_menu),
+            onClick = { expanded = true },
+        )
         DropdownMenu(expanded = expanded, onDismissRequest = closeMenu) {
             if (canMoveToTop) {
                 DropdownMenuItem(
@@ -458,13 +455,7 @@ private fun DownloadQueueItemMenu(
 // A neutral lifted surface while dragged, rather than Material's tertiaryContainer list tint
 @Composable
 private fun listItemContainerColor(isDragging: Boolean): Color {
-    return if (isDragging) MaterialTheme.colorScheme.surfaceContainerHigh else MaterialTheme.colorScheme.background
-}
-
-@Composable
-private fun listItemElevation(isDragging: Boolean): Dp {
-    val elevation = ListItemDefaults.elevation()
-    return if (isDragging) elevation.draggedElevation else elevation.elevation
+    return if (isDragging) Graphite.colors.raised else Graphite.colors.canvas
 }
 
 private class PagesProgress(

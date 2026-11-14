@@ -9,13 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +20,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import eu.kanade.domain.manga.model.downloadedFilter
 import eu.kanade.presentation.components.TabbedDialog
 import eu.kanade.presentation.components.TabbedDialogPaddings
@@ -36,8 +32,12 @@ import tachiyomi.presentation.core.components.LabeledCheckbox
 import tachiyomi.presentation.core.components.RadioItem
 import tachiyomi.presentation.core.components.SortItem
 import tachiyomi.presentation.core.components.TriStateItem
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.theme.active
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ChapterSettingsDialog(
@@ -164,22 +164,22 @@ fun ScanlatorFilterItem(
         modifier = Modifier
             .clickable(onClick = onClick)
             .fillMaxWidth()
-            .padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = 12.dp),
+            .padding(horizontal = TabbedDialogPaddings.Horizontal, vertical = GSpace.s4),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s6),
     ) {
         Icon(
             imageVector = Lucide.Icons.Users,
             contentDescription = null,
             tint = if (active) {
-                MaterialTheme.colorScheme.active
+                Graphite.colors.accent
             } else {
                 LocalContentColor.current
             },
         )
         Text(
             text = stringResource(MR.strings.scanlator),
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
         )
     }
 }
@@ -228,12 +228,12 @@ private fun SetAsDefaultDialog(
 ) {
     var optionalChecked by rememberSaveable { mutableStateOf(false) }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(text = stringResource(MR.strings.chapter_settings)) },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(GSpace.s4),
             ) {
                 Text(text = stringResource(MR.strings.confirm_set_chapter_settings))
 
@@ -245,19 +245,19 @@ private fun SetAsDefaultDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
                 onClick = {
                     onConfirmed(optionalChecked)
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
     )
 }

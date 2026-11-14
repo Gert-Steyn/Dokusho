@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -42,9 +39,14 @@ import mihon.feature.common.utils.getLabel
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 internal fun Screen.MigrateMangaDialog(
@@ -66,12 +68,12 @@ internal fun Screen.MigrateMangaDialog(
 
     if (state.isMigrating) {
         LoadingScreen(
-            modifier = Modifier.background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f)),
+            modifier = Modifier.background(Graphite.colors.scrim),
         )
         return
     }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = {
             Text(text = stringResource(MR.strings.migration_dialog_what_to_include))
@@ -91,39 +93,36 @@ internal fun Screen.MigrateMangaDialog(
         },
         confirmButton = {
             FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+                horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
             ) {
-                TextButton(
+                GGhostButton(
+                    text = stringResource(MR.strings.action_show_manga),
                     onClick = {
                         onDismissRequest()
                         onClickTitle()
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.action_show_manga))
-                }
+                )
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                TextButton(
+                GSecondaryButton(
+                    text = stringResource(MR.strings.copy),
                     onClick = {
                         scope.launch(Dispatchers.IO) {
                             viewModel.migrateManga(replace = false)
                             withContext(Dispatchers.Main) { onComplete() }
                         }
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.copy))
-                }
-                TextButton(
+                )
+                GPrimaryButton(
+                    text = stringResource(MR.strings.migrate),
                     onClick = {
                         scope.launch(Dispatchers.IO) {
                             viewModel.migrateManga(replace = true)
                             withContext(Dispatchers.Main) { onComplete() }
                         }
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.migrate))
-                }
+                )
             }
         },
     )

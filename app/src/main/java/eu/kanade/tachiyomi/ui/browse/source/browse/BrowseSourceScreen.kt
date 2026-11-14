@@ -51,10 +51,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import mihon.feature.migration.dialog.MigrateMangaDialog
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.FilterList
-import mihon.icons.materialsymbols.rounded.Verified
-import mihon.icons.materialsymbols.roundedfilled.Favorite
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.BadgeCheck
+import mihon.icons.lucide.icons.Heart
+import mihon.icons.lucide.icons.ListFilter
 import mihon.presentation.core.util.collectAsLazyPagingItems
 import tachiyomi.core.common.Constants
 import tachiyomi.domain.source.model.StubSource
@@ -159,7 +159,7 @@ data class BrowseSourceScreen(
                             },
                             leadingIcon = {
                                 Icon(
-                                    imageVector = MaterialSymbols.RoundedFilled.Favorite,
+                                    imageVector = Lucide.Icons.Heart,
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(FilterChipDefaults.IconSize),
@@ -178,7 +178,7 @@ data class BrowseSourceScreen(
                                 },
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = MaterialSymbols.Rounded.Verified,
+                                        imageVector = Lucide.Icons.BadgeCheck,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .size(FilterChipDefaults.IconSize),
@@ -195,7 +195,7 @@ data class BrowseSourceScreen(
                                 onClick = viewModel::openFilterSheet,
                                 leadingIcon = {
                                     Icon(
-                                        imageVector = MaterialSymbols.Rounded.FilterList,
+                                        imageVector = Lucide.Icons.ListFilter,
                                         contentDescription = null,
                                         modifier = Modifier
                                             .size(FilterChipDefaults.IconSize),

@@ -23,11 +23,11 @@ import eu.kanade.presentation.browse.components.BaseSourceItem
 import eu.kanade.presentation.browse.components.SourceIcon
 import eu.kanade.tachiyomi.ui.browse.migration.sources.MigrateSourceViewModel
 import eu.kanade.tachiyomi.util.system.copyToClipboard
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ArrowDownward
-import mihon.icons.materialsymbols.rounded.ArrowUpward
-import mihon.icons.materialsymbols.rounded.Numbers
-import mihon.icons.materialsymbols.rounded.SortByAlpha
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDown
+import mihon.icons.lucide.icons.ArrowDownAZ
+import mihon.icons.lucide.icons.ArrowUp
+import mihon.icons.lucide.icons.Hash
 import tachiyomi.domain.source.model.Source
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.Badge
@@ -105,11 +105,11 @@ private fun MigrateSourceList(
                 IconButton(onClick = onToggleSortingMode) {
                     when (sortingMode) {
                         SetMigrateSorting.Mode.ALPHABETICAL -> Icon(
-                            MaterialSymbols.Rounded.SortByAlpha,
+                            Lucide.Icons.ArrowDownAZ,
                             contentDescription = stringResource(MR.strings.action_sort_alpha),
                         )
                         SetMigrateSorting.Mode.TOTAL -> Icon(
-                            MaterialSymbols.Rounded.Numbers,
+                            Lucide.Icons.Hash,
                             contentDescription = stringResource(MR.strings.action_sort_count),
                         )
                     }
@@ -117,11 +117,11 @@ private fun MigrateSourceList(
                 IconButton(onClick = onToggleSortingDirection) {
                     when (sortingDirection) {
                         SetMigrateSorting.Direction.ASCENDING -> Icon(
-                            MaterialSymbols.Rounded.ArrowUpward,
+                            Lucide.Icons.ArrowUp,
                             contentDescription = stringResource(MR.strings.action_asc),
                         )
                         SetMigrateSorting.Direction.DESCENDING -> Icon(
-                            MaterialSymbols.Rounded.ArrowDownward,
+                            Lucide.Icons.ArrowDown,
                             contentDescription = stringResource(MR.strings.action_desc),
                         )
                     }

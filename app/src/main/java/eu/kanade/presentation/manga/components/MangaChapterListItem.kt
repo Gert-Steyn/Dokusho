@@ -26,18 +26,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import eu.kanade.presentation.components.UnreadDot
 import eu.kanade.tachiyomi.data.download.model.Download
 import me.saket.swipe.SwipeableActionsBox
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.BookmarkAdd
-import mihon.icons.materialsymbols.rounded.BookmarkRemove
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.Download
-import mihon.icons.materialsymbols.rounded.FileDownloadOff
-import mihon.icons.materialsymbols.rounded.RemoveDone
-import mihon.icons.materialsymbols.roundedfilled.Bookmark
-import mihon.icons.materialsymbols.roundedfilled.Circle
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Bookmark
+import mihon.icons.lucide.icons.BookmarkMinus
+import mihon.icons.lucide.icons.BookmarkPlus
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.Download
+import mihon.icons.lucide.icons.FileX
+import mihon.icons.lucide.icons.ListX
+import mihon.icons.lucide.icons.Trash2
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.DISABLED_ALPHA
@@ -108,18 +108,11 @@ fun MangaChapterListItem(
                 ) {
                     var textHeight by remember { mutableIntStateOf(0) }
                     if (!read) {
-                        Icon(
-                            imageVector = MaterialSymbols.RoundedFilled.Circle,
-                            contentDescription = stringResource(MR.strings.unread),
-                            modifier = Modifier
-                                .height(8.dp)
-                                .padding(end = 4.dp),
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
+                        UnreadDot()
                     }
                     if (bookmark) {
                         Icon(
-                            imageVector = MaterialSymbols.RoundedFilled.Bookmark,
+                            imageVector = Lucide.Icons.Bookmark,
                             contentDescription = stringResource(MR.strings.action_filter_bookmarked),
                             modifier = Modifier
                                 .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
@@ -192,22 +185,22 @@ private fun getSwipeAction(
 ): me.saket.swipe.SwipeAction? {
     return when (action) {
         LibraryPreferences.ChapterSwipeAction.ToggleRead -> swipeAction(
-            icon = if (!read) MaterialSymbols.Rounded.Check else MaterialSymbols.Rounded.RemoveDone,
+            icon = if (!read) Lucide.Icons.Check else Lucide.Icons.ListX,
             background = background,
             isUndo = read,
             onSwipe = onSwipe,
         )
         LibraryPreferences.ChapterSwipeAction.ToggleBookmark -> swipeAction(
-            icon = if (!bookmark) MaterialSymbols.Rounded.BookmarkAdd else MaterialSymbols.Rounded.BookmarkRemove,
+            icon = if (!bookmark) Lucide.Icons.BookmarkPlus else Lucide.Icons.BookmarkMinus,
             background = background,
             isUndo = bookmark,
             onSwipe = onSwipe,
         )
         LibraryPreferences.ChapterSwipeAction.Download -> swipeAction(
             icon = when (downloadState) {
-                Download.State.NOT_DOWNLOADED, Download.State.ERROR -> MaterialSymbols.Rounded.Download
-                Download.State.QUEUE, Download.State.DOWNLOADING -> MaterialSymbols.Rounded.FileDownloadOff
-                Download.State.DOWNLOADED -> MaterialSymbols.Rounded.Delete
+                Download.State.NOT_DOWNLOADED, Download.State.ERROR -> Lucide.Icons.Download
+                Download.State.QUEUE, Download.State.DOWNLOADING -> Lucide.Icons.FileX
+                Download.State.DOWNLOADED -> Lucide.Icons.Trash2
             },
             background = background,
             onSwipe = onSwipe,

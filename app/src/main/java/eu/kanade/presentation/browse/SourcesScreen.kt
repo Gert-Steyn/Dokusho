@@ -21,9 +21,9 @@ import eu.kanade.presentation.browse.components.BaseSourceItem
 import eu.kanade.tachiyomi.ui.browse.source.SourcesViewModel
 import eu.kanade.tachiyomi.ui.browse.source.browse.BrowseSourceViewModel.Listing
 import eu.kanade.tachiyomi.util.system.LocaleHelper
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Keep
-import mihon.icons.materialsymbols.roundedfilled.Keep
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Pin
+import mihon.icons.lucide.icons.PinOff
 import tachiyomi.domain.source.model.Pin
 import tachiyomi.domain.source.model.Source
 import tachiyomi.i18n.MR
@@ -143,7 +143,7 @@ private fun SourcePinButton(
     isPinned: Boolean,
     onClick: () -> Unit,
 ) {
-    val icon = if (isPinned) MaterialSymbols.RoundedFilled.Keep else MaterialSymbols.Rounded.Keep
+    val icon = if (isPinned) Lucide.Icons.Pin else Lucide.Icons.PinOff
     val tint = if (isPinned) {
         MaterialTheme.colorScheme.primary
     } else {

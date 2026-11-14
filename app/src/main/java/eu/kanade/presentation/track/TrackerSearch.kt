@@ -71,11 +71,11 @@ import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.tachiyomi.data.track.model.TrackSearch
 import eu.kanade.tachiyomi.util.system.openInBrowser
 import kotlinx.coroutines.launch
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowBack
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.roundedfilled.CheckCircle
-import mihon.icons.materialsymbols.roundedfilled.VisibilityOff
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowLeft
+import mihon.icons.lucide.icons.CircleCheck
+import mihon.icons.lucide.icons.EyeOff
+import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.material.Scaffold
@@ -112,7 +112,7 @@ fun TrackerSearch(
                     navigationIcon = {
                         IconButton(onClick = onDismissRequest) {
                             Icon(
-                                imageVector = MaterialSymbols.AutoMirroredRounded.ArrowBack,
+                                imageVector = Lucide.AutoMirrored.ArrowLeft,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -152,7 +152,7 @@ fun TrackerSearch(
                                 },
                             ) {
                                 Icon(
-                                    imageVector = MaterialSymbols.Rounded.Close,
+                                    imageVector = Lucide.Icons.X,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -189,7 +189,7 @@ fun TrackerSearch(
                             elevation = ButtonDefaults.elevatedButtonElevation(),
                         ) {
                             Icon(
-                                imageVector = MaterialSymbols.RoundedFilled.VisibilityOff,
+                                imageVector = Lucide.Icons.EyeOff,
                                 contentDescription = stringResource(MR.strings.action_toggle_private_on),
                             )
                         }
@@ -275,7 +275,7 @@ private fun SearchResultItem(
     ) {
         if (selected) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.CheckCircle,
+                imageVector = Lucide.Icons.CircleCheck,
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.TopEnd),
                 tint = MaterialTheme.colorScheme.primary,

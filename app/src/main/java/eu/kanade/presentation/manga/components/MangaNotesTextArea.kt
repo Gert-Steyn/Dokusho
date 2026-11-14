@@ -44,12 +44,12 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.FormatListBulleted
-import mihon.icons.materialsymbols.rounded.FormatBold
-import mihon.icons.materialsymbols.rounded.FormatItalic
-import mihon.icons.materialsymbols.rounded.FormatListNumbered
-import mihon.icons.materialsymbols.rounded.FormatUnderlined
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.List
+import mihon.icons.lucide.icons.Bold
+import mihon.icons.lucide.icons.Italic
+import mihon.icons.lucide.icons.ListOrdered
+import mihon.icons.lucide.icons.Underline
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
@@ -130,14 +130,14 @@ fun MangaNotesTextArea(
                     MangaNotesTextAreaButton(
                         onClick = { richTextState.toggleSpanStyle(SpanStyle(fontWeight = FontWeight.Bold)) },
                         isSelected = richTextState.currentSpanStyle.fontWeight == FontWeight.Bold,
-                        icon = MaterialSymbols.Rounded.FormatBold,
+                        icon = Lucide.Icons.Bold,
                     )
                 }
                 item {
                     MangaNotesTextAreaButton(
                         onClick = { richTextState.toggleSpanStyle(SpanStyle(fontStyle = FontStyle.Italic)) },
                         isSelected = richTextState.currentSpanStyle.fontStyle == FontStyle.Italic,
-                        icon = MaterialSymbols.Rounded.FormatItalic,
+                        icon = Lucide.Icons.Italic,
                     )
                 }
                 item {
@@ -148,7 +148,7 @@ fun MangaNotesTextArea(
                         isSelected = richTextState.currentSpanStyle.textDecoration
                             ?.contains(TextDecoration.Underline)
                             ?: false,
-                        icon = MaterialSymbols.Rounded.FormatUnderlined,
+                        icon = Lucide.Icons.Underline,
                     )
                 }
                 item {
@@ -162,14 +162,14 @@ fun MangaNotesTextArea(
                     MangaNotesTextAreaButton(
                         onClick = { richTextState.toggleUnorderedList() },
                         isSelected = richTextState.isUnorderedList,
-                        icon = MaterialSymbols.AutoMirroredRounded.FormatListBulleted,
+                        icon = Lucide.AutoMirrored.List,
                     )
                 }
                 item {
                     MangaNotesTextAreaButton(
                         onClick = { richTextState.toggleOrderedList() },
                         isSelected = richTextState.isOrderedList,
-                        icon = MaterialSymbols.Rounded.FormatListNumbered,
+                        icon = Lucide.Icons.ListOrdered,
                     )
                 }
             }

@@ -32,10 +32,10 @@ import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Info
-import mihon.icons.materialsymbols.roundedfilled.CheckCircle
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.CircleCheck
+import mihon.icons.lucide.icons.Info
+import mihon.icons.lucide.icons.TriangleAlert
 import tachiyomi.domain.chapter.model.Chapter
 import tachiyomi.domain.chapter.service.calculateChapterGap
 import tachiyomi.i18n.MR
@@ -155,7 +155,7 @@ private fun NoChapterNotification(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.Info,
+                imageVector = Lucide.Icons.Info,
                 tint = MaterialTheme.colorScheme.primary,
                 contentDescription = null,
             )
@@ -183,7 +183,7 @@ private fun ChapterGapWarning(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.Warning,
+                imageVector = Lucide.Icons.TriangleAlert,
                 tint = MaterialTheme.colorScheme.error,
                 contentDescription = null,
             )
@@ -242,7 +242,7 @@ private fun ChapterText(
                     ),
                 ) {
                     Icon(
-                        imageVector = MaterialSymbols.RoundedFilled.CheckCircle,
+                        imageVector = Lucide.Icons.CircleCheck,
                         contentDescription = stringResource(MR.strings.label_downloaded),
                     )
                 },

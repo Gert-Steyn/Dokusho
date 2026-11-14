@@ -24,9 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.CheckBoxOutlineBlank
-import mihon.icons.materialsymbols.roundedfilled.DisabledByDefault
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Square
+import mihon.icons.lucide.icons.SquareX
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.TextButton
 import tachiyomi.presentation.core.components.material.padding
@@ -74,9 +74,9 @@ fun ScanlatorFilterDialog(
                             ) {
                                 Icon(
                                     imageVector = if (isExcluded) {
-                                        MaterialSymbols.RoundedFilled.DisabledByDefault
+                                        Lucide.Icons.SquareX
                                     } else {
-                                        MaterialSymbols.Rounded.CheckBoxOutlineBlank
+                                        Lucide.Icons.Square
                                     },
                                     tint = if (isExcluded) {
                                         MaterialTheme.colorScheme.primary

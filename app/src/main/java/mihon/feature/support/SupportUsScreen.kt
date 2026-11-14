@@ -26,8 +26,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.more.settings.widget.TextPreferenceWidget
 import eu.kanade.presentation.util.Screen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.OpenInNew
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ExternalLink
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.OpenCollective
 import mihon.icons.simpleicons.Patreon
@@ -132,7 +132,7 @@ class SupportUsScreen : Screen() {
                 icon = icon,
                 widget = {
                     Icon(
-                        imageVector = MaterialSymbols.AutoMirroredRounded.OpenInNew,
+                        imageVector = Lucide.AutoMirrored.ExternalLink,
                         contentDescription = null,
                     )
                 },

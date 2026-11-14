@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.EditNote
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.NotebookPen
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Button
 import tachiyomi.presentation.core.components.material.ButtonDefaults
@@ -57,7 +57,7 @@ fun MangaNotesSection(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.EditNote,
+                        imageVector = Lucide.Icons.NotebookPen,
                         contentDescription = null,
                         modifier = Modifier
                             .size(16.dp),

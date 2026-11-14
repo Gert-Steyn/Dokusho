@@ -55,11 +55,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mihon.feature.migration.list.MigrationListScreen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.rounded.Deselect
-import mihon.icons.materialsymbols.rounded.DragHandle
-import mihon.icons.materialsymbols.rounded.SelectAll
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.GripHorizontal
+import mihon.icons.lucide.icons.SquareCheckBig
+import mihon.icons.lucide.icons.SquareDashed
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState
@@ -126,12 +126,12 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                             listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.migrationConfigScreen_selectAllLabel),
-                                    icon = MaterialSymbols.Rounded.SelectAll,
+                                    icon = Lucide.Icons.SquareCheckBig,
                                     onClick = { viewModel.toggleSelection(Model.SelectionConfig.All) },
                                 ),
                                 AppBar.Action(
                                     title = stringResource(MR.strings.migrationConfigScreen_selectNoneLabel),
-                                    icon = MaterialSymbols.Rounded.Deselect,
+                                    icon = Lucide.Icons.SquareDashed,
                                     onClick = { viewModel.toggleSelection(Model.SelectionConfig.None) },
                                 ),
                                 AppBar.OverflowAction(
@@ -151,7 +151,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                 SmallExtendedFloatingActionButton(
                     text = { Text(text = stringResource(MR.strings.migrationConfigScreen_continueButtonText)) },
                     icon = {
-                        Icon(imageVector = MaterialSymbols.AutoMirroredRounded.ArrowForward, contentDescription = null)
+                        Icon(imageVector = Lucide.AutoMirrored.ArrowRight, contentDescription = null)
                     },
                     onClick = {
                         viewModel.saveSources()
@@ -280,7 +280,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
             trailingContent = if (dragEnabled) {
                 {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.DragHandle,
+                        imageVector = Lucide.Icons.GripHorizontal,
                         contentDescription = null,
                         modifier = with(scope) {
                             Modifier.draggableHandle()

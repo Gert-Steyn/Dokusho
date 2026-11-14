@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Info
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Info
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
@@ -30,7 +30,7 @@ internal fun InfoWidget(text: String) {
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.medium),
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Info,
+            imageVector = Lucide.Icons.Info,
             contentDescription = null,
         )
         Text(

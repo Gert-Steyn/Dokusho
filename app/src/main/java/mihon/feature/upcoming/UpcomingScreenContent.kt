@@ -28,9 +28,9 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.YearMonth
 import mihon.feature.upcoming.components.UpcomingItem
 import mihon.feature.upcoming.components.calendar.Calendar
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
-import mihon.icons.materialsymbols.rounded.FilterList
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
+import mihon.icons.lucide.icons.ListFilter
 import tachiyomi.core.common.Constants
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
@@ -110,13 +110,13 @@ private fun UpcomingToolbar(
                 listOf(
                     AppBar.Action(
                         title = stringResource(MR.strings.action_filter),
-                        icon = MaterialSymbols.Rounded.FilterList,
+                        icon = Lucide.Icons.ListFilter,
                         iconTint = if (hasFilters) MaterialTheme.colorScheme.active else LocalContentColor.current,
                         onClick = onClickFilter,
                     ),
                     AppBar.Action(
                         title = stringResource(MR.strings.upcoming_guide),
-                        icon = MaterialSymbols.AutoMirroredRounded.Help,
+                        icon = Lucide.AutoMirrored.CircleQuestionMark,
                         onClick = { uriHandler.openUri(Constants.URL_HELP_UPCOMING) },
                     ),
                 ),

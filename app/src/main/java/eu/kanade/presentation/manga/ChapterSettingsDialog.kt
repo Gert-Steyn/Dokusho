@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import eu.kanade.domain.manga.model.downloadedFilter
 import eu.kanade.presentation.components.TabbedDialog
 import eu.kanade.presentation.components.TabbedDialogPaddings
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Group
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Users
 import tachiyomi.core.common.preference.TriState
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
@@ -169,7 +169,7 @@ fun ScanlatorFilterItem(
         horizontalArrangement = Arrangement.spacedBy(24.dp),
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Group,
+            imageVector = Lucide.Icons.Users,
             contentDescription = null,
             tint = if (active) {
                 MaterialTheme.colorScheme.active

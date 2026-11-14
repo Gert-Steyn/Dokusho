@@ -37,8 +37,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.manga.components.MangaCover
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.PlayArrow
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Play
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.BadgeGroup
 import tachiyomi.presentation.core.i18n.stringResource
@@ -395,7 +395,7 @@ private fun ContinueReadingButton(
             modifier = Modifier.size(size),
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.PlayArrow,
+                imageVector = Lucide.Icons.Play,
                 contentDescription = stringResource(MR.strings.action_resume),
                 modifier = Modifier.size(iconSize),
             )

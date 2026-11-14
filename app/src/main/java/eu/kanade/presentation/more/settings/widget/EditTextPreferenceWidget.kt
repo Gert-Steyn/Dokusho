@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.window.DialogProperties
 import kotlinx.coroutines.launch
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.Cancel
-import mihon.icons.materialsymbols.roundedfilled.Error
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.CircleAlert
+import mihon.icons.lucide.icons.CircleX
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -57,10 +57,10 @@ fun EditTextPreferenceWidget(
                     onValueChange = { textFieldValue = it },
                     trailingIcon = {
                         if (textFieldValue.text.isBlank()) {
-                            Icon(imageVector = MaterialSymbols.RoundedFilled.Error, contentDescription = null)
+                            Icon(imageVector = Lucide.Icons.CircleAlert, contentDescription = null)
                         } else {
                             IconButton(onClick = { textFieldValue = TextFieldValue("") }) {
-                                Icon(imageVector = MaterialSymbols.RoundedFilled.Cancel, contentDescription = null)
+                                Icon(imageVector = Lucide.Icons.CircleX, contentDescription = null)
                             }
                         }
                     },

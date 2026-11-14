@@ -17,9 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
-import mihon.icons.materialsymbols.rounded.KeyboardArrowUp
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ChevronDown
+import mihon.icons.lucide.icons.ChevronUp
 import tachiyomi.presentation.core.theme.header
 
 @Composable
@@ -45,9 +45,9 @@ fun CollapsibleBox(
 
             Icon(
                 imageVector = if (expanded) {
-                    MaterialSymbols.Rounded.KeyboardArrowUp
+                    Lucide.Icons.ChevronUp
                 } else {
-                    MaterialSymbols.Rounded.KeyboardArrowDown
+                    Lucide.Icons.ChevronDown
                 },
                 contentDescription = null,
             )

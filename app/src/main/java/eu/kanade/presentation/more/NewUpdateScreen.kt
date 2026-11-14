@@ -21,10 +21,10 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.manga.components.MarkdownRender
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.tachiyomi.ui.more.NewUpdateScreenModel
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.OpenInNew
-import mihon.icons.materialsymbols.rounded.UpdateDisabled
-import mihon.icons.materialsymbols.rounded.Verified
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ExternalLink
+import mihon.icons.lucide.icons.BadgeCheck
+import mihon.icons.lucide.icons.RefreshCwOff
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
@@ -68,7 +68,7 @@ fun NewUpdateScreen(
     }
 
     InfoScreen(
-        icon = MaterialSymbols.Rounded.Verified,
+        icon = Lucide.Icons.BadgeCheck,
         headingText = stringResource(MR.strings.update_check_notification_update_available),
         subtitleText = versionName,
         acceptText = when (stage) {
@@ -87,7 +87,7 @@ fun NewUpdateScreen(
         rejectAction = {
             OutlinedButton(onClick = { showSkipDialog = true }) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.UpdateDisabled,
+                    imageVector = Lucide.Icons.RefreshCwOff,
                     contentDescription = stringResource(MR.strings.update_check_skip),
                 )
             }
@@ -109,7 +109,7 @@ fun NewUpdateScreen(
             ) {
                 Text(text = stringResource(MR.strings.update_check_open))
                 Spacer(modifier = Modifier.width(MaterialTheme.padding.extraSmall))
-                Icon(imageVector = MaterialSymbols.AutoMirroredRounded.OpenInNew, contentDescription = null)
+                Icon(imageVector = Lucide.AutoMirrored.ExternalLink, contentDescription = null)
             }
         }
     }

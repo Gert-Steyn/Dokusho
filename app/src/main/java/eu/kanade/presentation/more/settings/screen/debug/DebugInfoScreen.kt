@@ -26,8 +26,8 @@ import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import mihon.app.di.appGraph
 import mihon.core.common.FeatureFlags
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Autorenew
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.RefreshCcw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.util.collectAsState
 
@@ -90,7 +90,7 @@ class DebugInfoScreen : Screen() {
                             },
                         ) {
                             Icon(
-                                imageVector = MaterialSymbols.Rounded.Autorenew,
+                                imageVector = Lucide.Icons.RefreshCcw,
                                 tint = MaterialTheme.colorScheme.primary,
                                 contentDescription = null,
                             )

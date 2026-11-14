@@ -19,10 +19,10 @@ import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.util.formattedMessage
 import eu.kanade.tachiyomi.source.Source
 import kotlinx.coroutines.flow.StateFlow
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
-import mihon.icons.materialsymbols.rounded.Public
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.domain.library.model.LibraryDisplayMode
 import tachiyomi.domain.manga.model.Manga
@@ -88,7 +88,7 @@ fun BrowseSourceContent(
                 listOf(
                     EmptyScreenAction(
                         stringRes = MR.strings.local_source_help_guide,
-                        icon = MaterialSymbols.AutoMirroredRounded.Help,
+                        icon = Lucide.AutoMirrored.CircleQuestionMark,
                         onClick = onLocalSourceHelpClick,
                     ),
                 )
@@ -96,17 +96,17 @@ fun BrowseSourceContent(
                 listOf(
                     EmptyScreenAction(
                         stringRes = MR.strings.action_retry,
-                        icon = MaterialSymbols.Rounded.Refresh,
+                        icon = Lucide.Icons.RefreshCw,
                         onClick = mangaList::refresh,
                     ),
                     EmptyScreenAction(
                         stringRes = MR.strings.action_open_in_web_view,
-                        icon = MaterialSymbols.Rounded.Public,
+                        icon = Lucide.Icons.Globe,
                         onClick = onWebViewClick,
                     ),
                     EmptyScreenAction(
                         stringRes = MR.strings.label_help,
-                        icon = MaterialSymbols.AutoMirroredRounded.Help,
+                        icon = Lucide.AutoMirrored.CircleQuestionMark,
                         onClick = onHelpClick,
                     ),
                 )

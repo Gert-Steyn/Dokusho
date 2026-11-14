@@ -45,12 +45,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import dev.icerock.moko.resources.StringResource
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ArrowDownward
-import mihon.icons.materialsymbols.rounded.ArrowUpward
-import mihon.icons.materialsymbols.rounded.CheckBoxOutlineBlank
-import mihon.icons.materialsymbols.roundedfilled.CheckBox
-import mihon.icons.materialsymbols.roundedfilled.DisabledByDefault
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDown
+import mihon.icons.lucide.icons.ArrowUp
+import mihon.icons.lucide.icons.Square
+import mihon.icons.lucide.icons.SquareCheck
+import mihon.icons.lucide.icons.SquareX
 import tachiyomi.core.common.preference.Preference
 import tachiyomi.core.common.preference.TriState
 import tachiyomi.core.common.preference.toggle
@@ -89,8 +89,8 @@ fun HeadingItem(text: String) {
 @Composable
 fun SortItem(label: String, sortDescending: Boolean?, onClick: () -> Unit) {
     val arrowIcon = when (sortDescending) {
-        true -> MaterialSymbols.Rounded.ArrowDownward
-        false -> MaterialSymbols.Rounded.ArrowUpward
+        true -> Lucide.Icons.ArrowDown
+        false -> Lucide.Icons.ArrowUp
         null -> null
     }
 
@@ -347,9 +347,9 @@ fun TriStateItem(
 
         Icon(
             imageVector = when (state) {
-                TriState.DISABLED -> MaterialSymbols.Rounded.CheckBoxOutlineBlank
-                TriState.ENABLED_IS -> MaterialSymbols.RoundedFilled.CheckBox
-                TriState.ENABLED_NOT -> MaterialSymbols.RoundedFilled.DisabledByDefault
+                TriState.DISABLED -> Lucide.Icons.Square
+                TriState.ENABLED_IS -> Lucide.Icons.SquareCheck
+                TriState.ENABLED_NOT -> Lucide.Icons.SquareX
             },
             contentDescription = null,
             tint = if (!enabled || state == TriState.DISABLED) {

@@ -51,11 +51,11 @@ import eu.kanade.tachiyomi.util.system.setUserAgent
 import eu.kanade.tachiyomi.util.system.toast
 import kotlinx.coroutines.launch
 import logcat.LogPriority
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowBack
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.TabClose
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowLeft
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.PanelTopClose
+import mihon.icons.lucide.icons.X
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
@@ -252,13 +252,13 @@ fun WebViewScreenContent(
                         title = currentWindow.state.pageTitle ?: initialTitle,
                         subtitle = currentUrl,
                         navigateUp = onNavigateUp,
-                        navigationIcon = MaterialSymbols.Rounded.Close,
+                        navigationIcon = Lucide.Icons.X,
                         actions = {
                             AppBarActions(
                                 listOf(
                                     AppBar.Action(
                                         title = stringResource(MR.strings.action_webview_back),
-                                        icon = MaterialSymbols.AutoMirroredRounded.ArrowBack,
+                                        icon = Lucide.AutoMirrored.ArrowLeft,
                                         onClick = {
                                             if (navigator.canGoBack) {
                                                 navigator.navigateBack()
@@ -268,7 +268,7 @@ fun WebViewScreenContent(
                                     ),
                                     AppBar.Action(
                                         title = stringResource(MR.strings.action_webview_forward),
-                                        icon = MaterialSymbols.AutoMirroredRounded.ArrowForward,
+                                        icon = Lucide.AutoMirrored.ArrowRight,
                                         onClick = {
                                             if (navigator.canGoForward) {
                                                 navigator.navigateForward()
@@ -298,7 +298,7 @@ fun WebViewScreenContent(
                                             0,
                                             AppBar.Action(
                                                 title = stringResource(MR.strings.action_webview_close_tab),
-                                                icon = MaterialSymbols.Rounded.TabClose,
+                                                icon = Lucide.Icons.PanelTopClose,
                                                 onClick = popState,
                                             ),
                                         )

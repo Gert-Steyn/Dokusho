@@ -12,8 +12,8 @@ import eu.kanade.presentation.category.components.CategoryFloatingActionButton
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.more.settings.screen.browse.ExtensionStoreScreenState
 import mihon.domain.extension.model.ExtensionStore
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.components.material.padding
@@ -43,7 +43,7 @@ fun ExtensionStoresScreen(
                 actions = {
                     IconButton(onClick = onClickRefresh) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Refresh,
+                            imageVector = Lucide.Icons.RefreshCw,
                             contentDescription = stringResource(resource = MR.strings.action_webview_refresh),
                         )
                     }

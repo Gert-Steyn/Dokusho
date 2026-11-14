@@ -45,9 +45,9 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.presentation.util.isTabletUi
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.SkipNext
-import mihon.icons.materialsymbols.rounded.SkipPrevious
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.SkipBack
+import mihon.icons.lucide.icons.SkipForward
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 import kotlin.math.roundToInt
@@ -186,7 +186,7 @@ fun HorizontalChapterNavigator(
                 colors = buttonColor,
             ) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.SkipPrevious,
+                    imageVector = Lucide.Icons.SkipBack,
                     contentDescription = stringResource(
                         if (isRtl) MR.strings.action_next_chapter else MR.strings.action_previous_chapter,
                     ),
@@ -232,7 +232,7 @@ fun HorizontalChapterNavigator(
                 colors = buttonColor,
             ) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.SkipNext,
+                    imageVector = Lucide.Icons.SkipForward,
                     contentDescription = stringResource(
                         if (isRtl) MR.strings.action_previous_chapter else MR.strings.action_next_chapter,
                     ),
@@ -271,7 +271,7 @@ fun VerticalChapterNavigator(
             colors = buttonColor,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.SkipPrevious,
+                imageVector = Lucide.Icons.SkipBack,
                 contentDescription = stringResource(MR.strings.action_previous_chapter),
                 modifier = Modifier.rotate(90f),
             )
@@ -310,7 +310,7 @@ fun VerticalChapterNavigator(
             colors = buttonColor,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.SkipNext,
+                imageVector = Lucide.Icons.SkipForward,
                 contentDescription = stringResource(MR.strings.action_next_chapter),
                 modifier = Modifier.rotate(90f),
             )

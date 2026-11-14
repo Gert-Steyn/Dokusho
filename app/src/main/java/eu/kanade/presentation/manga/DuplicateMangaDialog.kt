@@ -54,18 +54,18 @@ import eu.kanade.presentation.more.settings.widget.TextPreferenceWidget
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.model.SManga
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Add
-import mihon.icons.materialsymbols.rounded.AttachMoney
-import mihon.icons.materialsymbols.rounded.Block
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.Person
-import mihon.icons.materialsymbols.rounded.Schedule
-import mihon.icons.materialsymbols.roundedfilled.Brush
-import mihon.icons.materialsymbols.roundedfilled.Pause
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Ban
+import mihon.icons.lucide.icons.Brush
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.Clock
+import mihon.icons.lucide.icons.DollarSign
+import mihon.icons.lucide.icons.Pause
+import mihon.icons.lucide.icons.Plus
+import mihon.icons.lucide.icons.TriangleAlert
+import mihon.icons.lucide.icons.User
+import mihon.icons.lucide.icons.X
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.manga.model.MangaWithChapterCount
 import tachiyomi.domain.source.model.StubSource
@@ -141,7 +141,7 @@ fun DuplicateMangaDialog(
 
                 TextPreferenceWidget(
                     title = stringResource(MR.strings.action_add_anyway),
-                    icon = MaterialSymbols.Rounded.Add,
+                    icon = Lucide.Icons.Plus,
                     onPreferenceClick = {
                         onDismissRequest()
                         onConfirm()
@@ -230,7 +230,7 @@ private fun DuplicateMangaListItem(
         if (!manga.author.isNullOrBlank()) {
             MangaDetailRow(
                 text = manga.author!!,
-                iconImageVector = MaterialSymbols.Rounded.Person,
+                iconImageVector = Lucide.Icons.User,
                 maxLines = 2,
             )
         }
@@ -238,7 +238,7 @@ private fun DuplicateMangaListItem(
         if (!manga.artist.isNullOrBlank() && manga.author != manga.artist) {
             MangaDetailRow(
                 text = manga.artist!!,
-                iconImageVector = MaterialSymbols.RoundedFilled.Brush,
+                iconImageVector = Lucide.Icons.Brush,
                 maxLines = 2,
             )
         }
@@ -254,13 +254,13 @@ private fun DuplicateMangaListItem(
                 else -> stringResource(MR.strings.unknown)
             },
             iconImageVector = when (manga.status) {
-                SManga.ONGOING.toLong() -> MaterialSymbols.Rounded.Schedule
-                SManga.COMPLETED.toLong() -> MaterialSymbols.Rounded.DoneAll
-                SManga.LICENSED.toLong() -> MaterialSymbols.Rounded.AttachMoney
-                SManga.PUBLISHING_FINISHED.toLong() -> MaterialSymbols.Rounded.Check
-                SManga.CANCELLED.toLong() -> MaterialSymbols.Rounded.Close
-                SManga.ON_HIATUS.toLong() -> MaterialSymbols.RoundedFilled.Pause
-                else -> MaterialSymbols.Rounded.Block
+                SManga.ONGOING.toLong() -> Lucide.Icons.Clock
+                SManga.COMPLETED.toLong() -> Lucide.Icons.CheckCheck
+                SManga.LICENSED.toLong() -> Lucide.Icons.DollarSign
+                SManga.PUBLISHING_FINISHED.toLong() -> Lucide.Icons.Check
+                SManga.CANCELLED.toLong() -> Lucide.Icons.X
+                SManga.ON_HIATUS.toLong() -> Lucide.Icons.Pause
+                else -> Lucide.Icons.Ban
             },
         )
 
@@ -272,7 +272,7 @@ private fun DuplicateMangaListItem(
         ) {
             if (source is StubSource) {
                 Icon(
-                    imageVector = MaterialSymbols.RoundedFilled.Warning,
+                    imageVector = Lucide.Icons.TriangleAlert,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
                     tint = MaterialTheme.colorScheme.error,

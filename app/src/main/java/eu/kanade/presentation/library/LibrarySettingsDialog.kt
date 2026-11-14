@@ -19,8 +19,8 @@ import eu.kanade.presentation.components.TabbedDialog
 import eu.kanade.presentation.components.TabbedDialogPaddings
 import eu.kanade.tachiyomi.ui.library.LibrarySettingsViewModel
 import eu.kanade.tachiyomi.util.system.isReleaseBuildType
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.core.common.preference.TriState
 import tachiyomi.domain.category.model.Category
 import tachiyomi.domain.library.model.LibraryDisplayMode
@@ -186,7 +186,7 @@ private fun ColumnScope.SortPage(
         if (mode == LibrarySort.Type.Random) {
             BaseSortItem(
                 label = stringResource(titleRes),
-                icon = MaterialSymbols.Rounded.Refresh
+                icon = Lucide.Icons.RefreshCw
                     .takeIf { sortingMode == LibrarySort.Type.Random },
                 onClick = {
                     viewModel.setSort(category, mode, LibrarySort.Direction.Ascending)

@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Preview
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Eye
 import tachiyomi.presentation.core.util.secondaryItemAlpha
 
 @Composable
@@ -70,7 +70,7 @@ private fun TextPreferenceWidgetPreview() {
                 TextPreferenceWidget(
                     title = "Text preference with icon",
                     subtitle = "Text preference summary",
-                    icon = MaterialSymbols.Rounded.Preview,
+                    icon = Lucide.Icons.Eye,
                     onPreferenceClick = {},
                 )
                 TextPreferenceWidget(

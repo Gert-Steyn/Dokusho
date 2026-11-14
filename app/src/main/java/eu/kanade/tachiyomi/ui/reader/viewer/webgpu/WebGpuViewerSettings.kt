@@ -50,13 +50,13 @@ import eu.kanade.tachiyomi.ui.reader.setting.ReadingMode
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import logcat.LogPriority
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Add
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.DragHandle
-import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
-import mihon.icons.materialsymbols.rounded.KeyboardArrowUp
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ChevronDown
+import mihon.icons.lucide.icons.ChevronUp
+import mihon.icons.lucide.icons.GripHorizontal
+import mihon.icons.lucide.icons.Plus
+import mihon.icons.lucide.icons.RefreshCw
+import mihon.icons.lucide.icons.Trash2
 import sh.calvin.reorderable.ReorderableColumn
 import tachiyomi.core.common.preference.Preference
 import tachiyomi.core.common.util.system.logcat
@@ -383,7 +383,7 @@ private fun SamplerItem(labelRes: StringResource, defaultName: String, pref: Pre
         shader?.let {
             IconButton(onClick = { WebGpuShaders.remove(context, pref, it) }) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Delete,
+                    imageVector = Lucide.Icons.Trash2,
                     contentDescription = stringResource(MR.strings.action_remove),
                 )
             }
@@ -424,7 +424,7 @@ private fun ShaderList(labelRes: StringResource, pref: Preference<List<WebGpuSha
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.DragHandle,
+                            imageVector = Lucide.Icons.GripHorizontal,
                             contentDescription = null,
                             modifier = Modifier.draggableHandle(),
                         )
@@ -440,9 +440,9 @@ private fun ShaderList(labelRes: StringResource, pref: Preference<List<WebGpuSha
                             IconButton(onClick = { expanded = !expanded }) {
                                 Icon(
                                     imageVector = if (expanded) {
-                                        MaterialSymbols.Rounded.KeyboardArrowUp
+                                        Lucide.Icons.ChevronUp
                                     } else {
-                                        MaterialSymbols.Rounded.KeyboardArrowDown
+                                        Lucide.Icons.ChevronDown
                                     },
                                     contentDescription = stringResource(MR.strings.shader_parameters),
                                 )
@@ -452,7 +452,7 @@ private fun ShaderList(labelRes: StringResource, pref: Preference<List<WebGpuSha
                             onClick = { WebGpuShaders.remove(context, pref, shader) },
                         ) {
                             Icon(
-                                imageVector = MaterialSymbols.Rounded.Delete,
+                                imageVector = Lucide.Icons.Trash2,
                                 contentDescription = stringResource(MR.strings.action_delete),
                             )
                         }
@@ -466,7 +466,7 @@ private fun ShaderList(labelRes: StringResource, pref: Preference<List<WebGpuSha
         onClick = pick,
         modifier = Modifier.padding(horizontal = SettingsItemsPaddings.Horizontal - MaterialTheme.padding.small),
     ) {
-        Icon(imageVector = MaterialSymbols.Rounded.Add, contentDescription = null)
+        Icon(imageVector = Lucide.Icons.Plus, contentDescription = null)
         Text(
             text = stringResource(MR.strings.action_add_shader),
             modifier = Modifier.padding(start = MaterialTheme.padding.small),
@@ -552,7 +552,7 @@ private fun ShaderParams(
                     modifier = Modifier.padding(end = MaterialTheme.padding.small),
                 ) {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.Refresh,
+                        imageVector = Lucide.Icons.RefreshCw,
                         contentDescription = stringResource(MR.strings.action_reset),
                     )
                 }

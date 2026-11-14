@@ -47,14 +47,14 @@ import eu.kanade.presentation.util.formatChapterNumber
 import eu.kanade.presentation.util.rememberResourceBitmapPainter
 import eu.kanade.tachiyomi.R
 import mihon.feature.migration.list.models.MigratingManga
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.CopyAll
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.MoreVert
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.Files
+import mihon.icons.lucide.icons.X
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.Badge
@@ -94,9 +94,9 @@ fun MigrationListScreenContent(
                                 icon = if (items.size ==
                                     1
                                 ) {
-                                    MaterialSymbols.Rounded.ContentCopy
+                                    Lucide.Icons.Copy
                                 } else {
-                                    MaterialSymbols.Rounded.CopyAll
+                                    Lucide.Icons.Files
                                 },
                                 onClick = { openMigrationDialog(true) },
                                 enabled = migrationComplete,
@@ -106,9 +106,9 @@ fun MigrationListScreenContent(
                                 icon = if (items.size ==
                                     1
                                 ) {
-                                    MaterialSymbols.Rounded.Check
+                                    Lucide.Icons.Check
                                 } else {
-                                    MaterialSymbols.Rounded.DoneAll
+                                    Lucide.Icons.CheckCheck
                                 },
                                 onClick = { openMigrationDialog(false) },
                                 enabled = migrationComplete,
@@ -147,7 +147,7 @@ fun MigrationListScreenContent(
                     )
 
                     Icon(
-                        imageVector = MaterialSymbols.AutoMirroredRounded.ArrowForward,
+                        imageVector = Lucide.AutoMirrored.ArrowRight,
                         contentDescription = null,
                         modifier = Modifier.weight(0.2f),
                     )
@@ -328,7 +328,7 @@ private fun MigrationListItemAction(
             MigratingManga.SearchResult.Searching -> {
                 IconButton(onClick = onSkip) {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.Close,
+                        imageVector = Lucide.Icons.X,
                         contentDescription = null,
                     )
                 }
@@ -336,7 +336,7 @@ private fun MigrationListItemAction(
             MigratingManga.SearchResult.NotFound, is MigratingManga.SearchResult.Success -> {
                 IconButton(onClick = { menuExpanded = true }) {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.MoreVert,
+                        imageVector = Lucide.Icons.EllipsisVertical,
                         contentDescription = null,
                     )
                 }

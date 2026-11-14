@@ -57,11 +57,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.roundedfilled.Visibility
-import mihon.icons.materialsymbols.roundedfilled.VisibilityOff
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
+import mihon.icons.lucide.icons.Eye
+import mihon.icons.lucide.icons.EyeOff
+import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
@@ -77,7 +77,7 @@ object SettingsTrackingScreen : SearchableSettings {
         val uriHandler = LocalUriHandler.current
         IconButton(onClick = { uriHandler.openUri("https://mihon.app/docs/guides/tracking") }) {
             Icon(
-                imageVector = MaterialSymbols.AutoMirroredRounded.Help,
+                imageVector = Lucide.AutoMirrored.CircleQuestionMark,
                 contentDescription = stringResource(MR.strings.tracking_guide),
             )
         }
@@ -227,7 +227,7 @@ object SettingsTrackingScreen : SearchableSettings {
                     )
                     IconButton(onClick = onDismissRequest) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Close,
+                            imageVector = Lucide.Icons.X,
                             contentDescription = stringResource(MR.strings.action_close),
                         )
                     }
@@ -257,9 +257,9 @@ object SettingsTrackingScreen : SearchableSettings {
                             IconButton(onClick = { hidePassword = !hidePassword }) {
                                 Icon(
                                     imageVector = if (hidePassword) {
-                                        MaterialSymbols.RoundedFilled.Visibility
+                                        Lucide.Icons.Eye
                                     } else {
-                                        MaterialSymbols.RoundedFilled.VisibilityOff
+                                        Lucide.Icons.EyeOff
                                     },
                                     contentDescription = null,
                                 )

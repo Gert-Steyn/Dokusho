@@ -76,7 +76,7 @@ import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.InjektScope
 import java.security.Security
 import kotlin.concurrent.thread
-import mihon.icons.materialsymbols.R as MaterialSymbolsR
+import mihon.icons.lucide.R as LucideR
 
 class App : Application(), DefaultLifecycleObserver, SingletonImageLoader.Factory, GraphProvider<AppGraph> {
 
@@ -156,7 +156,7 @@ class App : Application(), DefaultLifecycleObserver, SingletonImageLoader.Factor
                     ) {
                         setContentTitle(stringResource(MR.strings.pref_incognito_mode))
                         setContentText(stringResource(MR.strings.notification_incognito_text))
-                        setSmallIcon(MaterialSymbolsR.drawable.rounded_eyeglasses_2)
+                        setSmallIcon(LucideR.drawable.icons_glasses)
                         setOngoing(true)
 
                         val pendingIntent = PendingIntent.getBroadcast(

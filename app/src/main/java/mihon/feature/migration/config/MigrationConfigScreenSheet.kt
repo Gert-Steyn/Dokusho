@@ -32,9 +32,9 @@ import eu.kanade.domain.source.service.SourcePreferences
 import eu.kanade.presentation.components.AdaptiveSheet
 import mihon.domain.migration.models.MigrationFlag
 import mihon.feature.common.utils.getLabel
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.TriangleAlert
 import tachiyomi.core.common.preference.Preference
 import tachiyomi.core.common.preference.getAndSet
 import tachiyomi.core.common.preference.toggle
@@ -98,7 +98,7 @@ fun MigrationConfigScreenSheet(
                                 leadingIcon = {
                                     if (selected) {
                                         Icon(
-                                            imageVector = MaterialSymbols.Rounded.Check,
+                                            imageVector = Lucide.Icons.Check,
                                             contentDescription = null,
                                         )
                                     }
@@ -226,7 +226,7 @@ private fun MigrationSheetWarningItem(
     ListItem(
         leadingContent = {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.Warning,
+                imageVector = Lucide.Icons.TriangleAlert,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.active,
             )

@@ -19,7 +19,7 @@ import eu.kanade.tachiyomi.util.system.notify
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.i18n.MR
 import java.util.regex.Pattern
-import mihon.icons.materialsymbols.R as MaterialSymbolsR
+import mihon.icons.lucide.R as LucideR
 
 /**
  * DownloadNotifier is used to show notifications when downloading one or multiple chapters.
@@ -90,12 +90,12 @@ class DownloadNotifier(
                 isDownloading = true
                 // Pause action
                 addAction(
-                    MaterialSymbolsR.drawable.rounded_filled_pause,
+                    LucideR.drawable.icons_pause,
                     context.stringResource(MR.strings.action_pause),
                     NotificationReceiver.pauseDownloadsPendingBroadcast(context),
                 )
                 addAction(
-                    MaterialSymbolsR.drawable.rounded_book,
+                    LucideR.drawable.icons_book_open,
                     context.stringResource(MR.strings.action_show_manga),
                     NotificationReceiver.openEntryPendingActivity(context, download.manga.id),
                 )
@@ -140,20 +140,20 @@ class DownloadNotifier(
         ) {
             setContentTitle(context.stringResource(MR.strings.chapter_paused))
             setContentText(context.stringResource(MR.strings.download_notifier_download_paused))
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_pause)
+            setSmallIcon(LucideR.drawable.icons_pause)
             setLargeIcon(BitmapFactory.decodeResource(context.resources, R.mipmap.ic_launcher))
             setOnlyAlertOnce(true)
             // Open download manager when clicked
             setContentIntent(NotificationHandler.openDownloadManagerPendingActivity(context))
             // Resume action
             addAction(
-                MaterialSymbolsR.drawable.rounded_filled_play_arrow,
+                LucideR.drawable.icons_play,
                 context.stringResource(MR.strings.action_resume),
                 NotificationReceiver.resumeDownloadsPendingBroadcast(context),
             )
             // Clear action
             addAction(
-                MaterialSymbolsR.drawable.rounded_close,
+                LucideR.drawable.icons_x,
                 context.stringResource(MR.strings.action_cancel_all),
                 NotificationReceiver.clearDownloadsPendingBroadcast(context),
             )
@@ -189,12 +189,12 @@ class DownloadNotifier(
         ) {
             setContentTitle(context.stringResource(MR.strings.download_notifier_downloader_title))
             setStyle(NotificationCompat.BigTextStyle().bigText(reason))
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_warning)
+            setSmallIcon(LucideR.drawable.icons_triangle_alert)
             setAutoCancel(true)
             setContentIntent(NotificationHandler.openDownloadManagerPendingActivity(context))
             if (mangaId != null) {
                 addAction(
-                    MaterialSymbolsR.drawable.rounded_book,
+                    LucideR.drawable.icons_book_open,
                     context.stringResource(MR.strings.action_show_manga),
                     NotificationReceiver.openEntryPendingActivity(context, mangaId),
                 )
@@ -225,11 +225,11 @@ class DownloadNotifier(
                 mangaTitle?.plus(": $chapter") ?: context.stringResource(MR.strings.download_notifier_downloader_title),
             )
             setContentText(error ?: context.stringResource(MR.strings.download_notifier_unknown_error))
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_warning)
+            setSmallIcon(LucideR.drawable.icons_triangle_alert)
             setContentIntent(NotificationHandler.openDownloadManagerPendingActivity(context))
             if (mangaId != null) {
                 addAction(
-                    MaterialSymbolsR.drawable.rounded_book,
+                    LucideR.drawable.icons_book_open,
                     context.stringResource(MR.strings.action_show_manga),
                     NotificationReceiver.openEntryPendingActivity(context, mangaId),
                 )

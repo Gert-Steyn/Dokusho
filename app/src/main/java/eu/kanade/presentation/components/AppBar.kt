@@ -52,11 +52,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.drop
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowBack
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.MoreVert
-import mihon.icons.materialsymbols.rounded.Search
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowLeft
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.Search
+import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.clearFocusOnSoftKeyboardHide
@@ -139,7 +139,7 @@ fun AppBar(
                 if (isActionMode) {
                     IconButton(onClick = onCancelActionMode) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Close,
+                            imageVector = Lucide.Icons.X,
                             contentDescription = stringResource(MR.strings.action_cancel),
                         )
                     }
@@ -237,7 +237,7 @@ fun AppBarActions(
                 onClick = { showMenu = !showMenu },
             ) {
                 Icon(
-                    MaterialSymbols.Rounded.MoreVert,
+                    Lucide.Icons.EllipsisVertical,
                     contentDescription = stringResource(MR.strings.action_menu_overflow_description),
                 )
             }
@@ -378,7 +378,7 @@ fun SearchToolbar(
                             onClick = onClick,
                         ) {
                             Icon(
-                                MaterialSymbols.Rounded.Search,
+                                Lucide.Icons.Search,
                                 contentDescription = stringResource(MR.strings.action_search),
                             )
                         }
@@ -402,7 +402,7 @@ fun SearchToolbar(
                             },
                         ) {
                             Icon(
-                                MaterialSymbols.Rounded.Close,
+                                Lucide.Icons.X,
                                 contentDescription = stringResource(MR.strings.action_reset),
                             )
                         }
@@ -423,7 +423,7 @@ fun UpIcon(
     navigationIcon: ImageVector? = null,
 ) {
     val icon = navigationIcon
-        ?: MaterialSymbols.AutoMirroredRounded.ArrowBack
+        ?: Lucide.AutoMirrored.ArrowLeft
     Icon(
         imageVector = icon,
         contentDescription = stringResource(MR.strings.action_bar_up_description),

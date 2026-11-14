@@ -25,10 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import eu.kanade.presentation.components.SearchToolbar
 import eu.kanade.tachiyomi.ui.browse.source.globalsearch.SourceFilter
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.FilterList
-import mihon.icons.materialsymbols.rounded.Keep
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.ListFilter
+import mihon.icons.lucide.icons.Pin
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
@@ -82,7 +82,7 @@ fun GlobalSearchToolbar(
                     onClick = { onChangeSearchFilter(SourceFilter.PinnedOnly) },
                     leadingIcon = {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Keep,
+                            imageVector = Lucide.Icons.Pin,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(FilterChipDefaults.IconSize),
@@ -97,7 +97,7 @@ fun GlobalSearchToolbar(
                     onClick = { onChangeSearchFilter(SourceFilter.All) },
                     leadingIcon = {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.DoneAll,
+                            imageVector = Lucide.Icons.CheckCheck,
                             contentDescription = null,
                             modifier = Modifier
                                 .size(FilterChipDefaults.IconSize),
@@ -116,7 +116,7 @@ fun GlobalSearchToolbar(
                 onClick = { onToggleResults() },
                 leadingIcon = {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.FilterList,
+                        imageVector = Lucide.Icons.ListFilter,
                         contentDescription = null,
                         modifier = Modifier
                             .size(FilterChipDefaults.IconSize),

@@ -50,9 +50,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mihon.core.metro.AppCoroutineScope
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.FlipToBack
-import mihon.icons.materialsymbols.rounded.SelectAll
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Layers
+import mihon.icons.lucide.icons.SquareCheckBig
 import tachiyomi.domain.history.repository.HistoryRepository
 import tachiyomi.domain.manga.repository.MangaRepository
 import tachiyomi.domain.source.interactor.GetSourcesWithNonLibraryManga
@@ -148,12 +148,12 @@ class ClearDatabaseScreen : Screen() {
                                         actions = listOf(
                                             AppBar.Action(
                                                 title = stringResource(MR.strings.action_select_all),
-                                                icon = MaterialSymbols.Rounded.SelectAll,
+                                                icon = Lucide.Icons.SquareCheckBig,
                                                 onClick = viewModel::selectAll,
                                             ),
                                             AppBar.Action(
                                                 title = stringResource(MR.strings.action_select_inverse),
-                                                icon = MaterialSymbols.Rounded.FlipToBack,
+                                                icon = Lucide.Icons.Layers,
                                                 onClick = viewModel::invertSelection,
                                             ),
                                         ),

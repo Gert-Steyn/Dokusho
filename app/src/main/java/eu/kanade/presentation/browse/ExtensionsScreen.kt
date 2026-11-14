@@ -53,14 +53,14 @@ import eu.kanade.tachiyomi.util.system.LocaleHelper
 import eu.kanade.tachiyomi.util.system.copyToClipboard
 import eu.kanade.tachiyomi.util.system.launchRequestPackageInstallsPermission
 import mihon.domain.extension.model.ExtensionStore
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.Download
-import mihon.icons.materialsymbols.rounded.Info
-import mihon.icons.materialsymbols.rounded.Public
-import mihon.icons.materialsymbols.rounded.Refresh
-import mihon.icons.materialsymbols.rounded.Settings
-import mihon.icons.materialsymbols.rounded.VerifiedUser
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Download
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.Info
+import mihon.icons.lucide.icons.RefreshCw
+import mihon.icons.lucide.icons.Settings
+import mihon.icons.lucide.icons.ShieldCheck
+import mihon.icons.lucide.icons.X
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
@@ -111,7 +111,7 @@ fun ExtensionScreen(
                     actions = listOf(
                         EmptyScreenAction(
                             stringRes = MR.strings.extensionStores,
-                            icon = MaterialSymbols.Rounded.Settings,
+                            icon = Lucide.Icons.Settings,
                             onClick = { navigator.push(ExtensionStoresScreen()) },
                         ),
                     ),
@@ -468,7 +468,7 @@ private fun ExtensionItemActions(
         if (!installStep.isCompleted()) {
             IconButton(onClick = { onClickItemCancel(extension) }) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Close,
+                    imageVector = Lucide.Icons.X,
                     contentDescription = stringResource(MR.strings.action_cancel),
                 )
             }
@@ -477,14 +477,14 @@ private fun ExtensionItemActions(
 
         val secondaryAction = when (extension) {
             is Extension.Available -> {
-                (MaterialSymbols.Rounded.Public to MR.strings.action_open_in_web_view)
+                (Lucide.Icons.Globe to MR.strings.action_open_in_web_view)
                     .takeIf { extension.sources.isNotEmpty() }
             }
-            is Extension.Loaded -> MaterialSymbols.Rounded.Settings to MR.strings.action_settings
+            is Extension.Loaded -> Lucide.Icons.Settings to MR.strings.action_settings
             is Extension.NotLoaded -> if (extension.reason is Extension.NotLoaded.Reason.Untrusted) {
-                MaterialSymbols.Rounded.VerifiedUser to MR.strings.ext_trust
+                Lucide.Icons.ShieldCheck to MR.strings.ext_trust
             } else {
-                MaterialSymbols.Rounded.Info to MR.strings.ext_not_loaded_details
+                Lucide.Icons.Info to MR.strings.ext_not_loaded_details
             }
         }
         secondaryAction?.let { (icon, label) ->
@@ -494,10 +494,10 @@ private fun ExtensionItemActions(
         }
 
         val action = when {
-            installStep == InstallStep.Error -> MaterialSymbols.Rounded.Refresh to MR.strings.action_retry
-            extension is Extension.Available -> MaterialSymbols.Rounded.Download to MR.strings.ext_install
+            installStep == InstallStep.Error -> Lucide.Icons.RefreshCw to MR.strings.action_retry
+            extension is Extension.Available -> Lucide.Icons.Download to MR.strings.ext_install
             extension is Extension.Installed && extension.hasUpdate -> {
-                MaterialSymbols.Rounded.Download to MR.strings.ext_update
+                Lucide.Icons.Download to MR.strings.ext_update
             }
             else -> null
         }

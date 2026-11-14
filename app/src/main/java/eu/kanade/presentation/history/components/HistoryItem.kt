@@ -24,9 +24,9 @@ import eu.kanade.presentation.manga.components.MangaCover
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.presentation.util.formatChapterNumber
 import eu.kanade.tachiyomi.util.lang.toTimestampString
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.Favorite
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Heart
+import mihon.icons.lucide.icons.Trash2
 import tachiyomi.domain.history.model.HistoryWithRelations
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.padding
@@ -92,7 +92,7 @@ fun HistoryItem(
         if (!history.coverData.isMangaFavorite) {
             IconButton(onClick = onClickFavorite) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Favorite,
+                    imageVector = Lucide.Icons.Heart,
                     contentDescription = stringResource(MR.strings.add_to_library),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
@@ -101,7 +101,7 @@ fun HistoryItem(
 
         IconButton(onClick = onClickDelete) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.Delete,
+                imageVector = Lucide.Icons.Trash2,
                 contentDescription = stringResource(MR.strings.action_delete),
                 tint = MaterialTheme.colorScheme.onSurface,
             )

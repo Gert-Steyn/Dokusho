@@ -50,8 +50,8 @@ import eu.kanade.presentation.components.UpIcon
 import eu.kanade.presentation.more.settings.Preference
 import eu.kanade.presentation.util.Screen
 import kotlinx.coroutines.flow.collectLatest
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Close
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
@@ -130,7 +130,7 @@ class SettingsSearchScreen : Screen() {
                             if (textFieldState.text.isNotEmpty()) {
                                 IconButton(onClick = { textFieldState.clearText() }) {
                                     Icon(
-                                        imageVector = MaterialSymbols.Rounded.Close,
+                                        imageVector = Lucide.Icons.X,
                                         contentDescription = null,
                                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )

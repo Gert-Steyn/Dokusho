@@ -59,8 +59,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import logcat.LogPriority
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.storage.displayablePath
 import tachiyomi.core.common.util.system.logcat
@@ -86,7 +86,7 @@ object SettingsDataScreen : SearchableSettings {
         val uriHandler = LocalUriHandler.current
         IconButton(onClick = { uriHandler.openUri(HELP_URL) }) {
             Icon(
-                imageVector = MaterialSymbols.AutoMirroredRounded.Help,
+                imageVector = Lucide.AutoMirrored.CircleQuestionMark,
                 contentDescription = stringResource(MR.strings.tracking_guide),
             )
         }

@@ -16,10 +16,10 @@ import eu.kanade.presentation.more.stats.components.StatsItem
 import eu.kanade.presentation.more.stats.components.StatsOverviewItem
 import eu.kanade.presentation.more.stats.data.StatsData
 import eu.kanade.presentation.util.toDurationString
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.CollectionsBookmark
-import mihon.icons.materialsymbols.rounded.LocalLibrary
-import mihon.icons.materialsymbols.rounded.Schedule
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Clock
+import mihon.icons.lucide.icons.Library
+import mihon.icons.lucide.icons.LibraryBig
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.SectionCard
 import tachiyomi.presentation.core.components.material.padding
@@ -70,17 +70,17 @@ private fun LazyItemScope.OverviewSection(
             StatsOverviewItem(
                 title = data.libraryMangaCount.toString(),
                 subtitle = stringResource(MR.strings.in_library),
-                icon = MaterialSymbols.Rounded.CollectionsBookmark,
+                icon = Lucide.Icons.LibraryBig,
             )
             StatsOverviewItem(
                 title = readDurationString,
                 subtitle = stringResource(MR.strings.label_read_duration),
-                icon = MaterialSymbols.Rounded.Schedule,
+                icon = Lucide.Icons.Clock,
             )
             StatsOverviewItem(
                 title = data.completedMangaCount.toString(),
                 subtitle = stringResource(MR.strings.label_completed_titles),
-                icon = MaterialSymbols.Rounded.LocalLibrary,
+                icon = Lucide.Icons.Library,
             )
         }
     }

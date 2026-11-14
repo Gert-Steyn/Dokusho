@@ -27,9 +27,9 @@ import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toJavaYearMonth
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.yearMonth
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.KeyboardArrowLeft
-import mihon.icons.materialsymbols.rounded.KeyboardArrowRight
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ChevronLeft
+import mihon.icons.lucide.icons.ChevronRight
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 import java.time.format.DateTimeFormatter
@@ -60,11 +60,11 @@ fun CalenderHeader(
         Row {
             IconButton(onClick = onPreviousClick) {
                 @Suppress("DEPRECATION")
-                Icon(MaterialSymbols.Rounded.KeyboardArrowLeft, stringResource(MR.strings.upcoming_calendar_prev))
+                Icon(Lucide.Icons.ChevronLeft, stringResource(MR.strings.upcoming_calendar_prev))
             }
             IconButton(onClick = onNextClick) {
                 @Suppress("DEPRECATION")
-                Icon(MaterialSymbols.Rounded.KeyboardArrowRight, stringResource(MR.strings.upcoming_calendar_next))
+                Icon(Lucide.Icons.ChevronRight, stringResource(MR.strings.upcoming_calendar_next))
             }
         }
     }

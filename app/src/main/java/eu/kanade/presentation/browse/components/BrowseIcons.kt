@@ -19,9 +19,9 @@ import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.coil.InstalledExtensionIcon
 import eu.kanade.tachiyomi.data.coil.InstalledSourceIcon
 import eu.kanade.tachiyomi.extension.model.Extension
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.Dangerous
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.OctagonAlert
+import mihon.icons.lucide.icons.TriangleAlert
 import tachiyomi.domain.source.model.Source
 import tachiyomi.source.local.isLocal
 
@@ -37,7 +37,7 @@ fun SourceIcon(
     when {
         source.isStub -> {
             Image(
-                imageVector = MaterialSymbols.RoundedFilled.Warning,
+                imageVector = Lucide.Icons.TriangleAlert,
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.error),
                 modifier = modifier.then(defaultModifier),
@@ -91,7 +91,7 @@ fun ExtensionIcon(
             )
         }
         is Extension.NotLoaded -> Image(
-            imageVector = MaterialSymbols.RoundedFilled.Dangerous,
+            imageVector = Lucide.Icons.OctagonAlert,
             contentDescription = null,
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.error),
             modifier = modifier.then(defaultModifier),

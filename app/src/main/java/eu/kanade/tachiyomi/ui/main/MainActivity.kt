@@ -116,9 +116,9 @@ import mihon.core.migration.Migrator
 import mihon.data.cache.ChapterCache
 import mihon.domain.database.repository.DatabaseRepository
 import mihon.feature.support.SupportUsScreen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.OpenInNew
-import mihon.icons.materialsymbols.roundedfilled.VolunteerActivism
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ExternalLink
+import mihon.icons.lucide.icons.HandHeart
 import tachiyomi.core.common.Constants
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.library.service.LibraryPreferences
@@ -483,7 +483,7 @@ class MainActivity : BaseActivity() {
                             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
                         ) {
                             Icon(
-                                imageVector = MaterialSymbols.RoundedFilled.VolunteerActivism,
+                                imageVector = Lucide.Icons.HandHeart,
                                 contentDescription = null,
                             )
                             Text(
@@ -512,7 +512,7 @@ class MainActivity : BaseActivity() {
                                     text = stringResource(MR.strings.donationCampaign_contactPlatform),
                                 )
                                 Icon(
-                                    imageVector = MaterialSymbols.AutoMirroredRounded.OpenInNew,
+                                    imageVector = Lucide.AutoMirrored.ExternalLink,
                                     contentDescription = null,
                                 )
                             }

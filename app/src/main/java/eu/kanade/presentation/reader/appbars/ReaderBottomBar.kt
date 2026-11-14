@@ -10,11 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderOrientation
 import eu.kanade.tachiyomi.ui.reader.setting.ReadingMode
-import mihon.icons.custommaterialsymbols.CustomMaterialSymbols
-import mihon.icons.custommaterialsymbols.rounded.CropOff
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Crop
-import mihon.icons.materialsymbols.rounded.Settings
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Crop
+import mihon.icons.lucide.icons.Scan
+import mihon.icons.lucide.icons.Settings
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -51,14 +50,14 @@ fun ReaderBottomBar(
 
         IconButton(onClick = onClickCropBorder) {
             Icon(
-                imageVector = if (cropEnabled) MaterialSymbols.Rounded.Crop else CustomMaterialSymbols.Rounded.CropOff,
+                imageVector = if (cropEnabled) Lucide.Icons.Crop else Lucide.Icons.Scan,
                 contentDescription = stringResource(MR.strings.pref_crop_borders),
             )
         }
 
         IconButton(onClick = onClickSettings) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.Settings,
+                imageVector = Lucide.Icons.Settings,
                 contentDescription = stringResource(MR.strings.action_settings),
             )
         }

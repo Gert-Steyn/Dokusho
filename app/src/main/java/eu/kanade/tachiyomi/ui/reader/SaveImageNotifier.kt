@@ -18,7 +18,7 @@ import eu.kanade.tachiyomi.util.system.notificationBuilder
 import eu.kanade.tachiyomi.util.system.notify
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.i18n.MR
-import mihon.icons.materialsymbols.R as MaterialSymbolsR
+import mihon.icons.lucide.R as LucideR
 
 /**
  * Class used to show BigPictureStyle notifications
@@ -70,7 +70,7 @@ class SaveImageNotifier(private val context: Context) {
     private fun showCompleteNotification(uri: Uri, image: Bitmap?) {
         with(notificationBuilder) {
             setContentTitle(context.stringResource(MR.strings.picture_saved))
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_photo)
+            setSmallIcon(LucideR.drawable.icons_image)
             image?.let { setStyle(NotificationCompat.BigPictureStyle().bigPicture(it)) }
             setLargeIcon(image)
             setAutoCancel(true)
@@ -81,7 +81,7 @@ class SaveImageNotifier(private val context: Context) {
             setContentIntent(NotificationHandler.openImagePendingActivity(context, uri))
             // Share action
             addAction(
-                MaterialSymbolsR.drawable.rounded_share,
+                LucideR.drawable.icons_share_2,
                 context.stringResource(MR.strings.action_share),
                 NotificationReceiver.shareImagePendingBroadcast(context, uri),
             )

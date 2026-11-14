@@ -12,10 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.DragHandle
-import mihon.icons.materialsymbols.rounded.Edit
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.GripHorizontal
+import mihon.icons.lucide.icons.Pencil
+import mihon.icons.lucide.icons.Trash2
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import tachiyomi.domain.category.model.Category
 import tachiyomi.i18n.MR
@@ -42,7 +42,7 @@ fun ReorderableCollectionItemScope.CategoryListItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.DragHandle,
+                imageVector = Lucide.Icons.GripHorizontal,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(MaterialTheme.padding.medium)
@@ -54,13 +54,13 @@ fun ReorderableCollectionItemScope.CategoryListItem(
             )
             IconButton(onClick = onRename) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Edit,
+                    imageVector = Lucide.Icons.Pencil,
                     contentDescription = stringResource(MR.strings.action_rename_category),
                 )
             }
             IconButton(onClick = onDelete) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Delete,
+                    imageVector = Lucide.Icons.Trash2,
                     contentDescription = stringResource(MR.strings.action_delete),
                 )
             }

@@ -38,8 +38,8 @@ import eu.kanade.presentation.util.rememberRequestPackageInstallsPermissionState
 import eu.kanade.tachiyomi.util.system.launchRequestPackageInstallsPermission
 import eu.kanade.tachiyomi.util.system.telemetryIncluded
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Check
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.collectAsState
@@ -161,7 +161,7 @@ internal class PermissionStep : OnboardingStep {
                 ) {
                     if (granted) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Check,
+                            imageVector = Lucide.Icons.Check,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                         )

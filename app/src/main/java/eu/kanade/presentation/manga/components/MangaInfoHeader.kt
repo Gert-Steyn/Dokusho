@@ -78,22 +78,21 @@ import eu.kanade.tachiyomi.util.system.copyToClipboard
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.AttachMoney
-import mihon.icons.materialsymbols.rounded.Block
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.Favorite
-import mihon.icons.materialsymbols.rounded.HourglassEmpty
-import mihon.icons.materialsymbols.rounded.Person
-import mihon.icons.materialsymbols.rounded.Public
-import mihon.icons.materialsymbols.rounded.Schedule
-import mihon.icons.materialsymbols.rounded.Sync
-import mihon.icons.materialsymbols.roundedfilled.Brush
-import mihon.icons.materialsymbols.roundedfilled.Favorite
-import mihon.icons.materialsymbols.roundedfilled.Pause
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Ban
+import mihon.icons.lucide.icons.Brush
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.Clock
+import mihon.icons.lucide.icons.DollarSign
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.Heart
+import mihon.icons.lucide.icons.Hourglass
+import mihon.icons.lucide.icons.Pause
+import mihon.icons.lucide.icons.RefreshCcw
+import mihon.icons.lucide.icons.TriangleAlert
+import mihon.icons.lucide.icons.User
+import mihon.icons.lucide.icons.X
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.findChildOfType
@@ -207,7 +206,7 @@ fun MangaActionRow(
             } else {
                 stringResource(MR.strings.add_to_library)
             },
-            icon = if (favorite) MaterialSymbols.RoundedFilled.Favorite else MaterialSymbols.Rounded.Favorite,
+            icon = if (favorite) Lucide.Icons.Heart else Lucide.Icons.Heart,
             color = if (favorite) MaterialTheme.colorScheme.primary else defaultActionButtonColor,
             onClick = onAddToLibraryClicked,
             onLongClick = onEditCategory,
@@ -222,7 +221,7 @@ fun MangaActionRow(
                     nextUpdateDays,
                 )
             },
-            icon = MaterialSymbols.Rounded.HourglassEmpty,
+            icon = Lucide.Icons.Hourglass,
             color = if (isUserIntervalMode) MaterialTheme.colorScheme.primary else defaultActionButtonColor,
             onClick = { onEditIntervalClicked?.invoke() },
         )
@@ -232,14 +231,14 @@ fun MangaActionRow(
             } else {
                 pluralStringResource(MR.plurals.num_trackers, count = trackingCount, trackingCount)
             },
-            icon = if (trackingCount == 0) MaterialSymbols.Rounded.Sync else MaterialSymbols.Rounded.Check,
+            icon = if (trackingCount == 0) Lucide.Icons.RefreshCcw else Lucide.Icons.Check,
             color = if (trackingCount == 0) defaultActionButtonColor else MaterialTheme.colorScheme.primary,
             onClick = onTrackingClicked,
         )
         if (onWebViewClicked != null) {
             MangaActionButton(
                 title = stringResource(MR.strings.action_web_view),
-                icon = MaterialSymbols.Rounded.Public,
+                icon = Lucide.Icons.Globe,
                 color = defaultActionButtonColor,
                 onClick = onWebViewClicked,
                 onLongClick = onWebViewLongClicked,
@@ -467,7 +466,7 @@ private fun ColumnScope.MangaContentInfo(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Person,
+            imageVector = Lucide.Icons.User,
             contentDescription = null,
             modifier = Modifier.size(16.dp),
         )
@@ -498,7 +497,7 @@ private fun ColumnScope.MangaContentInfo(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.Brush,
+                imageVector = Lucide.Icons.Brush,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
             )
@@ -523,13 +522,13 @@ private fun ColumnScope.MangaContentInfo(
     ) {
         Icon(
             imageVector = when (status) {
-                SManga.ONGOING.toLong() -> MaterialSymbols.Rounded.Schedule
-                SManga.COMPLETED.toLong() -> MaterialSymbols.Rounded.DoneAll
-                SManga.LICENSED.toLong() -> MaterialSymbols.Rounded.AttachMoney
-                SManga.PUBLISHING_FINISHED.toLong() -> MaterialSymbols.Rounded.Check
-                SManga.CANCELLED.toLong() -> MaterialSymbols.Rounded.Close
-                SManga.ON_HIATUS.toLong() -> MaterialSymbols.RoundedFilled.Pause
-                else -> MaterialSymbols.Rounded.Block
+                SManga.ONGOING.toLong() -> Lucide.Icons.Clock
+                SManga.COMPLETED.toLong() -> Lucide.Icons.CheckCheck
+                SManga.LICENSED.toLong() -> Lucide.Icons.DollarSign
+                SManga.PUBLISHING_FINISHED.toLong() -> Lucide.Icons.Check
+                SManga.CANCELLED.toLong() -> Lucide.Icons.X
+                SManga.ON_HIATUS.toLong() -> Lucide.Icons.Pause
+                else -> Lucide.Icons.Ban
             },
             contentDescription = null,
             modifier = Modifier
@@ -553,7 +552,7 @@ private fun ColumnScope.MangaContentInfo(
             DotSeparatorText()
             if (isStubSource) {
                 Icon(
-                    imageVector = MaterialSymbols.RoundedFilled.Warning,
+                    imageVector = Lucide.Icons.TriangleAlert,
                     contentDescription = null,
                     modifier = Modifier
                         .padding(end = 4.dp)

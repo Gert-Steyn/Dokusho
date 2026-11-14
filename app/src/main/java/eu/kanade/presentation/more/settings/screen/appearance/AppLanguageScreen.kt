@@ -24,8 +24,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.util.Screen
 import eu.kanade.tachiyomi.util.system.LocaleHelper
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Check
 import org.xmlpull.v1.XmlPullParser
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.i18n.MR
@@ -74,7 +74,7 @@ class AppLanguageScreen : Screen() {
                         trailingContent = {
                             if (currentLanguage == it.langTag) {
                                 Icon(
-                                    imageVector = MaterialSymbols.Rounded.Check,
+                                    imageVector = Lucide.Icons.Check,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.primary,
                                 )

@@ -15,11 +15,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.AdaptiveSheet
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.Photo
-import mihon.icons.materialsymbols.rounded.Save
-import mihon.icons.materialsymbols.rounded.Share
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.Image
+import mihon.icons.lucide.icons.Save
+import mihon.icons.lucide.icons.Share2
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ActionButton
 import tachiyomi.presentation.core.components.material.padding
@@ -42,13 +42,13 @@ fun ReaderPageActionsDialog(
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.set_as_cover),
-                icon = MaterialSymbols.Rounded.Photo,
+                icon = Lucide.Icons.Image,
                 onClick = { showSetCoverDialog = true },
             )
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_copy_to_clipboard),
-                icon = MaterialSymbols.Rounded.ContentCopy,
+                icon = Lucide.Icons.Copy,
                 onClick = {
                     onShare(true)
                     onDismissRequest()
@@ -57,7 +57,7 @@ fun ReaderPageActionsDialog(
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_share),
-                icon = MaterialSymbols.Rounded.Share,
+                icon = Lucide.Icons.Share2,
                 onClick = {
                     onShare(false)
                     onDismissRequest()
@@ -66,7 +66,7 @@ fun ReaderPageActionsDialog(
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_save),
-                icon = MaterialSymbols.Rounded.Save,
+                icon = Lucide.Icons.Save,
                 onClick = {
                     onSave()
                     onDismissRequest()

@@ -30,12 +30,11 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.DropdownMenu
 import eu.kanade.tachiyomi.data.download.model.Download
-import mihon.icons.custommaterialsymbols.CustomMaterialSymbols
-import mihon.icons.custommaterialsymbols.rounded.DownloadArrow
-import mihon.icons.custommaterialsymbols.rounded.DownloadCircle
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Error
-import mihon.icons.materialsymbols.roundedfilled.CheckCircle
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDown
+import mihon.icons.lucide.icons.CircleAlert
+import mihon.icons.lucide.icons.CircleArrowDown
+import mihon.icons.lucide.icons.CircleCheck
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.IconButtonTokens
 import tachiyomi.presentation.core.i18n.stringResource
@@ -101,7 +100,7 @@ private fun NotDownloadedIndicator(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = CustomMaterialSymbols.Rounded.DownloadCircle,
+            imageVector = Lucide.Icons.CircleArrowDown,
             contentDescription = stringResource(MR.strings.manga_download),
             modifier = Modifier.size(IndicatorSize),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -180,7 +179,7 @@ private fun DownloadingIndicator(
             )
         }
         Icon(
-            imageVector = CustomMaterialSymbols.Rounded.DownloadArrow,
+            imageVector = Lucide.Icons.ArrowDown,
             contentDescription = null,
             modifier = ArrowModifier,
             tint = color,
@@ -207,7 +206,7 @@ private fun DownloadedIndicator(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = MaterialSymbols.RoundedFilled.CheckCircle,
+            imageVector = Lucide.Icons.CircleCheck,
             contentDescription = null,
             modifier = Modifier.size(IndicatorSize),
             tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -242,7 +241,7 @@ private fun ErrorIndicator(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Error,
+            imageVector = Lucide.Icons.CircleAlert,
             contentDescription = stringResource(MR.strings.chapter_error),
             modifier = Modifier.size(IndicatorSize),
             tint = MaterialTheme.colorScheme.error,

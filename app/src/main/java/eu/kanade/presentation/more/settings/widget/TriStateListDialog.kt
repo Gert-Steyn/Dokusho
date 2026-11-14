@@ -24,10 +24,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.CheckBoxOutlineBlank
-import mihon.icons.materialsymbols.roundedfilled.CheckBox
-import mihon.icons.materialsymbols.roundedfilled.DisabledByDefault
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Square
+import mihon.icons.lucide.icons.SquareCheck
+import mihon.icons.lucide.icons.SquareX
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -93,9 +93,9 @@ fun <T> TriStateListDialog(
                                 Icon(
                                     modifier = Modifier.padding(end = 20.dp),
                                     imageVector = when (state) {
-                                        State.UNCHECKED -> MaterialSymbols.Rounded.CheckBoxOutlineBlank
-                                        State.CHECKED -> MaterialSymbols.RoundedFilled.CheckBox
-                                        State.INVERSED -> MaterialSymbols.RoundedFilled.DisabledByDefault
+                                        State.UNCHECKED -> Lucide.Icons.Square
+                                        State.CHECKED -> Lucide.Icons.SquareCheck
+                                        State.INVERSED -> Lucide.Icons.SquareX
                                     },
                                     tint = if (state == State.UNCHECKED) {
                                         LocalContentColor.current

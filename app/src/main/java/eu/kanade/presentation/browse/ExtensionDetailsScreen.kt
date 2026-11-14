@@ -54,9 +54,9 @@ import eu.kanade.tachiyomi.source.ConfigurableSource
 import eu.kanade.tachiyomi.ui.browse.extension.details.ExtensionDetailsViewModel
 import eu.kanade.tachiyomi.util.system.LocaleHelper
 import eu.kanade.tachiyomi.util.system.copyToClipboard
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Eyeglasses2
-import mihon.icons.materialsymbols.rounded.Settings
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Glasses
+import mihon.icons.lucide.icons.Settings
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.material.Scaffold
@@ -349,7 +349,7 @@ private fun DetailsHeader(
             modifier = Modifier.padding(horizontal = MaterialTheme.padding.small),
             title = stringResource(MR.strings.pref_incognito_mode),
             subtitle = stringResource(MR.strings.pref_incognito_mode_extension_summary),
-            icon = MaterialSymbols.Rounded.Eyeglasses2,
+            icon = Lucide.Icons.Glasses,
             widget = {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -436,7 +436,7 @@ private fun SourceSwitchPreference(
                 if (source.source is ConfigurableSource) {
                     IconButton(onClick = { onClickSourcePreferences(source.source.id) }) {
                         Icon(
-                            imageVector = MaterialSymbols.Rounded.Settings,
+                            imageVector = Lucide.Icons.Settings,
                             contentDescription = stringResource(MR.strings.label_settings),
                             tint = MaterialTheme.colorScheme.onSurface,
                         )

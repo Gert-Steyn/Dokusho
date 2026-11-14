@@ -16,11 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import mihon.domain.extension.model.ExtensionStore
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Label
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.Public
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.Tag
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.Trash2
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.SimpleIcons
 import tachiyomi.i18n.MR
@@ -81,7 +81,7 @@ private fun ExtensionStoresListItem(
                 ),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(imageVector = MaterialSymbols.AutoMirroredRounded.Label, contentDescription = null)
+            Icon(imageVector = Lucide.AutoMirrored.Tag, contentDescription = null)
             Text(
                 text = store.name,
                 modifier = Modifier.padding(start = MaterialTheme.padding.medium),
@@ -95,7 +95,7 @@ private fun ExtensionStoresListItem(
         ) {
             IconButton(onClick = onOpenWebsite) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Public,
+                    imageVector = Lucide.Icons.Globe,
                     contentDescription = stringResource(MR.strings.action_open_in_browser),
                 )
             }
@@ -111,14 +111,14 @@ private fun ExtensionStoresListItem(
 
             IconButton(onClick = onCopy) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.ContentCopy,
+                    imageVector = Lucide.Icons.Copy,
                     contentDescription = stringResource(MR.strings.action_copy_to_clipboard),
                 )
             }
 
             IconButton(onClick = onDelete) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Delete,
+                    imageVector = Lucide.Icons.Trash2,
                     contentDescription = stringResource(MR.strings.action_delete),
                 )
             }

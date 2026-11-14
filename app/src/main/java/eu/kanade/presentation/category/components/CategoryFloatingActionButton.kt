@@ -6,8 +6,8 @@ import androidx.compose.material3.SmallExtendedFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Add
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Plus
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.shouldExpandFAB
@@ -20,7 +20,7 @@ fun CategoryFloatingActionButton(
 ) {
     SmallExtendedFloatingActionButton(
         text = { Text(text = stringResource(MR.strings.action_add)) },
-        icon = { Icon(imageVector = MaterialSymbols.Rounded.Add, contentDescription = null) },
+        icon = { Icon(imageVector = Lucide.Icons.Plus, contentDescription = null) },
         onClick = onCreate,
         expanded = lazyListState.shouldExpandFAB(),
         modifier = modifier,

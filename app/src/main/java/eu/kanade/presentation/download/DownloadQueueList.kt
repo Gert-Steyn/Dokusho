@@ -50,9 +50,9 @@ import eu.kanade.tachiyomi.ui.download.DownloadQueueSection
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.DragHandle
-import mihon.icons.materialsymbols.rounded.MoreVert
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.GripHorizontal
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
@@ -375,7 +375,7 @@ private fun ReorderableCollectionItemScope.DownloadQueueItem(
 @Composable
 private fun ReorderableCollectionItemScope.DragHandle(onDragStarted: () -> Unit, onDragStopped: () -> Unit) {
     Icon(
-        imageVector = MaterialSymbols.Rounded.DragHandle,
+        imageVector = Lucide.Icons.GripHorizontal,
         contentDescription = null,
         modifier = Modifier
             .draggableHandle(
@@ -400,7 +400,7 @@ private fun DownloadQueueItemMenu(
     Box {
         IconButton(onClick = { expanded = true }) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.MoreVert,
+                imageVector = Lucide.Icons.EllipsisVertical,
                 contentDescription = stringResource(MR.strings.action_menu),
             )
         }

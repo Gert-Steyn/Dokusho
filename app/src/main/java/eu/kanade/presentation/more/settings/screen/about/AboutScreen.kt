@@ -45,8 +45,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import logcat.LogPriority
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Public
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Globe
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.Facebook
 import mihon.icons.simpleicons.Github
@@ -181,7 +181,7 @@ object AboutScreen : Screen() {
                     ) {
                         LinkIcon(
                             label = stringResource(MR.strings.website),
-                            icon = MaterialSymbols.Rounded.Public,
+                            icon = Lucide.Icons.Globe,
                             url = "https://mihon.app",
                         )
                         LinkIcon(

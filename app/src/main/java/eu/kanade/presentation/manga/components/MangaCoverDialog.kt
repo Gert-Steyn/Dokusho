@@ -57,11 +57,11 @@ import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.Edit
-import mihon.icons.materialsymbols.rounded.Save
-import mihon.icons.materialsymbols.rounded.Share
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Pencil
+import mihon.icons.lucide.icons.Save
+import mihon.icons.lucide.icons.Share2
+import mihon.icons.lucide.icons.X
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
@@ -102,7 +102,7 @@ fun MangaCoverDialog(
                     ActionsPill {
                         IconButton(onClick = onDismissRequest) {
                             Icon(
-                                imageVector = MaterialSymbols.Rounded.Close,
+                                imageVector = Lucide.Icons.X,
                                 contentDescription = stringResource(MR.strings.action_close),
                             )
                         }
@@ -113,12 +113,12 @@ fun MangaCoverDialog(
                             actions = listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.action_share),
-                                    icon = MaterialSymbols.Rounded.Share,
+                                    icon = Lucide.Icons.Share2,
                                     onClick = onShareClick,
                                 ),
                                 AppBar.Action(
                                     title = stringResource(MR.strings.action_save),
-                                    icon = MaterialSymbols.Rounded.Save,
+                                    icon = Lucide.Icons.Save,
                                     onClick = onSaveClick,
                                 ),
                             ),
@@ -138,7 +138,7 @@ fun MangaCoverDialog(
                                     },
                                 ) {
                                     Icon(
-                                        imageVector = MaterialSymbols.Rounded.Edit,
+                                        imageVector = Lucide.Icons.Pencil,
                                         contentDescription = stringResource(MR.strings.action_edit_cover),
                                     )
                                 }

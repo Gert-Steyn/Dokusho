@@ -26,9 +26,9 @@ import eu.kanade.tachiyomi.data.track.EnhancedTracker
 import eu.kanade.tachiyomi.data.track.Tracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
 
@@ -92,7 +92,7 @@ fun TrackingPreferenceWidget(
                     ) {
                         if (!isRefreshing) {
                             Icon(
-                                imageVector = MaterialSymbols.Rounded.Refresh,
+                                imageVector = Lucide.Icons.RefreshCw,
                                 modifier = Modifier
                                     .padding(4.dp)
                                     .size(32.dp),
@@ -107,7 +107,7 @@ fun TrackingPreferenceWidget(
                     }
                 }
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Check,
+                    imageVector = Lucide.Icons.Check,
                     modifier = Modifier
                         .padding(4.dp)
                         .size(32.dp),

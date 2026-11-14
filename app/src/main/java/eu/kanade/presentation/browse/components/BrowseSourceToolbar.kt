@@ -15,10 +15,10 @@ import eu.kanade.presentation.components.RadioMenuItem
 import eu.kanade.presentation.components.SearchToolbar
 import eu.kanade.tachiyomi.source.ConfigurableSource
 import eu.kanade.tachiyomi.source.Source
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredroundedfilled.ViewList
-import mihon.icons.materialsymbols.roundedfilled.ViewCompact
-import mihon.icons.materialsymbols.roundedfilled.ViewModule
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.List
+import mihon.icons.lucide.icons.Grid3X3
+import mihon.icons.lucide.icons.LayoutGrid
 import tachiyomi.domain.library.model.LibraryDisplayMode
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
@@ -59,11 +59,11 @@ fun BrowseSourceToolbar(
                         AppBar.Action(
                             title = stringResource(MR.strings.action_display_mode),
                             icon = when (displayMode) {
-                                LibraryDisplayMode.List -> MaterialSymbols.AutoMirroredRoundedFilled.ViewList
-                                LibraryDisplayMode.ComfortableGrid -> MaterialSymbols.RoundedFilled.ViewModule
+                                LibraryDisplayMode.List -> Lucide.AutoMirrored.List
+                                LibraryDisplayMode.ComfortableGrid -> Lucide.Icons.LayoutGrid
                                 LibraryDisplayMode.CompactGrid,
                                 LibraryDisplayMode.CoverOnlyGrid,
-                                -> MaterialSymbols.RoundedFilled.ViewCompact
+                                -> Lucide.Icons.Grid3X3
                             },
                             onClick = { selectingDisplayMode = true },
                         ),

@@ -16,13 +16,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,23 +44,26 @@ import eu.kanade.presentation.util.formatChapterNumber
 import eu.kanade.presentation.util.rememberResourceBitmapPainter
 import eu.kanade.tachiyomi.R
 import mihon.feature.migration.list.models.MigratingManga
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.CopyAll
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.MoreVert
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.Files
+import mihon.icons.lucide.icons.X
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.Badge
 import tachiyomi.presentation.core.components.BadgeGroup
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
 
 @Composable
@@ -94,9 +94,9 @@ fun MigrationListScreenContent(
                                 icon = if (items.size ==
                                     1
                                 ) {
-                                    MaterialSymbols.Rounded.ContentCopy
+                                    Lucide.Icons.Copy
                                 } else {
-                                    MaterialSymbols.Rounded.CopyAll
+                                    Lucide.Icons.Files
                                 },
                                 onClick = { openMigrationDialog(true) },
                                 enabled = migrationComplete,
@@ -106,9 +106,9 @@ fun MigrationListScreenContent(
                                 icon = if (items.size ==
                                     1
                                 ) {
-                                    MaterialSymbols.Rounded.Check
+                                    Lucide.Icons.Check
                                 } else {
-                                    MaterialSymbols.Rounded.DoneAll
+                                    Lucide.Icons.CheckCheck
                                 },
                                 onClick = { openMigrationDialog(false) },
                                 enabled = migrationComplete,
@@ -127,8 +127,8 @@ fun MigrationListScreenContent(
                         .fillMaxWidth()
                         .animateItem()
                         .padding(
-                            start = MaterialTheme.padding.medium,
-                            end = MaterialTheme.padding.small,
+                            start = GSpace.s5,
+                            end = GSpace.s3,
                         )
                         .height(IntrinsicSize.Min),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -147,7 +147,7 @@ fun MigrationListScreenContent(
                     )
 
                     Icon(
-                        imageVector = MaterialSymbols.AutoMirroredRounded.ArrowForward,
+                        imageVector = Lucide.AutoMirrored.ArrowRight,
                         contentDescription = null,
                         modifier = Modifier.weight(0.2f),
                     )
@@ -189,9 +189,9 @@ fun MigrationListItem(
         modifier = modifier
             .widthIn(max = 150.dp)
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.small)
+            .clip(GRadius.control)
             .clickable(onClick = onClick)
-            .padding(4.dp),
+            .padding(GSpace.s2),
     ) {
         Box(
             modifier = Modifier
@@ -204,11 +204,11 @@ fun MigrationListItem(
             )
             Box(
                 modifier = Modifier
-                    .clip(RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
+                    .clip(GRadius.tag)
                     .background(
                         Brush.verticalGradient(
                             0f to Color.Transparent,
-                            1f to MaterialTheme.colorScheme.background,
+                            1f to Graphite.colors.canvas,
                         ),
                     )
                     .fillMaxHeight(0.4f)
@@ -217,28 +217,28 @@ fun MigrationListItem(
             )
             Text(
                 modifier = Modifier
-                    .padding(8.dp)
+                    .padding(GSpace.s3)
                     .align(Alignment.BottomStart),
                 text = manga.title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 2,
-                style = MaterialTheme.typography.labelMedium,
+                style = Graphite.type.caption,
             )
-            BadgeGroup(modifier = Modifier.padding(4.dp)) {
+            BadgeGroup(modifier = Modifier.padding(GSpace.s2)) {
                 Badge(text = "$chapterCount")
             }
         }
 
         Column(
             modifier = Modifier
-                .padding(MaterialTheme.padding.extraSmall),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+                .padding(GSpace.s2),
+            verticalArrangement = Arrangement.spacedBy(GSpace.s1),
         ) {
             Text(
                 text = source,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.titleSmall,
+                style = Graphite.type.label,
             )
             val formattedLatestChapters = remember(latestChapter) {
                 latestChapter?.let(::formatChapterNumber)
@@ -250,7 +250,7 @@ fun MigrationListItem(
                 ),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.bodyMedium,
+                style = Graphite.type.body,
             )
         }
     }
@@ -280,7 +280,7 @@ fun MigrationListItemResult(
                     Modifier
                         .widthIn(max = 150.dp)
                         .fillMaxSize()
-                        .padding(4.dp),
+                        .padding(GSpace.s2),
                 ) {
                     Image(
                         painter = rememberResourceBitmapPainter(id = R.drawable.cover_error),
@@ -288,13 +288,13 @@ fun MigrationListItemResult(
                         modifier = Modifier
                             .fillMaxWidth()
                             .aspectRatio(MangaCover.Book.ratio)
-                            .clip(MaterialTheme.shapes.extraSmall),
+                            .clip(GRadius.tag),
                         contentScale = ContentScale.Crop,
                     )
                     Text(
                         text = stringResource(MR.strings.migrationListScreen_noMatchFoundText),
-                        modifier = Modifier.padding(MaterialTheme.padding.extraSmall),
-                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(GSpace.s2),
+                        style = Graphite.type.label,
                     )
                 }
             }
@@ -326,20 +326,18 @@ private fun MigrationListItemAction(
     Box(modifier) {
         when (result) {
             MigratingManga.SearchResult.Searching -> {
-                IconButton(onClick = onSkip) {
-                    Icon(
-                        imageVector = MaterialSymbols.Rounded.Close,
-                        contentDescription = null,
-                    )
-                }
+                GIconButton(
+                    icon = Lucide.Icons.X,
+                    contentDescription = null,
+                    onClick = onSkip,
+                )
             }
             MigratingManga.SearchResult.NotFound, is MigratingManga.SearchResult.Success -> {
-                IconButton(onClick = { menuExpanded = true }) {
-                    Icon(
-                        imageVector = MaterialSymbols.Rounded.MoreVert,
-                        contentDescription = null,
-                    )
-                }
+                GIconButton(
+                    icon = Lucide.Icons.EllipsisVertical,
+                    contentDescription = null,
+                    onClick = { menuExpanded = true },
+                )
                 DropdownMenu(
                     expanded = menuExpanded,
                     onDismissRequest = closeMenu,

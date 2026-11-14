@@ -2,7 +2,6 @@ package eu.kanade.presentation.more.settings.widget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -16,6 +15,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.window.DialogProperties
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
 
 @Composable
@@ -61,7 +63,7 @@ fun <T> MultiSelectListPreferenceDialog(
             .filter { values.contains(it) }
             .toMutableStateList()
     }
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = title?.let { { Text(text = it) } },
         text = {
@@ -87,24 +89,21 @@ fun <T> MultiSelectListPreferenceDialog(
                 }
             }
         },
-        properties = DialogProperties(
-            usePlatformDefaultWidth = true,
-        ),
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
                 onClick = {
                     // Values without an entry stay, as they can't be unselected here
                     onValuesChange(values.filterNot { it in entries.keys }.toMutableSet().apply { addAll(selected) })
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }

@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
@@ -20,7 +18,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.Navigator
@@ -32,21 +29,24 @@ import eu.kanade.presentation.more.settings.screen.about.AboutScreen
 import eu.kanade.presentation.more.settings.widget.TextPreferenceWidget
 import eu.kanade.presentation.util.LocalBackPress
 import eu.kanade.presentation.util.Screen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ChromeReaderMode
-import mihon.icons.materialsymbols.rounded.Code
-import mihon.icons.materialsymbols.rounded.CollectionsBookmark
-import mihon.icons.materialsymbols.rounded.Download
-import mihon.icons.materialsymbols.rounded.Explore
-import mihon.icons.materialsymbols.rounded.Info
-import mihon.icons.materialsymbols.rounded.Palette
-import mihon.icons.materialsymbols.rounded.Search
-import mihon.icons.materialsymbols.rounded.Security
-import mihon.icons.materialsymbols.rounded.Storage
-import mihon.icons.materialsymbols.rounded.Sync
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.BookOpenText
+import mihon.icons.lucide.icons.Code
+import mihon.icons.lucide.icons.Compass
+import mihon.icons.lucide.icons.Download
+import mihon.icons.lucide.icons.HardDrive
+import mihon.icons.lucide.icons.Info
+import mihon.icons.lucide.icons.LibraryBig
+import mihon.icons.lucide.icons.Palette
+import mihon.icons.lucide.icons.RefreshCcw
+import mihon.icons.lucide.icons.Search
+import mihon.icons.lucide.icons.Shield
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import cafe.adriel.voyager.core.screen.Screen as VoyagerScreen
 
 object SettingsMainScreen : Screen() {
@@ -58,7 +58,7 @@ object SettingsMainScreen : Screen() {
 
     @Composable
     private fun getPalerSurface(): Color {
-        val surface = MaterialTheme.colorScheme.surface
+        val surface = Graphite.colors.canvas
         val dark = isSystemInDarkTheme()
         return remember(surface, dark) {
             val arr = FloatArray(3)
@@ -76,7 +76,7 @@ object SettingsMainScreen : Screen() {
     fun Content(twoPane: Boolean) {
         val navigator = LocalNavigator.currentOrThrow
         val backPress = LocalBackPress.currentOrThrow
-        val containerColor = if (twoPane) getPalerSurface() else MaterialTheme.colorScheme.surface
+        val containerColor = if (twoPane) getPalerSurface() else Graphite.colors.canvas
         val topBarState = rememberTopAppBarState()
 
         Scaffold(
@@ -90,7 +90,7 @@ object SettingsMainScreen : Screen() {
                             listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.action_search),
-                                    icon = MaterialSymbols.Rounded.Search,
+                                    icon = Lucide.Icons.Search,
                                     onClick = { navigator.navigate(SettingsSearchScreen(), twoPane) },
                                 ),
                             ),
@@ -130,17 +130,17 @@ object SettingsMainScreen : Screen() {
                         var contentColor = LocalContentColor.current
                         if (twoPane) {
                             modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                                .clip(RoundedCornerShape(24.dp))
+                                .padding(horizontal = GSpace.s3)
+                                .clip(GRadius.control)
                                 .then(
                                     if (selected) {
-                                        Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
+                                        Modifier.background(Graphite.colors.surface)
                                     } else {
                                         Modifier
                                     },
                                 )
                             if (selected) {
-                                contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                contentColor = Graphite.colors.textSecondary
                             }
                         }
                         CompositionLocalProvider(LocalContentColor provides contentColor) {
@@ -174,55 +174,55 @@ object SettingsMainScreen : Screen() {
         Item(
             titleRes = MR.strings.pref_category_appearance,
             subtitleRes = MR.strings.pref_appearance_summary,
-            icon = MaterialSymbols.Rounded.Palette,
+            icon = Lucide.Icons.Palette,
             screen = SettingsAppearanceScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_library,
             subtitleRes = MR.strings.pref_library_summary,
-            icon = MaterialSymbols.Rounded.CollectionsBookmark,
+            icon = Lucide.Icons.LibraryBig,
             screen = SettingsLibraryScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_reader,
             subtitleRes = MR.strings.pref_reader_summary,
-            icon = MaterialSymbols.AutoMirroredRounded.ChromeReaderMode,
+            icon = Lucide.AutoMirrored.BookOpenText,
             screen = SettingsReaderScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_downloads,
             subtitleRes = MR.strings.pref_downloads_summary,
-            icon = MaterialSymbols.Rounded.Download,
+            icon = Lucide.Icons.Download,
             screen = SettingsDownloadScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_tracking,
             subtitleRes = MR.strings.pref_tracking_summary,
-            icon = MaterialSymbols.Rounded.Sync,
+            icon = Lucide.Icons.RefreshCcw,
             screen = SettingsTrackingScreen,
         ),
         Item(
             titleRes = MR.strings.browse,
             subtitleRes = MR.strings.pref_browse_summary,
-            icon = MaterialSymbols.Rounded.Explore,
+            icon = Lucide.Icons.Compass,
             screen = SettingsBrowseScreen,
         ),
         Item(
             titleRes = MR.strings.label_data_storage,
             subtitleRes = MR.strings.pref_backup_summary,
-            icon = MaterialSymbols.Rounded.Storage,
+            icon = Lucide.Icons.HardDrive,
             screen = SettingsDataScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_security,
             subtitleRes = MR.strings.pref_security_summary,
-            icon = MaterialSymbols.Rounded.Security,
+            icon = Lucide.Icons.Shield,
             screen = SettingsSecurityScreen,
         ),
         Item(
             titleRes = MR.strings.pref_category_advanced,
             subtitleRes = MR.strings.pref_advanced_summary,
-            icon = MaterialSymbols.Rounded.Code,
+            icon = Lucide.Icons.Code,
             screen = SettingsAdvancedScreen,
         ),
         Item(
@@ -230,7 +230,7 @@ object SettingsMainScreen : Screen() {
             formatSubtitle = {
                 "${stringResource(MR.strings.app_name)} ${AboutScreen.getVersionName(buildTime = null)}"
             },
-            icon = MaterialSymbols.Rounded.Info,
+            icon = Lucide.Icons.Info,
             screen = AboutScreen,
         ),
     )

@@ -21,10 +21,8 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -37,6 +35,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -50,20 +51,22 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import mihon.icons.custommaterialsymbols.CustomMaterialSymbols
-import mihon.icons.custommaterialsymbols.rounded.DonePrevious
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Label
-import mihon.icons.materialsymbols.rounded.BookmarkAdd
-import mihon.icons.materialsymbols.rounded.BookmarkRemove
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.Download
-import mihon.icons.materialsymbols.rounded.MoreVert
-import mihon.icons.materialsymbols.rounded.RemoveDone
-import mihon.icons.materialsymbols.rounded.SwapCalls
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.Tag
+import mihon.icons.lucide.icons.ArrowLeftRight
+import mihon.icons.lucide.icons.BookmarkMinus
+import mihon.icons.lucide.icons.BookmarkPlus
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.Download
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.ListChecks
+import mihon.icons.lucide.icons.ListX
+import mihon.icons.lucide.icons.Trash2
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -86,8 +89,8 @@ fun MangaBottomActionMenu(
         val scope = rememberCoroutineScope()
         Surface(
             modifier = modifier,
-            shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shape = RectangleShape,
+            color = Graphite.colors.surface,
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false, false) }
@@ -101,19 +104,23 @@ fun MangaBottomActionMenu(
                     if (isActive) confirm[toConfirmIndex] = false
                 }
             }
+            val borderColor = Graphite.colors.borderSubtle
             Row(
                 modifier = Modifier
+                    .drawBehind {
+                        drawLine(borderColor, Offset(0f, 0f), Offset(size.width, 0f), GSize.border.toPx())
+                    }
                     .padding(
                         WindowInsets.navigationBars
                             .only(WindowInsetsSides.Bottom)
                             .asPaddingValues(),
                     )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = GSpace.s3, vertical = GSpace.s4),
             ) {
                 if (onBookmarkClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_bookmark),
-                        icon = MaterialSymbols.Rounded.BookmarkAdd,
+                        icon = Lucide.Icons.BookmarkPlus,
                         toConfirm = confirm[0],
                         onLongClick = { onLongClickItem(0) },
                         onClick = onBookmarkClicked,
@@ -122,7 +129,7 @@ fun MangaBottomActionMenu(
                 if (onRemoveBookmarkClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_remove_bookmark),
-                        icon = MaterialSymbols.Rounded.BookmarkRemove,
+                        icon = Lucide.Icons.BookmarkMinus,
                         toConfirm = confirm[1],
                         onLongClick = { onLongClickItem(1) },
                         onClick = onRemoveBookmarkClicked,
@@ -131,7 +138,7 @@ fun MangaBottomActionMenu(
                 if (onMarkAsReadClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_mark_as_read),
-                        icon = MaterialSymbols.Rounded.DoneAll,
+                        icon = Lucide.Icons.CheckCheck,
                         toConfirm = confirm[2],
                         onLongClick = { onLongClickItem(2) },
                         onClick = onMarkAsReadClicked,
@@ -140,7 +147,7 @@ fun MangaBottomActionMenu(
                 if (onMarkAsUnreadClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_mark_as_unread),
-                        icon = MaterialSymbols.Rounded.RemoveDone,
+                        icon = Lucide.Icons.ListX,
                         toConfirm = confirm[3],
                         onLongClick = { onLongClickItem(3) },
                         onClick = onMarkAsUnreadClicked,
@@ -149,7 +156,7 @@ fun MangaBottomActionMenu(
                 if (onMarkPreviousAsReadClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_mark_previous_as_read),
-                        icon = CustomMaterialSymbols.Rounded.DonePrevious,
+                        icon = Lucide.Icons.ListChecks,
                         toConfirm = confirm[4],
                         onLongClick = { onLongClickItem(4) },
                         onClick = onMarkPreviousAsReadClicked,
@@ -158,7 +165,7 @@ fun MangaBottomActionMenu(
                 if (onDownloadClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_download),
-                        icon = MaterialSymbols.Rounded.Download,
+                        icon = Lucide.Icons.Download,
                         toConfirm = confirm[5],
                         onLongClick = { onLongClickItem(5) },
                         onClick = onDownloadClicked,
@@ -167,7 +174,7 @@ fun MangaBottomActionMenu(
                 if (onDeleteClicked != null) {
                     Button(
                         title = stringResource(MR.strings.action_delete),
-                        icon = MaterialSymbols.Rounded.Delete,
+                        icon = Lucide.Icons.Trash2,
                         toConfirm = confirm[6],
                         onLongClick = { onLongClickItem(6) },
                         onClick = onDeleteClicked,
@@ -193,7 +200,7 @@ private fun RowScope.Button(
     )
     Box(
         modifier = Modifier
-            .size(48.dp)
+            .size(GSize.minTarget)
             .weight(animatedWeight)
             .combinedClickable(
                 interactionSource = null,
@@ -210,6 +217,8 @@ private fun RowScope.Button(
             Icon(
                 imageVector = icon,
                 contentDescription = title,
+                modifier = Modifier.size(GSize.icon),
+                tint = Graphite.colors.textMuted,
             )
             AnimatedVisibility(
                 visible = toConfirm,
@@ -220,7 +229,8 @@ private fun RowScope.Button(
                     text = title,
                     overflow = TextOverflow.Visible,
                     maxLines = 1,
-                    style = MaterialTheme.typography.labelSmall,
+                    style = Graphite.type.caption,
+                    color = Graphite.colors.textSecondary,
                 )
             }
         }
@@ -247,8 +257,8 @@ fun LibraryBottomActionMenu(
         val scope = rememberCoroutineScope()
         Surface(
             modifier = modifier,
-            shape = MaterialTheme.shapes.large.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
-            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shape = RectangleShape,
+            color = Graphite.colors.surface,
         ) {
             val haptic = LocalHapticFeedback.current
             val confirm = remember { mutableStateListOf(false, false, false, false, false, false) }
@@ -263,31 +273,35 @@ fun LibraryBottomActionMenu(
                 }
             }
             val itemOverflow = onDownloadClicked != null
+            val borderColor = Graphite.colors.borderSubtle
             Row(
                 modifier = Modifier
+                    .drawBehind {
+                        drawLine(borderColor, Offset(0f, 0f), Offset(size.width, 0f), GSize.border.toPx())
+                    }
                     .windowInsetsPadding(
                         WindowInsets.navigationBars
                             .only(WindowInsetsSides.Bottom),
                     )
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = GSpace.s3, vertical = GSpace.s4),
             ) {
                 Button(
                     title = stringResource(MR.strings.action_move_category),
-                    icon = MaterialSymbols.AutoMirroredRounded.Label,
+                    icon = Lucide.AutoMirrored.Tag,
                     toConfirm = confirm[0],
                     onLongClick = { onLongClickItem(0) },
                     onClick = onChangeCategoryClicked,
                 )
                 Button(
                     title = stringResource(MR.strings.action_mark_as_read),
-                    icon = MaterialSymbols.Rounded.DoneAll,
+                    icon = Lucide.Icons.CheckCheck,
                     toConfirm = confirm[1],
                     onLongClick = { onLongClickItem(1) },
                     onClick = onMarkAsReadClicked,
                 )
                 Button(
                     title = stringResource(MR.strings.action_mark_as_unread),
-                    icon = MaterialSymbols.Rounded.RemoveDone,
+                    icon = Lucide.Icons.ListX,
                     toConfirm = confirm[2],
                     onLongClick = { onLongClickItem(2) },
                     onClick = onMarkAsUnreadClicked,
@@ -296,7 +310,7 @@ fun LibraryBottomActionMenu(
                     var downloadExpanded by remember { mutableStateOf(false) }
                     Button(
                         title = stringResource(MR.strings.action_download),
-                        icon = MaterialSymbols.Rounded.Download,
+                        icon = Lucide.Icons.Download,
                         toConfirm = confirm[3],
                         onLongClick = { onLongClickItem(3) },
                         onClick = { downloadExpanded = !downloadExpanded },
@@ -312,14 +326,14 @@ fun LibraryBottomActionMenu(
                 if (!itemOverflow) {
                     Button(
                         title = stringResource(MR.strings.migrate),
-                        icon = MaterialSymbols.Rounded.SwapCalls,
+                        icon = Lucide.Icons.ArrowLeftRight,
                         toConfirm = confirm[4],
                         onLongClick = { onLongClickItem(4) },
                         onClick = onMigrateClicked,
                     )
                     Button(
                         title = stringResource(MR.strings.action_delete),
-                        icon = MaterialSymbols.Rounded.Delete,
+                        icon = Lucide.Icons.Trash2,
                         toConfirm = confirm[5],
                         onLongClick = { onLongClickItem(5) },
                         onClick = onDeleteClicked,
@@ -328,7 +342,7 @@ fun LibraryBottomActionMenu(
                     var overflowMenuOpen by remember { mutableStateOf(false) }
                     Button(
                         title = stringResource(MR.strings.label_more),
-                        icon = MaterialSymbols.Rounded.MoreVert,
+                        icon = Lucide.Icons.EllipsisVertical,
                         toConfirm = false,
                         onLongClick = {},
                         onClick = { overflowMenuOpen = true },

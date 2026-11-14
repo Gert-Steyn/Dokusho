@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Default Theme -->
-    <color name="divider_default">@color/md_white_1000_12</color>
+    <color name="graphite_canvas">#0E0F11</color>
+    <color name="graphite_surface">#17181B</color>
+    <color name="graphite_raised">#1D1F23</color>
+    <color name="graphite_hover">#23252A</color>
+    <color name="graphite_pressed">#2A2D33</color>
+    <color name="graphite_border_subtle">#26282D</color>
+    <color name="graphite_border">#33363C</color>
+    <color name="graphite_border_strong">#474B53</color>
+    <color name="graphite_text">#E6E7EA</color>
+    <color name="graphite_text_secondary">#A0A3AB</color>
+    <color name="graphite_text_muted">#8B8E96</color>
+    <color name="graphite_text_disabled">#6C6F77</color>
+    <color name="graphite_accent">#7B89FF</color>
+    <color name="graphite_accent_fill">#4F5EF5</color>
+    <color name="graphite_accent_subtle">#1B1F3D</color>
+    <color name="graphite_on_accent">#FFFFFF</color>
+    <color name="graphite_success">#3FB97A</color>
+    <color name="graphite_warning">#E5A63B</color>
+    <color name="graphite_danger">#F0566A</color>
+    <color name="graphite_danger_fill">#D0364B</color>
+    <color name="graphite_danger_subtle">#30141A</color>
+    <color name="graphite_on_danger">#FFFFFF</color>
 </resources>

@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,9 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
+import eu.kanade.presentation.components.UnreadDot
 import eu.kanade.presentation.components.relativeDateText
 import eu.kanade.presentation.manga.components.ChapterDownloadAction
 import eu.kanade.presentation.manga.components.ChapterDownloadIndicator
@@ -37,15 +34,15 @@ import eu.kanade.presentation.manga.components.MangaCover
 import eu.kanade.presentation.util.relativeTimeSpanString
 import eu.kanade.tachiyomi.data.download.model.Download
 import eu.kanade.tachiyomi.ui.updates.UpdatesItem
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.Bookmark
-import mihon.icons.materialsymbols.roundedfilled.Circle
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Bookmark
 import tachiyomi.domain.updates.model.UpdatesWithRelations
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ListGroupHeader
-import tachiyomi.presentation.core.components.material.DISABLED_ALPHA
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.selectedBackground
 
 internal fun LazyListScope.updatesLastUpdatedItem(
@@ -66,11 +63,12 @@ internal fun UpdatesLastUpdatedHeader(
 ) {
     Box(
         modifier = modifier
-            .padding(horizontal = MaterialTheme.padding.medium, vertical = MaterialTheme.padding.small),
+            .padding(horizontal = GSpace.s5, vertical = GSpace.s3),
     ) {
         Text(
             text = stringResource(MR.strings.updates_last_update_info, relativeTimeSpanString(lastUpdated)),
-            fontStyle = FontStyle.Italic,
+            style = Graphite.type.small,
+            color = Graphite.colors.textMuted,
         )
     }
 }
@@ -155,7 +153,6 @@ private fun UpdatesUiItem(
     modifier: Modifier = Modifier,
 ) {
     val haptic = LocalHapticFeedback.current
-    val textAlpha = if (update.read) DISABLED_ALPHA else 1f
 
     Row(
         modifier = modifier
@@ -167,13 +164,13 @@ private fun UpdatesUiItem(
                     haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 },
             )
-            .height(56.dp)
-            .padding(horizontal = MaterialTheme.padding.medium),
+            .height(GSize.row)
+            .padding(horizontal = GSpace.s5),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MangaCover.Square(
             modifier = Modifier
-                .padding(vertical = 6.dp)
+                .padding(vertical = GSpace.s2)
                 .fillMaxHeight(),
             data = update.coverData,
             onClick = onClickCover,
@@ -181,44 +178,37 @@ private fun UpdatesUiItem(
 
         Column(
             modifier = Modifier
-                .padding(horizontal = MaterialTheme.padding.medium)
+                .padding(horizontal = GSpace.s5)
                 .weight(1f),
         ) {
             Text(
                 text = update.mangaTitle,
                 maxLines = 1,
-                style = MaterialTheme.typography.bodyMedium,
-                color = LocalContentColor.current.copy(alpha = textAlpha),
+                style = Graphite.type.body,
+                color = if (update.read) Graphite.colors.textSecondary else Graphite.colors.text,
                 overflow = TextOverflow.Ellipsis,
             )
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 var textHeight by remember { mutableIntStateOf(0) }
                 if (!update.read) {
-                    Icon(
-                        imageVector = MaterialSymbols.RoundedFilled.Circle,
-                        contentDescription = stringResource(MR.strings.unread),
-                        modifier = Modifier
-                            .height(8.dp)
-                            .padding(end = 4.dp),
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
+                    UnreadDot()
                 }
                 if (update.bookmark) {
                     Icon(
-                        imageVector = MaterialSymbols.RoundedFilled.Bookmark,
+                        imageVector = Lucide.Icons.Bookmark,
                         contentDescription = stringResource(MR.strings.action_filter_bookmarked),
                         modifier = Modifier
-                            .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
-                        tint = MaterialTheme.colorScheme.primary,
+                            .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - GSpace.s1 }),
+                        tint = Graphite.colors.accent,
                     )
-                    Spacer(modifier = Modifier.width(2.dp))
+                    Spacer(modifier = Modifier.width(GSpace.s1))
                 }
                 Text(
                     text = update.chapterName,
                     maxLines = 1,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LocalContentColor.current.copy(alpha = textAlpha),
+                    style = Graphite.type.small,
+                    color = if (update.read) Graphite.colors.textMuted else Graphite.colors.text,
                     overflow = TextOverflow.Ellipsis,
                     onTextLayout = { textHeight = it.size.height },
                     modifier = Modifier
@@ -229,7 +219,7 @@ private fun UpdatesUiItem(
                     Text(
                         text = readProgress,
                         maxLines = 1,
-                        color = LocalContentColor.current.copy(alpha = DISABLED_ALPHA),
+                        color = Graphite.colors.textMuted,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
@@ -238,7 +228,7 @@ private fun UpdatesUiItem(
 
         ChapterDownloadIndicator(
             enabled = onDownloadChapter != null,
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(start = GSpace.s2),
             downloadStateProvider = downloadStateProvider,
             downloadProgressProvider = downloadProgressProvider,
             onClick = { onDownloadChapter?.invoke(it) },

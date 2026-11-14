@@ -9,13 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.collectAsState
@@ -78,8 +74,8 @@ import kotlinx.datetime.toLocalDateTime
 import logcat.LogPriority
 import mihon.app.di.appGraph
 import mihon.core.metro.AppCoroutineScope
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.Delete
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Trash2
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.manga.interactor.GetManga
@@ -89,9 +85,11 @@ import tachiyomi.domain.track.interactor.GetTracks
 import tachiyomi.domain.track.model.Track
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.LabeledCheckbox
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GGhostButton
 import tachiyomi.presentation.core.components.material.AlertDialogContent
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -643,7 +641,7 @@ data class TrackDateRemoverScreen(
             modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
             icon = {
                 Icon(
-                    imageVector = MaterialSymbols.RoundedFilled.Delete,
+                    imageVector = Lucide.Icons.Trash2,
                     contentDescription = null,
                 )
             },
@@ -666,23 +664,19 @@ data class TrackDateRemoverScreen(
             buttons = {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small, Alignment.End),
+                    horizontalArrangement = Arrangement.spacedBy(GSpace.s3, Alignment.End),
                 ) {
-                    TextButton(onClick = navigator::pop) {
-                        Text(text = stringResource(MR.strings.action_cancel))
-                    }
-                    FilledTonalButton(
+                    GGhostButton(
+                        text = stringResource(MR.strings.action_cancel),
+                        onClick = navigator::pop,
+                    )
+                    GDangerButton(
+                        text = stringResource(MR.strings.action_remove),
                         onClick = {
                             viewModel.removeDate()
                             navigator.popUntil { it is TrackInfoDialogHomeScreen }
                         },
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer,
-                            contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                        ),
-                    ) {
-                        Text(text = stringResource(MR.strings.action_remove))
-                    }
+                    )
                 }
             },
         )
@@ -855,7 +849,7 @@ data class TrackerRemoveScreen(
             modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars),
             icon = {
                 Icon(
-                    imageVector = MaterialSymbols.RoundedFilled.Delete,
+                    imageVector = Lucide.Icons.Trash2,
                     contentDescription = null,
                 )
             },
@@ -867,7 +861,7 @@ data class TrackerRemoveScreen(
             },
             text = {
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                    verticalArrangement = Arrangement.spacedBy(GSpace.s3),
                 ) {
                     Text(
                         text = stringResource(MR.strings.track_delete_text, serviceName),
@@ -886,26 +880,22 @@ data class TrackerRemoveScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(
-                        MaterialTheme.padding.small,
+                        GSpace.s3,
                         Alignment.End,
                     ),
                 ) {
-                    TextButton(onClick = navigator::pop) {
-                        Text(text = stringResource(MR.strings.action_cancel))
-                    }
-                    FilledTonalButton(
+                    GGhostButton(
+                        text = stringResource(MR.strings.action_cancel),
+                        onClick = navigator::pop,
+                    )
+                    GDangerButton(
+                        text = stringResource(MR.strings.action_ok),
                         onClick = {
                             viewModel.unregisterTracking(serviceId)
                             if (removeRemoteTrack) viewModel.deleteMangaFromService()
                             navigator.pop()
                         },
-                        colors = ButtonDefaults.filledTonalButtonColors(
-                            containerColor = MaterialTheme.colorScheme.errorContainer,
-                            contentColor = MaterialTheme.colorScheme.onErrorContainer,
-                        ),
-                    ) {
-                        Text(text = stringResource(MR.strings.action_ok))
-                    }
+                    )
                 }
             },
         )

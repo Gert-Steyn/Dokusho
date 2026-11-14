@@ -265,6 +265,20 @@ class ReaderPreferences(
 
     // endregion
 
+    // region Text
+
+    val textFontSize: Preference<Int> = preferenceStore.getInt("reader_text_font_size", 18)
+
+    val textLineSpacing: Preference<Int> = preferenceStore.getInt("reader_text_line_spacing", 150)
+
+    val textSideMargin: Preference<Int> = preferenceStore.getInt("reader_text_side_margin", 16)
+
+    val textFont: Preference<TextFont> = preferenceStore.getEnum("reader_text_font", TextFont.SERIF)
+
+    val textJustify: Preference<Boolean> = preferenceStore.getBoolean("reader_text_justify", false)
+
+    // endregion
+
     enum class FlashColor {
         BLACK,
         WHITE,
@@ -382,6 +396,12 @@ class ReaderPreferences(
             MR.strings.transition_animation_fade_white,
         ),
         NONE(MR.strings.transition_animation_none),
+    }
+
+    enum class TextFont(val titleRes: StringResource) {
+        SANS(MR.strings.reader_text_font_sans),
+        SERIF(MR.strings.reader_text_font_serif),
+        MONO(MR.strings.reader_text_font_mono),
     }
 
     enum class CutoutMode(val titleRes: StringResource) {

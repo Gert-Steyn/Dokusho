@@ -11,14 +11,13 @@ import eu.kanade.tachiyomi.ui.reader.viewer.webgpu.WebGpuViewer
 import eu.kanade.tachiyomi.ui.reader.viewer.webgpu.WebGpuViewerContinuous
 import eu.kanade.tachiyomi.ui.reader.viewer.webtoon.WebtoonViewer
 import mihon.app.di.appGraph
-import mihon.icons.custommaterialsymbols.CustomMaterialSymbols
-import mihon.icons.custommaterialsymbols.rounded.ReaderLeftToRight
-import mihon.icons.custommaterialsymbols.rounded.ReaderLongStrip
-import mihon.icons.custommaterialsymbols.rounded.ReaderLongStripGaps
-import mihon.icons.custommaterialsymbols.rounded.ReaderRightToLeft
-import mihon.icons.custommaterialsymbols.rounded.ReaderVertical
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.MobileGear
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDownToLine
+import mihon.icons.lucide.icons.ArrowLeftToLine
+import mihon.icons.lucide.icons.ArrowRightToLine
+import mihon.icons.lucide.icons.GalleryVertical
+import mihon.icons.lucide.icons.GalleryVerticalEnd
+import mihon.icons.lucide.icons.MonitorCog
 import tachiyomi.i18n.MR
 
 enum class ReadingMode(
@@ -28,38 +27,38 @@ enum class ReadingMode(
     val direction: Direction? = null,
     val type: ViewerType? = null,
 ) {
-    DEFAULT(MR.strings.label_default, MaterialSymbols.Rounded.MobileGear, 0x00000000),
+    DEFAULT(MR.strings.label_default, Lucide.Icons.MonitorCog, 0x00000000),
     LEFT_TO_RIGHT(
         MR.strings.left_to_right_viewer,
-        CustomMaterialSymbols.Rounded.ReaderLeftToRight,
+        Lucide.Icons.ArrowRightToLine,
         0x00000001,
         Direction.Horizontal,
         ViewerType.Pager,
     ),
     RIGHT_TO_LEFT(
         MR.strings.right_to_left_viewer,
-        CustomMaterialSymbols.Rounded.ReaderRightToLeft,
+        Lucide.Icons.ArrowLeftToLine,
         0x00000002,
         Direction.Horizontal,
         ViewerType.Pager,
     ),
     VERTICAL(
         MR.strings.vertical_viewer,
-        CustomMaterialSymbols.Rounded.ReaderVertical,
+        Lucide.Icons.ArrowDownToLine,
         0x00000003,
         Direction.Vertical,
         ViewerType.Pager,
     ),
     WEBTOON(
         MR.strings.webtoon_viewer,
-        CustomMaterialSymbols.Rounded.ReaderLongStrip,
+        Lucide.Icons.GalleryVertical,
         0x00000004,
         Direction.Vertical,
         ViewerType.Webtoon,
     ),
     CONTINUOUS_VERTICAL(
         MR.strings.vertical_plus_viewer,
-        CustomMaterialSymbols.Rounded.ReaderLongStripGaps,
+        Lucide.Icons.GalleryVerticalEnd,
         0x00000005,
         Direction.Vertical,
         ViewerType.Webtoon,

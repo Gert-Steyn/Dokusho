@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -16,12 +15,14 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import kotlinx.coroutines.launch
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.BugReport
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Bug
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.InfoScreen
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun CrashScreen(
@@ -33,7 +34,7 @@ fun CrashScreen(
     val crashLogUtil = remember { context.appGraph.crashLogUtil }
 
     InfoScreen(
-        icon = MaterialSymbols.Rounded.BugReport,
+        icon = Lucide.Icons.Bug,
         headingText = stringResource(MR.strings.crash_screen_title),
         subtitleText = stringResource(MR.strings.crash_screen_description, stringResource(MR.strings.app_name)),
         acceptText = stringResource(MR.strings.pref_dump_crash_logs),
@@ -47,16 +48,16 @@ fun CrashScreen(
     ) {
         Box(
             modifier = Modifier
-                .padding(vertical = MaterialTheme.padding.small)
-                .clip(MaterialTheme.shapes.small)
+                .padding(vertical = GSpace.s3)
+                .clip(GRadius.control)
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.surfaceVariant),
+                .background(Graphite.colors.surface),
         ) {
             Text(
                 text = exception.toString(),
                 modifier = Modifier
-                    .padding(all = MaterialTheme.padding.small),
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    .padding(all = GSpace.s3),
+                color = Graphite.colors.textSecondary,
             )
         }
     }

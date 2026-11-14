@@ -3,9 +3,6 @@ package eu.kanade.presentation.manga.components
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.graphics.res.animatedVectorResource
-import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
-import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,11 +25,8 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
-import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -63,7 +57,6 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
@@ -71,41 +64,42 @@ import com.mikepenz.markdown.model.markdownAnnotator
 import com.mikepenz.markdown.model.markdownAnnotatorConfig
 import com.mikepenz.markdown.utils.getUnescapedTextInNode
 import eu.kanade.presentation.components.DropdownMenu
-import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.model.SManga
 import eu.kanade.tachiyomi.util.system.copyToClipboard
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.daysUntil
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.AttachMoney
-import mihon.icons.materialsymbols.rounded.Block
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.DoneAll
-import mihon.icons.materialsymbols.rounded.Favorite
-import mihon.icons.materialsymbols.rounded.HourglassEmpty
-import mihon.icons.materialsymbols.rounded.Person
-import mihon.icons.materialsymbols.rounded.Public
-import mihon.icons.materialsymbols.rounded.Schedule
-import mihon.icons.materialsymbols.rounded.Sync
-import mihon.icons.materialsymbols.roundedfilled.Brush
-import mihon.icons.materialsymbols.roundedfilled.Favorite
-import mihon.icons.materialsymbols.roundedfilled.Pause
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Ban
+import mihon.icons.lucide.icons.Brush
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.CheckCheck
+import mihon.icons.lucide.icons.ChevronDown
+import mihon.icons.lucide.icons.ChevronUp
+import mihon.icons.lucide.icons.Clock
+import mihon.icons.lucide.icons.DollarSign
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.Heart
+import mihon.icons.lucide.icons.Hourglass
+import mihon.icons.lucide.icons.Pause
+import mihon.icons.lucide.icons.RefreshCcw
+import mihon.icons.lucide.icons.TriangleAlert
+import mihon.icons.lucide.icons.User
+import mihon.icons.lucide.icons.X
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.findChildOfType
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.DISABLED_ALPHA
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.components.material.TextButton
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.clickableNoIndication
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 import kotlin.math.roundToInt
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -126,7 +120,7 @@ fun MangaInfoBox(
         // Backdrop
         val backdropGradientColors = listOf(
             Color.Transparent,
-            MaterialTheme.colorScheme.background,
+            Graphite.colors.canvas,
         )
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -148,7 +142,7 @@ fun MangaInfoBox(
         )
 
         // Manga & source info
-        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
+        CompositionLocalProvider(LocalContentColor provides Graphite.colors.text) {
             if (!isTabletUi) {
                 MangaAndSourceTitlesSmall(
                     appBarPadding = appBarPadding,
@@ -188,7 +182,7 @@ fun MangaActionRow(
     onEditCategory: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
-    val defaultActionButtonColor = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLED_ALPHA)
+    val defaultActionButtonColor = Graphite.colors.textMuted
 
     // TODO: show something better when using custom interval
     val nextUpdateDays = remember(nextUpdate) {
@@ -200,15 +194,15 @@ fun MangaActionRow(
         }
     }
 
-    Row(modifier = modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)) {
+    Row(modifier = modifier.padding(start = GSpace.s5, top = GSpace.s3, end = GSpace.s5)) {
         MangaActionButton(
             title = if (favorite) {
                 stringResource(MR.strings.in_library)
             } else {
                 stringResource(MR.strings.add_to_library)
             },
-            icon = if (favorite) MaterialSymbols.RoundedFilled.Favorite else MaterialSymbols.Rounded.Favorite,
-            color = if (favorite) MaterialTheme.colorScheme.primary else defaultActionButtonColor,
+            icon = if (favorite) Lucide.Icons.Heart else Lucide.Icons.Heart,
+            color = if (favorite) Graphite.colors.accent else defaultActionButtonColor,
             onClick = onAddToLibraryClicked,
             onLongClick = onEditCategory,
         )
@@ -222,8 +216,8 @@ fun MangaActionRow(
                     nextUpdateDays,
                 )
             },
-            icon = MaterialSymbols.Rounded.HourglassEmpty,
-            color = if (isUserIntervalMode) MaterialTheme.colorScheme.primary else defaultActionButtonColor,
+            icon = Lucide.Icons.Hourglass,
+            color = if (isUserIntervalMode) Graphite.colors.accent else defaultActionButtonColor,
             onClick = { onEditIntervalClicked?.invoke() },
         )
         MangaActionButton(
@@ -232,14 +226,14 @@ fun MangaActionRow(
             } else {
                 pluralStringResource(MR.plurals.num_trackers, count = trackingCount, trackingCount)
             },
-            icon = if (trackingCount == 0) MaterialSymbols.Rounded.Sync else MaterialSymbols.Rounded.Check,
-            color = if (trackingCount == 0) defaultActionButtonColor else MaterialTheme.colorScheme.primary,
+            icon = if (trackingCount == 0) Lucide.Icons.RefreshCcw else Lucide.Icons.Check,
+            color = if (trackingCount == 0) defaultActionButtonColor else Graphite.colors.accent,
             onClick = onTrackingClicked,
         )
         if (onWebViewClicked != null) {
             MangaActionButton(
                 title = stringResource(MR.strings.action_web_view),
-                icon = MaterialSymbols.Rounded.Public,
+                icon = Lucide.Icons.Globe,
                 color = defaultActionButtonColor,
                 onClick = onWebViewClicked,
                 onLongClick = onWebViewLongClicked,
@@ -272,16 +266,16 @@ fun ExpandableMangaDescription(
             notes = notes,
             onEditNotesClicked = onEditNotes,
             modifier = Modifier
-                .padding(top = 8.dp)
-                .padding(horizontal = 16.dp)
+                .padding(top = GSpace.s3)
+                .padding(horizontal = GSpace.s5)
                 .clickableNoIndication { onExpanded(!expanded) },
         )
         val tags = tagsProvider()
         if (!tags.isNullOrEmpty()) {
             Box(
                 modifier = Modifier
-                    .padding(top = 8.dp)
-                    .padding(vertical = 12.dp)
+                    .padding(top = GSpace.s3)
+                    .padding(vertical = GSpace.s4)
                     .animateContentSize(animationSpec = spring())
                     .fillMaxWidth(),
             ) {
@@ -308,8 +302,8 @@ fun ExpandableMangaDescription(
                 }
                 if (expanded) {
                     FlowRow(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+                        modifier = Modifier.padding(horizontal = GSpace.s5),
+                        horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
                     ) {
                         tags.forEach {
                             TagsChip(
@@ -324,8 +318,8 @@ fun ExpandableMangaDescription(
                     }
                 } else {
                     LazyRow(
-                        contentPadding = PaddingValues(horizontal = MaterialTheme.padding.medium),
-                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+                        contentPadding = PaddingValues(horizontal = GSpace.s5),
+                        horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
                     ) {
                         items(items = tags) {
                             TagsChip(
@@ -357,7 +351,7 @@ private fun MangaAndSourceTitlesLarge(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, top = appBarPadding + 16.dp, end = 16.dp),
+            .padding(start = GSpace.s5, top = appBarPadding + GSpace.s5, end = GSpace.s5),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         MangaCover.Book(
@@ -369,7 +363,7 @@ private fun MangaAndSourceTitlesLarge(
             contentDescription = stringResource(MR.strings.manga_cover),
             onClick = onCoverClick,
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(GSpace.s5))
         MangaContentInfo(
             title = manga.title,
             author = manga.author,
@@ -397,8 +391,8 @@ private fun MangaAndSourceTitlesSmall(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, top = appBarPadding + 16.dp, end = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            .padding(start = GSpace.s5, top = appBarPadding + GSpace.s5, end = GSpace.s5),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MangaCover.Book(
@@ -413,7 +407,7 @@ private fun MangaAndSourceTitlesSmall(
             onClick = onCoverClick,
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalArrangement = Arrangement.spacedBy(GSpace.s1),
         ) {
             MangaContentInfo(
                 title = manga.title,
@@ -444,7 +438,7 @@ private fun ColumnScope.MangaContentInfo(
     val context = LocalContext.current
     Text(
         text = title.ifBlank { stringResource(MR.strings.unknown_title) },
-        style = MaterialTheme.typography.titleLarge,
+        style = Graphite.type.title,
         modifier = Modifier.clickableNoIndication(
             onLongClick = {
                 if (title.isNotBlank()) {
@@ -459,22 +453,23 @@ private fun ColumnScope.MangaContentInfo(
         textAlign = textAlign,
     )
 
-    Spacer(modifier = Modifier.height(2.dp))
+    Spacer(modifier = Modifier.height(GSpace.s1))
 
     Row(
-        modifier = Modifier.secondaryItemAlpha(),
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Person,
+            imageVector = Lucide.Icons.User,
             contentDescription = null,
             modifier = Modifier.size(16.dp),
+            tint = Graphite.colors.textMuted,
         )
         Text(
             text = author?.takeIf { it.isNotBlank() }
                 ?: stringResource(MR.strings.unknown_author),
-            style = MaterialTheme.typography.titleSmall,
+            style = Graphite.type.label,
+            color = Graphite.colors.textSecondary,
             modifier = Modifier
                 .clickableNoIndication(
                     onLongClick = {
@@ -493,18 +488,19 @@ private fun ColumnScope.MangaContentInfo(
 
     if (!artist.isNullOrBlank() && author != artist) {
         Row(
-            modifier = Modifier.secondaryItemAlpha(),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.extraSmall),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s2),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.Brush,
+                imageVector = Lucide.Icons.Brush,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
+                tint = Graphite.colors.textMuted,
             )
             Text(
                 text = artist,
-                style = MaterialTheme.typography.titleSmall,
+                style = Graphite.type.label,
+                color = Graphite.colors.textSecondary,
                 modifier = Modifier
                     .clickableNoIndication(
                         onLongClick = { context.copyToClipboard(artist, artist) },
@@ -515,28 +511,28 @@ private fun ColumnScope.MangaContentInfo(
         }
     }
 
-    Spacer(modifier = Modifier.height(2.dp))
+    Spacer(modifier = Modifier.height(GSpace.s1))
 
     Row(
-        modifier = Modifier.secondaryItemAlpha(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = when (status) {
-                SManga.ONGOING.toLong() -> MaterialSymbols.Rounded.Schedule
-                SManga.COMPLETED.toLong() -> MaterialSymbols.Rounded.DoneAll
-                SManga.LICENSED.toLong() -> MaterialSymbols.Rounded.AttachMoney
-                SManga.PUBLISHING_FINISHED.toLong() -> MaterialSymbols.Rounded.Check
-                SManga.CANCELLED.toLong() -> MaterialSymbols.Rounded.Close
-                SManga.ON_HIATUS.toLong() -> MaterialSymbols.RoundedFilled.Pause
-                else -> MaterialSymbols.Rounded.Block
+                SManga.ONGOING.toLong() -> Lucide.Icons.Clock
+                SManga.COMPLETED.toLong() -> Lucide.Icons.CheckCheck
+                SManga.LICENSED.toLong() -> Lucide.Icons.DollarSign
+                SManga.PUBLISHING_FINISHED.toLong() -> Lucide.Icons.Check
+                SManga.CANCELLED.toLong() -> Lucide.Icons.X
+                SManga.ON_HIATUS.toLong() -> Lucide.Icons.Pause
+                else -> Lucide.Icons.Ban
             },
             contentDescription = null,
             modifier = Modifier
-                .padding(end = 4.dp)
+                .padding(end = GSpace.s2)
                 .size(16.dp),
+            tint = Graphite.colors.textMuted,
         )
-        ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
+        ProvideTextStyle(Graphite.type.body.copy(color = Graphite.colors.textSecondary)) {
             Text(
                 text = when (status) {
                     SManga.ONGOING.toLong() -> stringResource(MR.strings.ongoing)
@@ -553,12 +549,12 @@ private fun ColumnScope.MangaContentInfo(
             DotSeparatorText()
             if (isStubSource) {
                 Icon(
-                    imageVector = MaterialSymbols.RoundedFilled.Warning,
+                    imageVector = Lucide.Icons.TriangleAlert,
                     contentDescription = null,
                     modifier = Modifier
-                        .padding(end = 4.dp)
+                        .padding(end = GSpace.s2)
                         .size(16.dp),
-                    tint = MaterialTheme.colorScheme.error,
+                    tint = Graphite.colors.danger,
                 )
             }
             Text(
@@ -641,7 +637,7 @@ private fun MangaSummary(
                     // Shows at least 3 lines if no notes
                     // when there are notes show 6
                     text = if (notes.isBlank()) "\n\n" else "\n\n\n\n\n",
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Graphite.type.body,
                 )
             },
             {
@@ -658,7 +654,6 @@ private fun MangaSummary(
                     SelectionContainer {
                         MarkdownRender(
                             content = description,
-                            modifier = Modifier.secondaryItemAlpha(),
                             annotator = descriptionAnnotator(
                                 loadImages = loadImages,
                                 linkStyle = getMarkdownLinkStyle().toSpanStyle(),
@@ -669,19 +664,18 @@ private fun MangaSummary(
                 }
             },
             {
-                val colors = listOf(Color.Transparent, MaterialTheme.colorScheme.background)
+                val colors = listOf(Color.Transparent, Graphite.colors.canvas)
                 Box(
                     modifier = Modifier.background(Brush.verticalGradient(colors = colors)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    val image = AnimatedImageVector.animatedVectorResource(R.drawable.animated_caret_flip)
                     Icon(
-                        painter = rememberAnimatedVectorPainter(image, !expanded),
+                        imageVector = if (expanded) Lucide.Icons.ChevronUp else Lucide.Icons.ChevronDown,
                         contentDescription = stringResource(
                             if (expanded) MR.strings.manga_info_collapse else MR.strings.manga_info_expand,
                         ),
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.background(Brush.radialGradient(colors = colors.asReversed())),
+                        tint = Graphite.colors.textMuted,
+                        modifier = Modifier.size(GSize.icon),
                     )
                 }
             },
@@ -691,7 +685,7 @@ private fun MangaSummary(
             .measure(constraints)
             .height
         val heightDelta = infoHeight - shrunkHeight
-        val scrimHeight = 24.dp.roundToPx()
+        val scrimHeight = GSpace.s6.roundToPx()
 
         val actualPlaceable = actual.single()
             .measure(constraints)
@@ -708,7 +702,7 @@ private fun MangaSummary(
     }
 }
 
-private val DefaultTagChipModifier = Modifier.padding(vertical = 4.dp)
+private val DefaultTagChipModifier = Modifier.padding(vertical = GSpace.s2)
 
 @Composable
 private fun TagsChip(
@@ -716,13 +710,12 @@ private fun TagsChip(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
-    CompositionLocalProvider(LocalMinimumInteractiveComponentSize provides 0.dp) {
-        SuggestionChip(
-            modifier = modifier,
-            onClick = onClick,
-            label = { Text(text = text, style = MaterialTheme.typography.bodySmall) },
-        )
-    }
+    GChip(
+        text = text,
+        selected = false,
+        onClick = onClick,
+        modifier = modifier,
+    )
 }
 
 @Composable
@@ -743,13 +736,13 @@ private fun RowScope.MangaActionButton(
                 imageVector = icon,
                 contentDescription = null,
                 tint = color,
-                modifier = Modifier.size(20.dp),
+                modifier = Modifier.size(GSize.icon),
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(GSpace.s2))
             Text(
                 text = title,
                 color = color,
-                fontSize = 12.sp,
+                style = Graphite.type.caption,
                 textAlign = TextAlign.Center,
             )
         }

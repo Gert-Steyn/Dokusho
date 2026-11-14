@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.TopAppBarScrollBehavior
@@ -29,12 +28,12 @@ import eu.kanade.tachiyomi.ui.updates.UpdatesViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.CalendarMonth
-import mihon.icons.materialsymbols.rounded.FilterList
-import mihon.icons.materialsymbols.rounded.FlipToBack
-import mihon.icons.materialsymbols.rounded.Refresh
-import mihon.icons.materialsymbols.rounded.SelectAll
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.CalendarDays
+import mihon.icons.lucide.icons.Layers
+import mihon.icons.lucide.icons.ListFilter
+import mihon.icons.lucide.icons.RefreshCw
+import mihon.icons.lucide.icons.SquareCheckBig
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
 import tachiyomi.presentation.core.components.material.PullRefresh
@@ -42,7 +41,7 @@ import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.LoadingScreen
-import tachiyomi.presentation.core.theme.active
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -174,18 +173,18 @@ private fun UpdatesAppBar(
                 listOf(
                     AppBar.Action(
                         title = stringResource(MR.strings.action_filter),
-                        icon = MaterialSymbols.Rounded.FilterList,
-                        iconTint = if (hasFilters) MaterialTheme.colorScheme.active else LocalContentColor.current,
+                        icon = Lucide.Icons.ListFilter,
+                        iconTint = if (hasFilters) Graphite.colors.accent else LocalContentColor.current,
                         onClick = onFilterClicked,
                     ),
                     AppBar.Action(
                         title = stringResource(MR.strings.action_view_upcoming),
-                        icon = MaterialSymbols.Rounded.CalendarMonth,
+                        icon = Lucide.Icons.CalendarDays,
                         onClick = onCalendarClicked,
                     ),
                     AppBar.Action(
                         title = stringResource(MR.strings.action_update_library),
-                        icon = MaterialSymbols.Rounded.Refresh,
+                        icon = Lucide.Icons.RefreshCw,
                         onClick = onUpdateLibrary,
                     ),
                 ),
@@ -198,12 +197,12 @@ private fun UpdatesAppBar(
                 listOf(
                     AppBar.Action(
                         title = stringResource(MR.strings.action_select_all),
-                        icon = MaterialSymbols.Rounded.SelectAll,
+                        icon = Lucide.Icons.SquareCheckBig,
                         onClick = onSelectAll,
                     ),
                     AppBar.Action(
                         title = stringResource(MR.strings.action_select_inverse),
-                        icon = MaterialSymbols.Rounded.FlipToBack,
+                        icon = Lucide.Icons.Layers,
                         onClick = onInvertSelection,
                     ),
                 ),

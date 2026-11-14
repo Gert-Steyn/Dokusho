@@ -494,20 +494,11 @@
     <string name="label_default">Per defecte</string>
     <string name="label_warning">Advertència</string>
     <string name="confirm_lock_change">Autentiqueu-vos per a confirmar el canvi</string>
-    <string name="theme_greenapple">Verd poma</string>
     <string name="pref_category_appearance">Aparença</string>
     <string name="action_start_downloading_now">Inicia la baixada ara</string>
     <string name="action_sort_count">Nombre total d’elements</string>
     <string name="pref_app_theme">Tema de l’aplicació</string>
-    <string name="theme_monet">Dinàmic</string>
     <string name="action_display_language_badge">Llengua</string>
-    <string name="theme_midnightdusk">Capvespre</string>
-    <string name="theme_strawberrydaiquiri">Daiquiri de maduixa</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_tealturquoise">Xarxet i turquesa</string>
-    <string name="theme_yinyang">Yin i yang</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="pref_dark_theme_pure_black">Mode fosc negre pur</string>
     <string name="update_72hour">Cada 3 dies</string>
     <string name="connected_to_wifi">Només amb Wi-Fi</string>
     <string name="ext_installer_shizuku_unavailable_dialog">Instal·leu i inicieu el Shizuku per a utilitzar-lo com a instal·lador d’extensions.</string>
@@ -587,7 +578,6 @@
     <string name="pref_app_language">Llengua de l’aplicació</string>
     <string name="delete_category_confirmation">Voleu eliminar la categoria «%s»?</string>
     <string name="delete_category">Elimina la categoria</string>
-    <string name="theme_lavender">Lavanda</string>
     <string name="description_placeholder">Sense descripció</string>
     <string name="internal_error">Error intern: Reviseu els registres de fallades per a més informació</string>
     <string name="pref_user_agent_string">Cadena d’agent d’usuari per defecte</string>
@@ -596,7 +586,6 @@
     <string name="appwidget_updates_description">Vegeu els elements de la biblioteca actualitzats recentment</string>
     <string name="action_remove_everything">Elimina-ho tot</string>
     <string name="update_already_running">Ja s’està executant una actualització</string>
-    <string name="theme_tidalwave">Tsunami</string>
     <string name="error_user_agent_string_blank">La cadena de l’agent d’usuari no pot estar buida</string>
     <string name="pref_appearance_summary">Tema, formats de data i hora</string>
     <string name="pref_library_summary">Categories, actualitzacions globals i lliscament en capítols</string>
@@ -750,7 +739,6 @@
     <string name="private_settings">Inclou-hi configuració sensible (per exemple, testimonis d’autenticació dels serveis de seguiment)</string>
     <string name="onboarding_storage_help_action">Guia d’emmagatzematge</string>
     <string name="onboarding_storage_help_info">Heu actualitzat d’una versió més antiga i no sabeu què heu de seleccionar? Consulteu la guia d’emmagatzematge per a més informació.</string>
-    <string name="theme_nord">Nòrdic</string>
     <string name="pref_library_update_smart_update">Actualitzacions intel·ligents</string>
     <string name="ext_revoke_trust">Revoca les extensions de confiança desconegudes</string>
     <string name="manga_interval_expected_update_soon">Aviat</string>
@@ -799,14 +787,12 @@
     <string name="author">Autor</string>
     <string name="artist">Artista</string>
     <string name="action_toggle_private_off">Segueix de manera pública</string>
-    <string name="theme_monochrome">Monocrom</string>
     <string name="library_list">Llista de la biblioteca</string>
     <string name="action_toggle_private_on">Segueix de manera privada</string>
     <string name="action_display_unread_badge">Capítols no llegits</string>
     <string name="action_notes">Notes</string>
     <string name="action_edit_notes">Edita les notes</string>
     <string name="action_webview_close_tab">Tanca la pestanya</string>
-    <string name="theme_catppuccin">Gatputxino</string>
     <string name="pref_display_images_description">Renderitza les imatges a les descripcions dels mangues</string>
     <string name="pref_behavior">Comportament</string>
     <string name="pref_mark_duplicate_read_chapter_read">Marca els capítols duplicats de llegits com a llegits</string>
@@ -869,7 +855,6 @@
     <string name="migrationListScreen.matchWithoutChapterToast">No s’ha trobat cap capítol, aquest element no es pot utilitzar per a migrar</string>
     <string name="action_filter_excluded_scanlators">Filtra els scanlators exclosos</string>
     <string name="label_support_us">Doneu-nos suport</string>
-    <string name="theme_tokyonight">Nit a Tòquio</string>
     <string name="pref_category_extensions">Extensions</string>
     <string name="pref_allowed_content_warnings">Advertències de contingut permeses</string>
     <string name="pref_apply_content_warnings_to_installed">Aplica-ho també a les extensions instal·lades</string>

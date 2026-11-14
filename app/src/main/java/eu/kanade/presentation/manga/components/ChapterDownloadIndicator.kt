@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.WavyProgressIndicatorDefaults
 import androidx.compose.material3.ripple
@@ -30,16 +29,16 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.DropdownMenu
 import eu.kanade.tachiyomi.data.download.model.Download
-import mihon.icons.custommaterialsymbols.CustomMaterialSymbols
-import mihon.icons.custommaterialsymbols.rounded.DownloadArrow
-import mihon.icons.custommaterialsymbols.rounded.DownloadCircle
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Error
-import mihon.icons.materialsymbols.roundedfilled.CheckCircle
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDown
+import mihon.icons.lucide.icons.CircleAlert
+import mihon.icons.lucide.icons.CircleArrowDown
+import mihon.icons.lucide.icons.CircleCheck
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.IconButtonTokens
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 enum class ChapterDownloadAction {
     START,
@@ -96,15 +95,14 @@ private fun NotDownloadedIndicator(
                 hapticFeedback = LocalHapticFeedback.current,
                 onLongClick = { onClick(ChapterDownloadAction.START_NOW) },
                 onClick = { onClick(ChapterDownloadAction.START) },
-            )
-            .secondaryItemAlpha(),
+            ),
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = CustomMaterialSymbols.Rounded.DownloadCircle,
+            imageVector = Lucide.Icons.CircleArrowDown,
             contentDescription = stringResource(MR.strings.manga_download),
             modifier = Modifier.size(IndicatorSize),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = Graphite.colors.textSecondary,
         )
     }
 }
@@ -129,8 +127,8 @@ private fun DownloadingIndicator(
             ),
         contentAlignment = Alignment.Center,
     ) {
-        val color = MaterialTheme.colorScheme.onSurfaceVariant
-        val trackColor = color.copy(alpha = TRACK_ALPHA)
+        val color = Graphite.colors.textSecondary
+        val trackColor = Graphite.colors.hover
         val stroke = Stroke(width = with(LocalDensity.current) { IndicatorStrokeWidth.toPx() }, cap = StrokeCap.Round)
         val downloadProgress = downloadProgressProvider()
         val indeterminate = downloadState == Download.State.QUEUE ||
@@ -180,7 +178,7 @@ private fun DownloadingIndicator(
             )
         }
         Icon(
-            imageVector = CustomMaterialSymbols.Rounded.DownloadArrow,
+            imageVector = Lucide.Icons.ArrowDown,
             contentDescription = null,
             modifier = ArrowModifier,
             tint = color,
@@ -207,10 +205,10 @@ private fun DownloadedIndicator(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = MaterialSymbols.RoundedFilled.CheckCircle,
+            imageVector = Lucide.Icons.CircleCheck,
             contentDescription = null,
             modifier = Modifier.size(IndicatorSize),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+            tint = Graphite.colors.textSecondary,
         )
         DropdownMenu(expanded = isMenuExpanded, onDismissRequest = { isMenuExpanded = false }) {
             DropdownMenuItem(
@@ -242,10 +240,10 @@ private fun ErrorIndicator(
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = MaterialSymbols.Rounded.Error,
+            imageVector = Lucide.Icons.CircleAlert,
             contentDescription = stringResource(MR.strings.chapter_error),
             modifier = Modifier.size(IndicatorSize),
-            tint = MaterialTheme.colorScheme.error,
+            tint = Graphite.colors.danger,
         )
     }
 }
@@ -271,10 +269,9 @@ private fun Modifier.commonClickable(
 )
 
 private val IndicatorSize = 26.dp
-private val IndicatorPadding = 1.dp
+private val IndicatorPadding = GSpace.s1
 private val IndicatorWavelength = 7.dp
 private const val INDICATOR_AMPLITUDE = 0.6f
-private const val TRACK_ALPHA = 0.25f
 
 private val IndicatorStrokeWidth = 2.dp
 

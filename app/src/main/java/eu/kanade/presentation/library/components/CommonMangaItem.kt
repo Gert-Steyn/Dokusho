@@ -13,14 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -33,34 +31,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.manga.components.MangaCover
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.PlayArrow
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Play
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.BadgeGroup
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.selectedBackground
 import tachiyomi.domain.manga.model.MangaCover as MangaCoverModel
 
 object CommonMangaItemDefaults {
-    val GridHorizontalSpacer = 4.dp
-    val GridVerticalSpacer = 4.dp
+    val GridHorizontalSpacer = GSpace.s2
+    val GridVerticalSpacer = GSpace.s2
 
     @Suppress("ConstPropertyName")
     const val BrowseFavoriteCoverAlpha = 0.34f
 }
 
-private val ContinueReadingButtonSizeSmall = 28.dp
-private val ContinueReadingButtonSizeLarge = 32.dp
+private val ContinueReadingButtonSize = GSize.controlSm
+private val ContinueReadingButtonIconSize = GSize.icon
 
-private val ContinueReadingButtonIconSizeSmall = 16.dp
-private val ContinueReadingButtonIconSizeLarge = 20.dp
-
-private val ContinueReadingButtonGridPadding = 6.dp
-private val ContinueReadingButtonListSpacing = 8.dp
+private val ContinueReadingButtonGridPadding = GSpace.s3
 
 private const val GRID_SELECTED_COVER_ALPHA = 0.76f
 
@@ -104,8 +99,6 @@ fun MangaCompactGridItem(
                     )
                 } else if (onClickContinueReading != null) {
                     ContinueReadingButton(
-                        size = ContinueReadingButtonSizeLarge,
-                        iconSize = ContinueReadingButtonIconSizeLarge,
                         onClick = onClickContinueReading,
                         modifier = Modifier
                             .padding(ContinueReadingButtonGridPadding)
@@ -127,11 +120,11 @@ private fun BoxScope.CoverTextOverlay(
 ) {
     Box(
         modifier = Modifier
-            .clip(RoundedCornerShape(bottomStart = 4.dp, bottomEnd = 4.dp))
+            .clip(GRadius.tag)
             .background(
                 Brush.verticalGradient(
                     0f to Color.Transparent,
-                    1f to Color(0xAA000000),
+                    1f to Graphite.colors.scrim,
                 ),
             )
             .fillMaxHeight(0.33f)
@@ -145,12 +138,12 @@ private fun BoxScope.CoverTextOverlay(
         GridItemTitle(
             modifier = Modifier
                 .weight(1f)
-                .padding(8.dp),
+                .padding(GSpace.s3),
             title = title,
-            style = MaterialTheme.typography.titleSmall.copy(
-                color = Color.White,
+            style = Graphite.type.small.copy(
+                color = Graphite.colors.onAccent,
                 shadow = Shadow(
-                    color = Color.Black,
+                    color = Graphite.colors.scrim,
                     blurRadius = 4f,
                 ),
             ),
@@ -158,8 +151,6 @@ private fun BoxScope.CoverTextOverlay(
         )
         if (onClickContinueReading != null) {
             ContinueReadingButton(
-                size = ContinueReadingButtonSizeSmall,
-                iconSize = ContinueReadingButtonIconSizeSmall,
                 onClick = onClickContinueReading,
                 modifier = Modifier.padding(
                     end = ContinueReadingButtonGridPadding,
@@ -206,8 +197,6 @@ fun MangaComfortableGridItem(
                 content = {
                     if (onClickContinueReading != null) {
                         ContinueReadingButton(
-                            size = ContinueReadingButtonSizeLarge,
-                            iconSize = ContinueReadingButtonIconSizeLarge,
                             onClick = onClickContinueReading,
                             modifier = Modifier
                                 .padding(ContinueReadingButtonGridPadding)
@@ -217,9 +206,9 @@ fun MangaComfortableGridItem(
                 },
             )
             GridItemTitle(
-                modifier = Modifier.padding(4.dp),
+                modifier = Modifier.padding(GSpace.s2),
                 title = title,
-                style = MaterialTheme.typography.titleSmall,
+                style = Graphite.type.label,
                 minLines = 2,
                 maxLines = titleMaxLines,
             )
@@ -248,7 +237,7 @@ private fun MangaGridCover(
         if (badgesStart != null) {
             BadgeGroup(
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(GSpace.s2)
                     .align(Alignment.TopStart),
                 content = badgesStart,
             )
@@ -257,7 +246,7 @@ private fun MangaGridCover(
         if (badgesEnd != null) {
             BadgeGroup(
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(GSpace.s2)
                     .align(Alignment.TopEnd),
                 content = badgesEnd,
             )
@@ -276,8 +265,6 @@ private fun GridItemTitle(
     Text(
         modifier = modifier,
         text = title,
-        fontSize = 12.sp,
-        lineHeight = 18.sp,
         minLines = minLines,
         maxLines = maxLines,
         overflow = TextOverflow.Ellipsis,
@@ -298,16 +285,16 @@ private fun GridItemSelectable(
 ) {
     Box(
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(GRadius.control)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
-            .selectedOutline(isSelected = isSelected, color = MaterialTheme.colorScheme.secondary)
-            .padding(4.dp),
+            .selectedOutline(isSelected = isSelected, color = Graphite.colors.accent)
+            .padding(GSpace.s2),
     ) {
         val contentColor = if (isSelected) {
-            MaterialTheme.colorScheme.onSecondary
+            Graphite.colors.onAccent
         } else {
             LocalContentColor.current
         }
@@ -342,12 +329,12 @@ fun MangaListItem(
     Row(
         modifier = Modifier
             .selectedBackground(isSelected)
-            .height(56.dp)
+            .height(GSize.row)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick,
             )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = GSpace.s5, vertical = GSpace.s3),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         MangaCover.Square(
@@ -359,19 +346,17 @@ fun MangaListItem(
         Text(
             text = title,
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = GSpace.s5)
                 .weight(1f),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
         )
         BadgeGroup(content = badge)
         if (onClickContinueReading != null) {
             ContinueReadingButton(
-                size = ContinueReadingButtonSizeSmall,
-                iconSize = ContinueReadingButtonIconSizeSmall,
                 onClick = onClickContinueReading,
-                modifier = Modifier.padding(start = ContinueReadingButtonListSpacing),
+                modifier = Modifier.padding(start = GSpace.s3),
             )
         }
     }
@@ -379,25 +364,25 @@ fun MangaListItem(
 
 @Composable
 private fun ContinueReadingButton(
-    size: Dp,
-    iconSize: Dp,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(modifier = modifier) {
         FilledIconButton(
             onClick = onClick,
-            shape = MaterialTheme.shapes.small,
+            shape = GRadius.control,
             colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
-                contentColor = contentColorFor(MaterialTheme.colorScheme.primaryContainer),
+                containerColor = Graphite.colors.accentSubtle,
+                contentColor = Graphite.colors.accent,
             ),
-            modifier = Modifier.size(size),
+            modifier = Modifier
+                .size(ContinueReadingButtonSize)
+                .minimumInteractiveComponentSize(),
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.PlayArrow,
+                imageVector = Lucide.Icons.Play,
                 contentDescription = stringResource(MR.strings.action_resume),
-                modifier = Modifier.size(iconSize),
+                modifier = Modifier.size(ContinueReadingButtonIconSize),
             )
         }
     }

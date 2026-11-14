@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,8 +12,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import eu.kanade.tachiyomi.util.system.LocaleHelper
 import tachiyomi.domain.source.model.Source
-import tachiyomi.presentation.core.components.material.padding
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun BaseSourceItem(
@@ -47,22 +46,22 @@ private val defaultIcon: @Composable RowScope.(Source) -> Unit = { source ->
 private val defaultContent: @Composable RowScope.(Source, String?) -> Unit = { source, sourceLangString ->
     Column(
         modifier = Modifier
-            .padding(horizontal = MaterialTheme.padding.medium)
+            .padding(horizontal = GSpace.s5)
             .weight(1f),
     ) {
         Text(
             text = source.name,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
         )
         if (sourceLangString != null) {
             Text(
-                modifier = Modifier.secondaryItemAlpha(),
                 text = sourceLangString,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
+                style = Graphite.type.small,
+                color = Graphite.colors.textMuted,
             )
         }
     }

@@ -4,25 +4,24 @@ import android.util.DisplayMetrics
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import eu.kanade.presentation.util.rememberResourceBitmapPainter
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.data.coil.InstalledExtensionIcon
 import eu.kanade.tachiyomi.data.coil.InstalledSourceIcon
 import eu.kanade.tachiyomi.extension.model.Extension
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.roundedfilled.Dangerous
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.OctagonAlert
+import mihon.icons.lucide.icons.TriangleAlert
 import tachiyomi.domain.source.model.Source
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.source.local.isLocal
 
 private val defaultModifier = Modifier
@@ -37,9 +36,9 @@ fun SourceIcon(
     when {
         source.isStub -> {
             Image(
-                imageVector = MaterialSymbols.RoundedFilled.Warning,
+                imageVector = Lucide.Icons.TriangleAlert,
                 contentDescription = null,
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.error),
+                colorFilter = ColorFilter.tint(Graphite.colors.danger),
                 modifier = modifier.then(defaultModifier),
             )
         }
@@ -71,13 +70,14 @@ fun ExtensionIcon(
 ) {
     when (extension) {
         is Extension.Available -> {
+            val placeholder = ColorPainter(Graphite.colors.hover)
             AsyncImage(
                 model = extension.iconUrl,
                 contentDescription = null,
-                placeholder = ColorPainter(Color(0x1F888888)),
-                error = rememberResourceBitmapPainter(id = R.drawable.cover_error),
+                placeholder = placeholder,
+                error = placeholder,
                 modifier = modifier
-                    .clip(MaterialTheme.shapes.extraSmall),
+                    .clip(GRadius.tag),
             )
         }
         is Extension.Loaded -> {
@@ -91,9 +91,9 @@ fun ExtensionIcon(
             )
         }
         is Extension.NotLoaded -> Image(
-            imageVector = MaterialSymbols.RoundedFilled.Dangerous,
+            imageVector = Lucide.Icons.OctagonAlert,
             contentDescription = null,
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.error),
+            colorFilter = ColorFilter.tint(Graphite.colors.danger),
             modifier = modifier.then(defaultModifier),
         )
     }

@@ -45,8 +45,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import logcat.LogPriority
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Public
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Globe
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.Facebook
 import mihon.icons.simpleicons.Github
@@ -61,6 +61,7 @@ import tachiyomi.presentation.core.components.LinkIcon
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 import java.util.Locale
 import kotlin.time.Instant
 
@@ -91,7 +92,7 @@ object AboutScreen : Screen() {
             ) {
                 item {
                     LogoHeader(
-                        iconPadding = PaddingValues(vertical = 56.dp),
+                        iconPadding = PaddingValues(vertical = GSpace.s8),
                     )
                 }
 
@@ -176,12 +177,12 @@ object AboutScreen : Screen() {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp),
+                            .padding(vertical = GSpace.s3),
                         horizontalArrangement = Arrangement.Center,
                     ) {
                         LinkIcon(
                             label = stringResource(MR.strings.website),
-                            icon = MaterialSymbols.Rounded.Public,
+                            icon = Lucide.Icons.Globe,
                             url = "https://mihon.app",
                         )
                         LinkIcon(

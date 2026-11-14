@@ -488,14 +488,6 @@
     <string name="restore_miui_warning">Säkerhetskopiering/återställning kanske inte fungerar korrekt om MIUI-optimering är inaktiverat.</string>
     <string name="enhanced_tracking_info">Ger förbättrade funktioner för specifika källor. Artiklar spåras automatiskt när de läggs till i ditt bibliotek.</string>
     <string name="enhanced_services">Förbättrade spårare</string>
-    <string name="pref_dark_theme_pure_black">Rent svart mörkt läge</string>
-    <string name="theme_yotsuba">Yotsuba</string>
-    <string name="theme_yinyang">Yin och yang</string>
-    <string name="theme_tako">Tako</string>
-    <string name="theme_strawberrydaiquiri">Jordgubbsdaiquiri</string>
-    <string name="theme_midnightdusk">Midnattskymning</string>
-    <string name="theme_greenapple">Grönt äpple</string>
-    <string name="theme_monet">Dynamisk</string>
     <string name="pref_app_theme">App-tema</string>
     <string name="about_dont_kill_my_app">Vissa tillverkare har ytterligare appbegränsningar som dödar bakgrundstjänster. Denna webbplats har mer information om hur du åtgärdar det.</string>
     <string name="label_background_activity">Bakgrundsaktivitet</string>
@@ -506,7 +498,6 @@
     <string name="pref_hide_threshold">Känslighet för att dölja menyn vid rullning</string>
     <string name="pref_inverted_colors">Omvänd</string>
     <string name="relative_time_today">Idag</string>
-    <string name="theme_tealturquoise">Teal och turkos</string>
     <string name="pref_category_appearance">Utseende</string>
     <string name="confirm_lock_change">Autentisera för att bekräfta ändringen</string>
     <string name="label_default">Standard</string>
@@ -584,7 +575,6 @@
     <string name="cant_open_last_read_chapter">Det går inte att öppna det senast lästa kapitlet</string>
     <string name="not_installed">Inte installerad</string>
     <string name="custom_cover">Anpassat omslag</string>
-    <string name="theme_lavender">Lavendel</string>
     <string name="description_placeholder">Ingen beskrivning</string>
     <string name="pref_app_language">Appspråk</string>
     <string name="delete_category_confirmation">Vill du radera kategorin \"%s\"?</string>
@@ -603,7 +593,6 @@
     <string name="popular">Populära</string>
     <string name="remove_manga">Du är på väg att ta bort \"%s\" från ditt bibliotek</string>
     <string name="download_ahead">Ladda ner i förväg</string>
-    <string name="theme_tidalwave">Tidvattenvåg</string>
     <string name="download_ahead_info">Fungerar endast om det aktuella kapitlet + nästa redan har laddats ner.</string>
     <string name="auto_download_while_reading">Automatisk nedladdning under läsning</string>
     <string name="pref_library_summary">Kategorier, global uppdatering, kapitel svepning</string>
@@ -751,7 +740,6 @@
     <string name="onboarding_storage_help_info">Osäker på vad du ska välja då du uppdaterar från en äldre version? Se lagerhanteringsguiden för mer information.</string>
     <string name="pref_library_update_smart_update">Smart uppdatering</string>
     <string name="onboarding_storage_help_action">Lagerhanteringsguide</string>
-    <string name="theme_nord">Nord</string>
     <string name="ext_revoke_trust">Återkalla tillförlitliga okända tillägg</string>
     <string name="manga_interval_expected_update_soon">Snart</string>
     <string name="manga_interval_custom_amount">Anpassad uppdateringsfrekvens:</string>
@@ -792,7 +780,6 @@
     <string name="firebase_summary">Att skicka kraschloggar och användningsdata tillåter oss att identifiera och korrigera fel, förbättra prestanda samt göra framtida uppdateringar mer relevanta till dina behov</string>
     <string name="confirm_tracker_update">Uppdatera spårare till kapitel %d?</string>
     <string name="action_toggle_private_off">Spåra offentligt</string>
-    <string name="theme_monochrome">Monokrom</string>
     <string name="export">Exportera</string>
     <string name="library_exported">Bibliotek Exporterat</string>
     <string name="library_list">Bibliotekslista</string>
@@ -816,7 +803,6 @@
     <string name="action_notes">Anteckningar</string>
     <string name="action_edit_notes">Redigera anteckningar</string>
     <string name="action_webview_close_tab">Stäng flik</string>
-    <string name="theme_catppuccin">Catppuccin</string>
     <string name="pref_display_images_description">Rendera bilder i mangabeskrivningar</string>
     <string name="pref_behavior">Beteende</string>
     <string name="pref_mark_duplicate_read_chapter_read">Markera lästa kapiteldubbletter som lästa</string>

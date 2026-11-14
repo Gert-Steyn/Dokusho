@@ -3,27 +3,26 @@ package eu.kanade.presentation.reader
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.components.AdaptiveSheet
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.Photo
-import mihon.icons.materialsymbols.rounded.Save
-import mihon.icons.materialsymbols.rounded.Share
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.Image
+import mihon.icons.lucide.icons.Save
+import mihon.icons.lucide.icons.Share2
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ActionButton
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 @Composable
 fun ReaderPageActionsDialog(
@@ -36,19 +35,19 @@ fun ReaderPageActionsDialog(
 
     AdaptiveSheet(onDismissRequest = onDismissRequest) {
         Row(
-            modifier = Modifier.padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+            modifier = Modifier.padding(vertical = GSpace.s5),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
         ) {
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.set_as_cover),
-                icon = MaterialSymbols.Rounded.Photo,
+                icon = Lucide.Icons.Image,
                 onClick = { showSetCoverDialog = true },
             )
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_copy_to_clipboard),
-                icon = MaterialSymbols.Rounded.ContentCopy,
+                icon = Lucide.Icons.Copy,
                 onClick = {
                     onShare(true)
                     onDismissRequest()
@@ -57,7 +56,7 @@ fun ReaderPageActionsDialog(
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_share),
-                icon = MaterialSymbols.Rounded.Share,
+                icon = Lucide.Icons.Share2,
                 onClick = {
                     onShare(false)
                     onDismissRequest()
@@ -66,7 +65,7 @@ fun ReaderPageActionsDialog(
             ActionButton(
                 modifier = Modifier.weight(1f),
                 title = stringResource(MR.strings.action_save),
-                icon = MaterialSymbols.Rounded.Save,
+                icon = Lucide.Icons.Save,
                 onClick = {
                     onSave()
                     onDismissRequest()
@@ -91,19 +90,21 @@ private fun SetCoverDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         text = {
             Text(stringResource(MR.strings.confirm_set_image_as_cover))
         },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(stringResource(MR.strings.action_ok))
-            }
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = onConfirm,
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismiss,
+            )
         },
         onDismissRequest = onDismiss,
     )

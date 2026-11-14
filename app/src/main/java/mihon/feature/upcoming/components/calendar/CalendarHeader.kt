@@ -12,9 +12,6 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -27,11 +24,13 @@ import kotlinx.datetime.YearMonth
 import kotlinx.datetime.toJavaYearMonth
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.yearMonth
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.KeyboardArrowLeft
-import mihon.icons.materialsymbols.rounded.KeyboardArrowRight
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ChevronLeft
+import mihon.icons.lucide.icons.ChevronRight
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.Graphite
 import java.time.format.DateTimeFormatter
 import kotlin.time.Clock
 
@@ -54,18 +53,20 @@ fun CalenderHeader(
         ) { monthYear ->
             Text(
                 text = getTitleText(monthYear),
-                style = MaterialTheme.typography.titleLarge,
+                style = Graphite.type.title,
             )
         }
         Row {
-            IconButton(onClick = onPreviousClick) {
-                @Suppress("DEPRECATION")
-                Icon(MaterialSymbols.Rounded.KeyboardArrowLeft, stringResource(MR.strings.upcoming_calendar_prev))
-            }
-            IconButton(onClick = onNextClick) {
-                @Suppress("DEPRECATION")
-                Icon(MaterialSymbols.Rounded.KeyboardArrowRight, stringResource(MR.strings.upcoming_calendar_next))
-            }
+            GIconButton(
+                icon = Lucide.Icons.ChevronLeft,
+                contentDescription = stringResource(MR.strings.upcoming_calendar_prev),
+                onClick = onPreviousClick,
+            )
+            GIconButton(
+                icon = Lucide.Icons.ChevronRight,
+                contentDescription = stringResource(MR.strings.upcoming_calendar_next),
+                onClick = onNextClick,
+            )
         }
     }
 }

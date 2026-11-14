@@ -40,7 +40,7 @@ import tachiyomi.domain.source.service.SourceManager
 import tachiyomi.i18n.MR
 import java.math.RoundingMode
 import java.text.NumberFormat
-import mihon.icons.materialsymbols.R as MaterialSymbolsR
+import mihon.icons.lucide.R as LucideR
 
 @Inject
 class LibraryUpdateNotifier(
@@ -74,12 +74,12 @@ class LibraryUpdateNotifier(
     val progressNotificationBuilder by lazy {
         context.notificationBuilder(Notifications.CHANNEL_LIBRARY_PROGRESS) {
             setContentTitle(context.stringResource(MR.strings.app_name))
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_refresh)
+            setSmallIcon(LucideR.drawable.icons_refresh_cw)
             setLargeIcon(notificationBitmap)
             setOngoing(true)
             setOnlyAlertOnce(true)
             addAction(
-                MaterialSymbolsR.drawable.rounded_close,
+                LucideR.drawable.icons_x,
                 context.stringResource(MR.strings.action_cancel),
                 cancelIntent,
             )
@@ -146,7 +146,7 @@ class LibraryUpdateNotifier(
             setStyle(
                 NotificationCompat.BigTextStyle().bigText(context.stringResource(MR.strings.notification_size_warning)),
             )
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_warning)
+            setSmallIcon(LucideR.drawable.icons_triangle_alert)
             setTimeoutAfter(Downloader.WARNING_NOTIF_TIMEOUT_MS)
             setContentIntent(NotificationHandler.openUrl(context, HELP_WARNING_URL))
         }
@@ -259,7 +259,7 @@ class LibraryUpdateNotifier(
 
             // Mark chapters as read action
             addAction(
-                MaterialSymbolsR.drawable.rounded_check,
+                LucideR.drawable.icons_check,
                 context.stringResource(MR.strings.action_mark_as_read),
                 NotificationReceiver.markAsReadPendingBroadcast(
                     context,
@@ -270,7 +270,7 @@ class LibraryUpdateNotifier(
             )
             // View chapters action
             addAction(
-                MaterialSymbolsR.drawable.rounded_book,
+                LucideR.drawable.icons_book_open,
                 context.stringResource(MR.strings.action_view_chapters),
                 NotificationReceiver.openChapterPendingActivity(
                     context,

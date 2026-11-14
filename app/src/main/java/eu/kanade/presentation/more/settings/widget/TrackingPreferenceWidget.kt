@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,11 +25,13 @@ import eu.kanade.tachiyomi.data.track.EnhancedTracker
 import eu.kanade.tachiyomi.data.track.Tracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TrackingPreferenceWidget(
@@ -46,7 +47,7 @@ fun TrackingPreferenceWidget(
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(horizontal = PrefsHorizontalPadding, vertical = 8.dp),
+                .padding(horizontal = PrefsHorizontalPadding, vertical = GSpace.s3),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Row(
@@ -64,19 +65,19 @@ fun TrackingPreferenceWidget(
                 ) {
                     Text(
                         text = tracker.name,
-                        modifier = Modifier.padding(horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = GSpace.s5),
                         maxLines = 1,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = TitleFontSize,
-                        fontWeight = FontWeight.Medium,
+                        style = Graphite.type.body,
+                        color = Graphite.colors.text,
                     )
                     val displayName = tracker.getDisplayUsername()
                     if (isLoggedIn && displayName.isNotBlank()) {
                         Text(
                             text = displayName,
-                            modifier = Modifier.padding(horizontal = 16.dp),
+                            modifier = Modifier.padding(horizontal = GSpace.s5),
                             maxLines = 1,
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Graphite.type.small,
+                            color = Graphite.colors.textMuted,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
@@ -92,26 +93,28 @@ fun TrackingPreferenceWidget(
                     ) {
                         if (!isRefreshing) {
                             Icon(
-                                imageVector = MaterialSymbols.Rounded.Refresh,
+                                imageVector = Lucide.Icons.RefreshCw,
                                 modifier = Modifier
-                                    .padding(4.dp)
+                                    .padding(GSpace.s2)
                                     .size(32.dp),
+                                tint = Graphite.colors.textMuted,
                                 contentDescription = stringResource(MR.strings.refresh_tracker_profile),
                             )
                         } else {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(24.dp),
                                 strokeWidth = 2.dp,
+                                color = Graphite.colors.textMuted,
                             )
                         }
                     }
                 }
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.Check,
+                    imageVector = Lucide.Icons.Check,
                     modifier = Modifier
-                        .padding(4.dp)
+                        .padding(GSpace.s2)
                         .size(32.dp),
-                    tint = Color(0xFF4CAF50),
+                    tint = Graphite.colors.success,
                     contentDescription = stringResource(MR.strings.login_success),
                 )
             }

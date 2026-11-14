@@ -9,8 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Preview
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Eye
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 
 @Composable
 fun SwitchPreferenceWidget(
@@ -32,6 +33,7 @@ fun SwitchPreferenceWidget(
                 checked = checked,
                 onCheckedChange = null,
                 enabled = enabled,
+                colors = graphiteSwitchColors(),
                 modifier = Modifier.padding(start = TrailingWidgetBuffer),
             )
         },
@@ -49,7 +51,7 @@ private fun SwitchPreferenceWidgetPreview() {
                 SwitchPreferenceWidget(
                     title = "Text preference with icon",
                     subtitle = "Text preference summary",
-                    icon = MaterialSymbols.Rounded.Preview,
+                    icon = Lucide.Icons.Eye,
                     checked = true,
                     onCheckedChanged = {},
                 )

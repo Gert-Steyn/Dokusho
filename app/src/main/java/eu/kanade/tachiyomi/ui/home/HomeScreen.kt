@@ -4,16 +4,16 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationItemColors
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteItem
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteType
 import androidx.compose.material3.adaptive.navigationsuite.rememberNavigationSuiteScaffoldState
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -50,6 +51,8 @@ import soup.compose.material.motion.animation.materialFadeThroughIn
 import soup.compose.material.motion.animation.materialFadeThroughOut
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.pluralStringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 
 object HomeScreen : Screen() {
 
@@ -102,8 +105,8 @@ object HomeScreen : Screen() {
                     navigationSuiteType = navigationSuiteType,
                     state = navigationSuiteState,
                     navigationSuiteColors = NavigationSuiteDefaults.colors(
-                        navigationRailContainerColor = MaterialTheme.colorScheme
-                            .surfaceColorAtElevation(3.dp),
+                        navigationBarContainerColor = Graphite.colors.surface,
+                        navigationRailContainerColor = Graphite.colors.surface,
                     ),
                     navigationItemVerticalArrangement = Arrangement.Center,
                     navigationItems = {
@@ -188,17 +191,27 @@ object HomeScreen : Screen() {
                 Icon(
                     painter = tab.options.icon!!,
                     contentDescription = tab.options.title,
+                    modifier = Modifier.size(GSize.icon),
                 )
             },
             label = {
                 Text(
                     text = tab.options.title,
-                    style = MaterialTheme.typography.labelLarge,
+                    style = Graphite.type.caption,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
             },
             badge = tabBadge(tab),
+            colors = NavigationItemColors(
+                selectedIconColor = Graphite.colors.accent,
+                selectedTextColor = Graphite.colors.text,
+                selectedIndicatorColor = Color.Transparent,
+                unselectedIconColor = Graphite.colors.textMuted,
+                unselectedTextColor = Graphite.colors.textMuted,
+                disabledIconColor = Graphite.colors.textDisabled,
+                disabledTextColor = Graphite.colors.textDisabled,
+            ),
         )
     }
 

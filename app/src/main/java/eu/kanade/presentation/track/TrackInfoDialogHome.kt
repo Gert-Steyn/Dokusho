@@ -2,6 +2,7 @@ package eu.kanade.presentation.track
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,18 +21,14 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,14 +51,19 @@ import eu.kanade.presentation.track.components.TrackLogoIcon
 import eu.kanade.tachiyomi.data.track.Tracker
 import eu.kanade.tachiyomi.ui.manga.track.TrackItem
 import eu.kanade.tachiyomi.util.lang.toJavaLocalDate
-import eu.kanade.tachiyomi.util.lang.toLocalDate
 import eu.kanade.tachiyomi.util.system.copyToClipboard
 import kotlinx.datetime.toJavaLocalDate
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.MoreVert
-import mihon.icons.materialsymbols.roundedfilled.VisibilityOff
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.EyeOff
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -84,9 +86,9 @@ fun TrackInfoDialogHome(
             .animateContentSize()
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp)
+            .padding(GSpace.s5)
             .windowInsetsPadding(WindowInsets.systemBars),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s6),
     ) {
         trackItems.forEach { item ->
             if (item.track != null) {
@@ -170,12 +172,12 @@ private fun TrackInfoItem(
                 badge = {
                     if (private) {
                         Badge(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                            containerColor = Graphite.colors.accent,
+                            contentColor = Graphite.colors.onAccent,
                             modifier = Modifier.absoluteOffset(x = (-5).dp),
                         ) {
                             Icon(
-                                imageVector = MaterialSymbols.RoundedFilled.VisibilityOff,
+                                imageVector = Lucide.Icons.EyeOff,
                                 contentDescription = stringResource(MR.strings.tracked_privately),
                                 modifier = Modifier.size(14.dp),
                             )
@@ -191,7 +193,7 @@ private fun TrackInfoItem(
             }
             Box(
                 modifier = Modifier
-                    .height(48.dp)
+                    .height(GSize.minTarget)
                     .weight(1f)
                     .combinedClickable(
                         onClick = onNewSearch,
@@ -199,15 +201,15 @@ private fun TrackInfoItem(
                             context.copyToClipboard(title, title)
                         },
                     )
-                    .padding(start = 16.dp),
+                    .padding(start = GSpace.s5),
                 contentAlignment = Alignment.CenterStart,
             ) {
                 Text(
                     text = title,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    style = Graphite.type.heading,
+                    color = Graphite.colors.text,
                 )
             }
             VerticalDivider()
@@ -222,11 +224,12 @@ private fun TrackInfoItem(
 
         Box(
             modifier = Modifier
-                .padding(top = 12.dp)
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.surfaceContainerHighest)
-                .padding(8.dp)
-                .clip(RoundedCornerShape(6.dp)),
+                .padding(top = GSpace.s4)
+                .clip(GRadius.card)
+                .background(Graphite.colors.surface)
+                .border(GSize.border, Graphite.colors.borderSubtle, GRadius.card)
+                .padding(GSpace.s3)
+                .clip(GRadius.control),
         ) {
             Column {
                 Row(modifier = Modifier.height(IntrinsicSize.Min)) {
@@ -275,8 +278,6 @@ private fun TrackInfoItem(
     }
 }
 
-private const val UNSET_TEXT_ALPHA = 0.5F
-
 @Composable
 private fun TrackDetailsItem(
     text: String?,
@@ -288,16 +289,16 @@ private fun TrackDetailsItem(
         modifier = modifier
             .clickable(onClick = onClick)
             .fillMaxHeight()
-            .padding(12.dp),
+            .padding(GSpace.s4),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = text ?: placeholder,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
             textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = if (text == null) UNSET_TEXT_ALPHA else 1f),
+            color = if (text == null) Graphite.colors.textMuted else Graphite.colors.text,
         )
     }
 }
@@ -311,14 +312,13 @@ private fun TrackInfoItemEmpty(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         TrackLogoIcon(tracker)
-        TextButton(
+        GSecondaryButton(
+            text = stringResource(MR.strings.add_tracking),
             onClick = onNewSearch,
             modifier = Modifier
-                .padding(start = 16.dp)
+                .padding(start = GSpace.s5)
                 .weight(1f),
-        ) {
-            Text(text = stringResource(MR.strings.add_tracking))
-        }
+        )
     }
 }
 
@@ -332,12 +332,11 @@ private fun TrackInfoItemMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
-        IconButton(onClick = { expanded = true }) {
-            Icon(
-                imageVector = MaterialSymbols.Rounded.MoreVert,
-                contentDescription = stringResource(MR.strings.label_more),
-            )
-        }
+        GIconButton(
+            icon = Lucide.Icons.EllipsisVertical,
+            contentDescription = stringResource(MR.strings.label_more),
+            onClick = { expanded = true },
+        )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

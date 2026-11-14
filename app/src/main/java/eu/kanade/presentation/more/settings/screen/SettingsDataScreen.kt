@@ -14,10 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
@@ -59,8 +56,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import logcat.LogPriority
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.storage.displayablePath
 import tachiyomi.core.common.util.system.logcat
@@ -68,7 +65,11 @@ import tachiyomi.domain.backup.service.BackupPreferences
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.storage.service.StoragePreferences
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.TextButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.collectAsState
 
@@ -84,12 +85,11 @@ object SettingsDataScreen : SearchableSettings {
     @Composable
     override fun RowScope.AppBarAction() {
         val uriHandler = LocalUriHandler.current
-        IconButton(onClick = { uriHandler.openUri(HELP_URL) }) {
-            Icon(
-                imageVector = MaterialSymbols.AutoMirroredRounded.Help,
-                contentDescription = stringResource(MR.strings.tracking_guide),
-            )
-        }
+        GIconButton(
+            icon = Lucide.AutoMirrored.CircleQuestionMark,
+            contentDescription = stringResource(MR.strings.tracking_guide),
+            onClick = { uriHandler.openUri(HELP_URL) },
+        )
     }
 
     @Composable
@@ -402,7 +402,7 @@ object SettingsDataScreen : SearchableSettings {
         var authorSelected by remember { mutableStateOf(options.includeAuthor) }
         var artistSelected by remember { mutableStateOf(options.includeArtist) }
 
-        AlertDialog(
+        GDialog(
             onDismissRequest = onDismissRequest,
             title = {
                 Text(text = stringResource(MR.strings.migration_dialog_what_to_include))
@@ -411,6 +411,7 @@ object SettingsDataScreen : SearchableSettings {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(
+                            colors = graphiteCheckboxColors(),
                             checked = titleSelected,
                             onCheckedChange = { checked ->
                                 titleSelected = checked
@@ -425,6 +426,7 @@ object SettingsDataScreen : SearchableSettings {
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(
+                            colors = graphiteCheckboxColors(),
                             checked = authorSelected,
                             onCheckedChange = { authorSelected = it },
                             enabled = titleSelected,
@@ -434,6 +436,7 @@ object SettingsDataScreen : SearchableSettings {
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(
+                            colors = graphiteCheckboxColors(),
                             checked = artistSelected,
                             onCheckedChange = { artistSelected = it },
                             enabled = titleSelected,
@@ -443,7 +446,8 @@ object SettingsDataScreen : SearchableSettings {
                 }
             },
             confirmButton = {
-                TextButton(
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_save),
                     onClick = {
                         onConfirm(
                             ExportOptions(
@@ -454,14 +458,13 @@ object SettingsDataScreen : SearchableSettings {
                         )
                         onDismissRequest()
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.action_save))
-                }
+                )
             },
             dismissButton = {
-                TextButton(onClick = onDismissRequest) {
-                    Text(text = stringResource(MR.strings.action_cancel))
-                }
+                GGhostButton(
+                    text = stringResource(MR.strings.action_cancel),
+                    onClick = onDismissRequest,
+                )
             },
         )
     }

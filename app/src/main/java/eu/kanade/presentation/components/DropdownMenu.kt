@@ -1,6 +1,7 @@
 package eu.kanade.presentation.components
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.sizeIn
@@ -17,12 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowRight
-import mihon.icons.materialsymbols.rounded.RadioButtonChecked
-import mihon.icons.materialsymbols.rounded.RadioButtonUnchecked
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.Circle
+import mihon.icons.lucide.icons.CircleDot
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import androidx.compose.material3.DropdownMenu as ComposeDropdownMenu
 
 /**
@@ -42,10 +46,14 @@ fun DropdownMenu(
     ComposeDropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismissRequest,
-        modifier = modifier.sizeIn(minWidth = 196.dp, maxWidth = 196.dp),
+        modifier = modifier
+            .sizeIn(minWidth = 196.dp, maxWidth = 196.dp)
+            .border(GSize.border, Graphite.colors.border, GRadius.card),
         offset = offset,
         scrollState = scrollState,
         properties = properties,
+        shape = GRadius.card,
+        containerColor = Graphite.colors.raised,
         content = content,
     )
 }
@@ -63,14 +71,15 @@ fun RadioMenuItem(
         trailingIcon = {
             if (isChecked) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.RadioButtonChecked,
+                    imageVector = Lucide.Icons.CircleDot,
                     contentDescription = stringResource(MR.strings.selected),
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = Graphite.colors.accent,
                 )
             } else {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.RadioButtonUnchecked,
+                    imageVector = Lucide.Icons.Circle,
                     contentDescription = stringResource(MR.strings.not_selected),
+                    tint = Graphite.colors.textMuted,
                 )
             }
         },
@@ -93,7 +102,7 @@ fun NestedMenuItem(
             onClick = { nestedExpanded = true },
             trailingIcon = {
                 Icon(
-                    imageVector = MaterialSymbols.AutoMirroredRounded.ArrowRight,
+                    imageVector = Lucide.AutoMirrored.ArrowRight,
                     contentDescription = null,
                 )
             },

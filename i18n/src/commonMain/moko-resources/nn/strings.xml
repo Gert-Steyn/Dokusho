@@ -80,7 +80,6 @@
     <string name="pref_category_theme">Tema</string>
     <string name="theme_light">Av</string>
     <string name="theme_dark">På</string>
-    <string name="theme_monet">Dynamisk</string>
     <string name="information_no_downloads">Ingen nedlastingar</string>
     <string name="information_no_recent">Ingen nylege oppdateringar</string>
     <string name="label_library">Bibliotek</string>

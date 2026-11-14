@@ -18,11 +18,12 @@ import eu.kanade.presentation.util.Screen
 import eu.kanade.tachiyomi.data.backup.models.Backup
 import eu.kanade.tachiyomi.util.system.copyToClipboard
 import kotlinx.serialization.protobuf.schema.ProtoBufSchemaGenerator
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ContentCopy
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Copy
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 class BackupSchemaScreen : Screen() {
 
@@ -47,7 +48,7 @@ class BackupSchemaScreen : Screen() {
                             listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.action_copy_to_clipboard),
-                                    icon = MaterialSymbols.Rounded.ContentCopy,
+                                    icon = Lucide.Icons.Copy,
                                     onClick = {
                                         context.copyToClipboard(TITLE, schema)
                                     },
@@ -64,7 +65,7 @@ class BackupSchemaScreen : Screen() {
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(contentPadding)
-                    .padding(16.dp),
+                    .padding(GSpace.s5),
                 fontFamily = FontFamily.Monospace,
             )
         }

@@ -7,15 +7,15 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import tachiyomi.domain.manga.model.Manga
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun BaseMangaListItem(
@@ -30,8 +30,8 @@ fun BaseMangaListItem(
     Row(
         modifier = modifier
             .clickable(onClick = onClickItem)
-            .height(56.dp)
-            .padding(horizontal = MaterialTheme.padding.medium),
+            .height(GSize.row)
+            .padding(horizontal = GSpace.s5),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         cover()
@@ -43,7 +43,7 @@ fun BaseMangaListItem(
 private val defaultCover: @Composable RowScope.(Manga, () -> Unit) -> Unit = { manga, onClick ->
     MangaCover.Square(
         modifier = Modifier
-            .padding(vertical = MaterialTheme.padding.small)
+            .padding(vertical = GSpace.s3)
             .fillMaxHeight(),
         data = manga,
         onClick = onClick,
@@ -55,10 +55,10 @@ private val defaultContent: @Composable RowScope.(Manga) -> Unit = {
         Text(
             text = it.title,
             modifier = Modifier
-                .padding(start = MaterialTheme.padding.medium),
+                .padding(start = GSpace.s5),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
         )
     }
 }

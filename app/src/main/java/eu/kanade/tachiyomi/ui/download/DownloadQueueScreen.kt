@@ -1,13 +1,10 @@
 package eu.kanade.tachiyomi.ui.download
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SmallExtendedFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.animateFloatingActionButton
@@ -26,8 +23,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Velocity
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -38,15 +33,18 @@ import eu.kanade.presentation.components.DropdownMenu
 import eu.kanade.presentation.components.NestedMenuItem
 import eu.kanade.presentation.download.DownloadQueueList
 import eu.kanade.presentation.util.Screen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Sort
-import mihon.icons.materialsymbols.roundedfilled.Pause
-import mihon.icons.materialsymbols.roundedfilled.PlayArrow
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowUpDown
+import mihon.icons.lucide.icons.Pause
+import mihon.icons.lucide.icons.Play
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.Pill
+import tachiyomi.presentation.core.components.graphite.GFloatingPrimaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 object DownloadQueueScreen : Screen() {
 
@@ -95,13 +93,12 @@ object DownloadQueueScreen : Screen() {
                                 overflow = TextOverflow.Ellipsis,
                             )
                             if (downloadCount > 0) {
-                                val pillAlpha = if (isSystemInDarkTheme()) 0.12f else 0.08f
                                 Pill(
                                     text = "$downloadCount",
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    color = MaterialTheme.colorScheme.onBackground
-                                        .copy(alpha = pillAlpha),
-                                    fontSize = 14.sp,
+                                    modifier = Modifier.padding(start = GSpace.s2),
+                                    color = Graphite.colors.hover,
+                                    contentColor = Graphite.colors.textSecondary,
+                                    style = Graphite.type.caption,
                                 )
                             }
                         }
@@ -171,7 +168,7 @@ object DownloadQueueScreen : Screen() {
                                 listOf(
                                     AppBar.Action(
                                         title = stringResource(MR.strings.action_sort),
-                                        icon = MaterialSymbols.AutoMirroredRounded.Sort,
+                                        icon = Lucide.AutoMirrored.ArrowUpDown,
                                         onClick = { sortExpanded = true },
                                     ),
                                     AppBar.OverflowAction(
@@ -187,7 +184,7 @@ object DownloadQueueScreen : Screen() {
             },
             floatingActionButton = {
                 val isRunning by viewModel.isDownloaderRunning.collectAsStateWithLifecycle()
-                SmallExtendedFloatingActionButton(
+                GFloatingPrimaryButton(
                     text = {
                         val id = if (isRunning) {
                             MR.strings.action_pause
@@ -198,9 +195,9 @@ object DownloadQueueScreen : Screen() {
                     },
                     icon = {
                         val icon = if (isRunning) {
-                            MaterialSymbols.RoundedFilled.Pause
+                            Lucide.Icons.Pause
                         } else {
-                            MaterialSymbols.RoundedFilled.PlayArrow
+                            Lucide.Icons.Play
                         }
                         Icon(imageVector = icon, contentDescription = null)
                     },

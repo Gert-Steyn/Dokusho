@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -25,9 +22,13 @@ import kotlinx.datetime.daysUntil
 import tachiyomi.domain.manga.interactor.FetchInterval
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.WheelTextPicker
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 import kotlin.math.absoluteValue
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -37,22 +38,22 @@ fun DeleteChaptersDialog(
     onDismissRequest: () -> Unit,
     onConfirm: () -> Unit,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(
+            GDangerButton(
+                text = stringResource(MR.strings.action_ok),
                 onClick = {
                     onDismissRequest()
                     onConfirm()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.are_you_sure))
@@ -81,7 +82,7 @@ fun SetIntervalDialog(
         }
     }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = { Text(stringResource(MR.strings.pref_library_update_smart_update)) },
         text = {
@@ -107,7 +108,7 @@ fun SetIntervalDialog(
                         stringResource(MR.strings.manga_interval_expected_update_null),
                     )
                 }
-                Spacer(Modifier.height(MaterialTheme.padding.small))
+                Spacer(Modifier.height(GSpace.s3))
 
                 if (onValueChanged != null && (!isReleaseBuildType)) {
                     Text(stringResource(MR.strings.manga_interval_custom_amount))
@@ -137,17 +138,19 @@ fun SetIntervalDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         confirmButton = {
-            TextButton(onClick = {
-                onValueChanged?.invoke(selectedInterval)
-                onDismissRequest()
-            }) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = {
+                    onValueChanged?.invoke(selectedInterval)
+                    onDismissRequest()
+                },
+            )
         },
     )
 }

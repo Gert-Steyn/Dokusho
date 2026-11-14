@@ -11,18 +11,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderState
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalSlider
 import androidx.compose.material3.rememberSliderState
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -42,14 +40,18 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.presentation.util.isTabletUi
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.SkipNext
-import mihon.icons.materialsymbols.rounded.SkipPrevious
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.SkipBack
+import mihon.icons.lucide.icons.SkipForward
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.graphiteSliderColors
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.math.roundToInt
 
 enum class ChapterNavigatorType {
@@ -101,15 +103,16 @@ fun ChapterNavigator(
     }
 
     val isTabletUi = isTabletUi()
-    val mainAxisPadding = if (isTabletUi) 24.dp else 8.dp
+    val mainAxisPadding = if (isTabletUi) GSpace.s6 else GSpace.s3
 
-    // Match with toolbar background color set in ReaderActivity
-    val backgroundColor = MaterialTheme.colorScheme
-        .surfaceColorAtElevation(3.dp)
+    // Match with the bar background set in ReaderAppBars
+    val backgroundColor = Graphite.colors.raised
         .copy(alpha = if (isSystemInDarkTheme()) 0.9f else 0.95f)
     val buttonColor = IconButtonDefaults.filledIconButtonColors(
         containerColor = backgroundColor,
+        contentColor = Graphite.colors.textMuted,
         disabledContainerColor = backgroundColor,
+        disabledContentColor = Graphite.colors.textDisabled,
     )
 
     val onPageChange: (Int) -> Unit = { onPageIndexChange(it - 1) }
@@ -184,12 +187,14 @@ fun HorizontalChapterNavigator(
                 enabled = if (isRtl) enabledNext else enabledPrevious,
                 onClick = if (isRtl) onNextChapter else onPreviousChapter,
                 colors = buttonColor,
+                shape = GRadius.control,
             ) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.SkipPrevious,
+                    imageVector = Lucide.Icons.SkipBack,
                     contentDescription = stringResource(
                         if (isRtl) MR.strings.action_next_chapter else MR.strings.action_previous_chapter,
                     ),
+                    modifier = Modifier.size(GSize.icon),
                 )
             }
 
@@ -198,13 +203,13 @@ fun HorizontalChapterNavigator(
                     Row(
                         modifier = Modifier
                             .weight(1f)
-                            .clip(RoundedCornerShape(24.dp))
+                            .clip(GRadius.control)
                             .background(backgroundColor)
-                            .padding(horizontal = 16.dp),
+                            .padding(horizontal = GSpace.s5),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Box(contentAlignment = Alignment.CenterEnd) {
-                            Text(text = currentPage.toString())
+                            Text(text = currentPage.toString(), color = Graphite.colors.text)
                             // Taking up full length so the slider doesn't shift when 'currentPage' length changes
                             Text(text = totalPages.toString(), color = Color.Transparent)
                         }
@@ -213,13 +218,14 @@ fun HorizontalChapterNavigator(
                             state = state,
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(horizontal = 8.dp),
+                                .padding(horizontal = GSpace.s3),
                             onValueChange = { onPageChange(it.roundToInt()) },
                             onValueChangeFinished = onPageChangeFinished,
                             interactionSource = interactionSource,
+                            colors = graphiteSliderColors(),
                         )
 
-                        Text(text = totalPages.toString())
+                        Text(text = totalPages.toString(), color = Graphite.colors.text)
                     }
                 }
             } else {
@@ -230,12 +236,14 @@ fun HorizontalChapterNavigator(
                 enabled = if (isRtl) enabledPrevious else enabledNext,
                 onClick = if (isRtl) onPreviousChapter else onNextChapter,
                 colors = buttonColor,
+                shape = GRadius.control,
             ) {
                 Icon(
-                    imageVector = MaterialSymbols.Rounded.SkipNext,
+                    imageVector = Lucide.Icons.SkipForward,
                     contentDescription = stringResource(
                         if (isRtl) MR.strings.action_previous_chapter else MR.strings.action_next_chapter,
                     ),
+                    modifier = Modifier.size(GSize.icon),
                 )
             }
         }
@@ -269,11 +277,12 @@ fun VerticalChapterNavigator(
             enabled = enabledPrevious,
             onClick = onPreviousChapter,
             colors = buttonColor,
+            shape = GRadius.control,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.SkipPrevious,
+                imageVector = Lucide.Icons.SkipBack,
                 contentDescription = stringResource(MR.strings.action_previous_chapter),
-                modifier = Modifier.rotate(90f),
+                modifier = Modifier.size(GSize.icon).rotate(90f),
             )
         }
 
@@ -281,24 +290,25 @@ fun VerticalChapterNavigator(
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .clip(RoundedCornerShape(24.dp))
+                    .clip(GRadius.control)
                     .background(backgroundColor)
-                    .padding(vertical = 16.dp),
+                    .padding(vertical = GSpace.s5),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(text = currentPage.toString())
+                Text(text = currentPage.toString(), color = Graphite.colors.text)
 
                 VerticalSlider(
                     state = state,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(vertical = 8.dp),
+                        .padding(vertical = GSpace.s3),
                     onValueChange = { onPageChange(it.roundToInt()) },
                     onValueChangeFinished = onPageChangeFinished,
                     interactionSource = interactionSource,
+                    colors = graphiteSliderColors(),
                 )
 
-                Text(text = totalPages.toString())
+                Text(text = totalPages.toString(), color = Graphite.colors.text)
             }
         } else {
             Spacer(Modifier.weight(1f))
@@ -308,11 +318,12 @@ fun VerticalChapterNavigator(
             enabled = enabledNext,
             onClick = onNextChapter,
             colors = buttonColor,
+            shape = GRadius.control,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.SkipNext,
+                imageVector = Lucide.Icons.SkipForward,
                 contentDescription = stringResource(MR.strings.action_next_chapter),
-                modifier = Modifier.rotate(90f),
+                modifier = Modifier.size(GSize.icon).rotate(90f),
             )
         }
     }

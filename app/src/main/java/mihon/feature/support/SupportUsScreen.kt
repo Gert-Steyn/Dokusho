@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,16 +25,17 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import eu.kanade.presentation.components.AppBar
 import eu.kanade.presentation.more.settings.widget.TextPreferenceWidget
 import eu.kanade.presentation.util.Screen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.OpenInNew
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ExternalLink
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.OpenCollective
 import mihon.icons.simpleicons.Patreon
 import mihon.icons.simpleicons.SimpleIcons
 import tachiyomi.core.common.Constants
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 class SupportUsScreen : Screen() {
 
@@ -53,13 +53,13 @@ class SupportUsScreen : Screen() {
             },
         ) { paddingValues ->
             Column(
-                verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                verticalArrangement = Arrangement.spacedBy(GSpace.s3),
                 modifier = Modifier.verticalScroll(rememberScrollState()).padding(
                     remember(paddingValues) {
                         object : PaddingValues {
                             override fun calculateLeftPadding(layoutDirection: LayoutDirection): Dp {
                                 return paddingValues.calculateLeftPadding(layoutDirection) +
-                                    MaterialTheme.padding.medium
+                                    GSpace.s5
                             }
 
                             override fun calculateTopPadding(): Dp {
@@ -68,7 +68,7 @@ class SupportUsScreen : Screen() {
 
                             override fun calculateRightPadding(layoutDirection: LayoutDirection): Dp {
                                 return paddingValues.calculateRightPadding(layoutDirection) +
-                                    MaterialTheme.padding.medium
+                                    GSpace.s5
                             }
 
                             override fun calculateBottomPadding(): Dp {
@@ -82,8 +82,8 @@ class SupportUsScreen : Screen() {
 
                 Text(
                     text = stringResource(MR.strings.supportUsScreen_perks),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                    style = Graphite.type.body,
+                    modifier = Modifier.padding(horizontal = GSpace.s5),
                 )
 
                 SupportItem(
@@ -99,14 +99,14 @@ class SupportUsScreen : Screen() {
 
                 Text(
                     text = stringResource(MR.strings.supportUsScreen_currentlySupportedBy, 200),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                    style = Graphite.type.body,
+                    modifier = Modifier.padding(horizontal = GSpace.s5),
                 )
 
                 Text(
                     text = stringResource(MR.strings.supportUsScreen_contactForDetailsMessage),
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                    style = Graphite.type.body,
+                    modifier = Modifier.padding(horizontal = GSpace.s5),
                 )
 
                 SupportItem(
@@ -132,7 +132,7 @@ class SupportUsScreen : Screen() {
                 icon = icon,
                 widget = {
                     Icon(
-                        imageVector = MaterialSymbols.AutoMirroredRounded.OpenInNew,
+                        imageVector = Lucide.AutoMirrored.ExternalLink,
                         contentDescription = null,
                     )
                 },

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,11 +43,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import mihon.app.di.appGraph
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ContentCopy
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Copy
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -86,7 +87,7 @@ class WorkerInfoScreen : Screen() {
                             listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.action_copy_to_clipboard),
-                                    icon = MaterialSymbols.Rounded.ContentCopy,
+                                    icon = Lucide.Icons.Copy,
                                     onClick = {
                                         context.copyToClipboard(TITLE, enqueued + finished + running)
                                     },
@@ -99,7 +100,7 @@ class WorkerInfoScreen : Screen() {
             },
         ) { contentPadding ->
             LazyColumn(
-                contentPadding = contentPadding + PaddingValues(horizontal = 16.dp),
+                contentPadding = contentPadding + PaddingValues(horizontal = GSpace.s5),
                 modifier = Modifier.horizontalScroll(rememberScrollState()),
             ) {
                 item { SectionTitle(title = "Enqueued") }
@@ -118,8 +119,8 @@ class WorkerInfoScreen : Screen() {
     private fun SectionTitle(title: String) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.padding(vertical = 8.dp),
+            style = Graphite.type.heading,
+            modifier = Modifier.padding(vertical = GSpace.s3),
         )
     }
 

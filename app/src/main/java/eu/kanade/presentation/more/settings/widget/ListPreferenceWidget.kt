@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -26,7 +24,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.graphiteRadioColors
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun <T> ListPreferenceWidget(
@@ -66,7 +70,7 @@ fun <T> ListPreferenceDialog(
     onDismissRequest: () -> Unit,
     message: String? = null,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = title?.let { { Text(text = it) } },
         text = {
@@ -95,16 +99,21 @@ fun <T> ListPreferenceDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }
 
 @Composable
 internal fun PreferenceDialogMessage(message: String) {
-    Text(text = message, modifier = Modifier.padding(bottom = 8.dp))
+    Text(
+        text = message,
+        modifier = Modifier.padding(bottom = GSpace.s3),
+        style = Graphite.type.body,
+    )
 }
 
 @Composable
@@ -116,7 +125,7 @@ private fun DialogRow(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(GRadius.control)
             .selectable(
                 selected = isSelected,
                 onClick = { if (!isSelected) onSelected() },
@@ -127,11 +136,13 @@ private fun DialogRow(
         RadioButton(
             selected = isSelected,
             onClick = null,
+            colors = graphiteRadioColors(),
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyLarge.merge(),
-            modifier = Modifier.padding(start = 24.dp),
+            style = Graphite.type.body,
+            color = Graphite.colors.text,
+            modifier = Modifier.padding(start = GSpace.s5),
         )
     }
 }

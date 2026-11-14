@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
@@ -26,23 +24,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import eu.kanade.presentation.components.UnreadDot
 import eu.kanade.tachiyomi.data.download.model.Download
 import me.saket.swipe.SwipeableActionsBox
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.BookmarkAdd
-import mihon.icons.materialsymbols.rounded.BookmarkRemove
-import mihon.icons.materialsymbols.rounded.Check
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.Download
-import mihon.icons.materialsymbols.rounded.FileDownloadOff
-import mihon.icons.materialsymbols.rounded.RemoveDone
-import mihon.icons.materialsymbols.roundedfilled.Bookmark
-import mihon.icons.materialsymbols.roundedfilled.Circle
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.Bookmark
+import mihon.icons.lucide.icons.BookmarkMinus
+import mihon.icons.lucide.icons.BookmarkPlus
+import mihon.icons.lucide.icons.Check
+import mihon.icons.lucide.icons.Download
+import mihon.icons.lucide.icons.FileX
+import mihon.icons.lucide.icons.ListX
+import mihon.icons.lucide.icons.Trash2
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.DISABLED_ALPHA
-import tachiyomi.presentation.core.components.material.SECONDARY_ALPHA
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.selectedBackground
 
 @Composable
@@ -70,7 +68,7 @@ fun MangaChapterListItem(
         read = read,
         bookmark = bookmark,
         downloadState = downloadStateProvider(),
-        background = MaterialTheme.colorScheme.primaryContainer,
+        background = Graphite.colors.accentSubtle,
         onSwipe = { onChapterSwipe(chapterSwipeStartAction) },
     )
     val end = getSwipeAction(
@@ -78,7 +76,7 @@ fun MangaChapterListItem(
         read = read,
         bookmark = bookmark,
         downloadState = downloadStateProvider(),
-        background = MaterialTheme.colorScheme.primaryContainer,
+        background = Graphite.colors.accentSubtle,
         onSwipe = { onChapterSwipe(chapterSwipeEndAction) },
     )
 
@@ -87,7 +85,7 @@ fun MangaChapterListItem(
         startActions = listOfNotNull(start),
         endActions = listOfNotNull(end),
         swipeThreshold = swipeActionThreshold,
-        backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceContainerLowest,
+        backgroundUntilSwipeThreshold = Graphite.colors.canvas,
     ) {
         Row(
             modifier = modifier
@@ -96,51 +94,43 @@ fun MangaChapterListItem(
                     onClick = onClick,
                     onLongClick = onLongClick,
                 )
-                .padding(start = 16.dp, top = 12.dp, end = 8.dp, bottom = 12.dp),
+                .padding(start = GSpace.s5, top = GSpace.s4, end = GSpace.s3, bottom = GSpace.s4),
         ) {
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
+                verticalArrangement = Arrangement.spacedBy(GSpace.s2),
             ) {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    horizontalArrangement = Arrangement.spacedBy(GSpace.s1),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     var textHeight by remember { mutableIntStateOf(0) }
                     if (!read) {
-                        Icon(
-                            imageVector = MaterialSymbols.RoundedFilled.Circle,
-                            contentDescription = stringResource(MR.strings.unread),
-                            modifier = Modifier
-                                .height(8.dp)
-                                .padding(end = 4.dp),
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
+                        UnreadDot()
                     }
                     if (bookmark) {
                         Icon(
-                            imageVector = MaterialSymbols.RoundedFilled.Bookmark,
+                            imageVector = Lucide.Icons.Bookmark,
                             contentDescription = stringResource(MR.strings.action_filter_bookmarked),
                             modifier = Modifier
-                                .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - 2.dp }),
-                            tint = MaterialTheme.colorScheme.primary,
+                                .sizeIn(maxHeight = with(LocalDensity.current) { textHeight.toDp() - GSpace.s1 }),
+                            tint = Graphite.colors.accent,
                         )
                     }
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = Graphite.type.body,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         onTextLayout = { textHeight = it.size.height },
-                        color = LocalContentColor.current.copy(alpha = if (read) DISABLED_ALPHA else 1f),
+                        color = if (read) Graphite.colors.textSecondary else Graphite.colors.text,
                     )
                 }
 
                 Row {
-                    val subtitleStyle = MaterialTheme.typography.bodySmall
+                    val subtitleStyle = Graphite.type.small
                         .merge(
-                            color = LocalContentColor.current
-                                .copy(alpha = if (read) DISABLED_ALPHA else SECONDARY_ALPHA),
+                            color = if (read) Graphite.colors.textMuted else Graphite.colors.textSecondary,
                         )
                     ProvideTextStyle(value = subtitleStyle) {
                         if (date != null) {
@@ -156,7 +146,7 @@ fun MangaChapterListItem(
                                 text = readProgress,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
-                                color = LocalContentColor.current.copy(alpha = DISABLED_ALPHA),
+                                color = Graphite.colors.textMuted,
                             )
                             if (scanlator != null) DotSeparatorText()
                         }
@@ -173,7 +163,7 @@ fun MangaChapterListItem(
 
             ChapterDownloadIndicator(
                 enabled = downloadIndicatorEnabled,
-                modifier = Modifier.padding(start = 4.dp),
+                modifier = Modifier.padding(start = GSpace.s2),
                 downloadStateProvider = downloadStateProvider,
                 downloadProgressProvider = downloadProgressProvider,
                 onClick = { onDownloadClick?.invoke(it) },
@@ -192,22 +182,22 @@ private fun getSwipeAction(
 ): me.saket.swipe.SwipeAction? {
     return when (action) {
         LibraryPreferences.ChapterSwipeAction.ToggleRead -> swipeAction(
-            icon = if (!read) MaterialSymbols.Rounded.Check else MaterialSymbols.Rounded.RemoveDone,
+            icon = if (!read) Lucide.Icons.Check else Lucide.Icons.ListX,
             background = background,
             isUndo = read,
             onSwipe = onSwipe,
         )
         LibraryPreferences.ChapterSwipeAction.ToggleBookmark -> swipeAction(
-            icon = if (!bookmark) MaterialSymbols.Rounded.BookmarkAdd else MaterialSymbols.Rounded.BookmarkRemove,
+            icon = if (!bookmark) Lucide.Icons.BookmarkPlus else Lucide.Icons.BookmarkMinus,
             background = background,
             isUndo = bookmark,
             onSwipe = onSwipe,
         )
         LibraryPreferences.ChapterSwipeAction.Download -> swipeAction(
             icon = when (downloadState) {
-                Download.State.NOT_DOWNLOADED, Download.State.ERROR -> MaterialSymbols.Rounded.Download
-                Download.State.QUEUE, Download.State.DOWNLOADING -> MaterialSymbols.Rounded.FileDownloadOff
-                Download.State.DOWNLOADED -> MaterialSymbols.Rounded.Delete
+                Download.State.NOT_DOWNLOADED, Download.State.ERROR -> Lucide.Icons.Download
+                Download.State.QUEUE, Download.State.DOWNLOADING -> Lucide.Icons.FileX
+                Download.State.DOWNLOADED -> Lucide.Icons.Trash2
             },
             background = background,
             onSwipe = onSwipe,
@@ -225,7 +215,7 @@ private fun swipeAction(
     return me.saket.swipe.SwipeAction(
         icon = {
             Icon(
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(GSpace.s5),
                 imageVector = icon,
                 tint = contentColorFor(background),
                 contentDescription = null,

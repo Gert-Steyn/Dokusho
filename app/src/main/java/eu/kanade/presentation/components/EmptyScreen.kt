@@ -4,9 +4,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Help
-import mihon.icons.materialsymbols.rounded.Refresh
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.CircleQuestionMark
+import mihon.icons.lucide.icons.RefreshCw
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.EmptyScreenAction
@@ -33,12 +33,12 @@ private fun WithActionPreview() {
                 actions = listOf(
                     EmptyScreenAction(
                         stringRes = MR.strings.action_retry,
-                        icon = MaterialSymbols.Rounded.Refresh,
+                        icon = Lucide.Icons.RefreshCw,
                         onClick = {},
                     ),
                     EmptyScreenAction(
                         stringRes = MR.strings.getting_started_guide,
-                        icon = MaterialSymbols.AutoMirroredRounded.Help,
+                        icon = Lucide.AutoMirrored.CircleQuestionMark,
                         onClick = {},
                     ),
                 ),

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import tachiyomi.presentation.core.components.graphite.graphiteSliderColors
 import kotlin.math.roundToInt
 
 @Composable
@@ -22,7 +23,7 @@ fun Slider(
     valueRange: IntProgression = 0..1,
     @IntRange(from = 0) steps: Int = with(valueRange) { (last - first) - 1 },
     onValueChangeFinished: (() -> Unit)? = null,
-    colors: SliderColors = SliderDefaults.colors(),
+    colors: SliderColors = graphiteSliderColors(),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     thumb: @Composable (SliderState) -> Unit = {
         SliderDefaults.Thumb(

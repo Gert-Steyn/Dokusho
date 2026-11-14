@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,8 +14,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import tachiyomi.presentation.core.components.material.SECONDARY_ALPHA
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun RowScope.StatsOverviewItem(
@@ -26,9 +25,9 @@ fun RowScope.StatsOverviewItem(
 ) {
     BaseStatsItem(
         title = title,
-        titleStyle = MaterialTheme.typography.titleLarge,
+        titleStyle = Graphite.type.title,
         subtitle = subtitle,
-        subtitleStyle = MaterialTheme.typography.bodyMedium,
+        subtitleStyle = Graphite.type.body,
         icon = icon,
     )
 }
@@ -40,9 +39,9 @@ fun RowScope.StatsItem(
 ) {
     BaseStatsItem(
         title = title,
-        titleStyle = MaterialTheme.typography.bodyMedium,
+        titleStyle = Graphite.type.body,
         subtitle = subtitle,
-        subtitleStyle = MaterialTheme.typography.labelSmall,
+        subtitleStyle = Graphite.type.caption,
     )
 }
 
@@ -58,23 +57,20 @@ private fun RowScope.BaseStatsItem(
         modifier = Modifier
             .weight(1f)
             .fillMaxHeight(),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s3),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = title,
             style = titleStyle
-                .copy(fontWeight = FontWeight.Bold),
+                .copy(fontWeight = FontWeight.SemiBold),
             textAlign = TextAlign.Center,
             maxLines = 1,
         )
         Text(
             text = subtitle,
             style = subtitleStyle
-                .copy(
-                    color = MaterialTheme.colorScheme.onSurface
-                        .copy(alpha = SECONDARY_ALPHA),
-                ),
+                .copy(color = Graphite.colors.textSecondary),
             textAlign = TextAlign.Center,
         )
         if (icon != null) {
@@ -82,7 +78,7 @@ private fun RowScope.BaseStatsItem(
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+                tint = Graphite.colors.textMuted,
             )
         }
     }

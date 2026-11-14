@@ -3,6 +3,7 @@ package tachiyomi.presentation.core.components
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.AnchoredDraggableDefaults
 import androidx.compose.foundation.gestures.AnchoredDraggableState
@@ -19,7 +20,6 @@ import androidx.compose.foundation.layout.requiredWidthIn
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +47,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import kotlin.math.roundToInt
 
 @Composable
@@ -95,8 +98,9 @@ fun AdaptiveSheet(
                     .systemBarsPadding()
                     .padding(vertical = 16.dp)
                     .then(modifier),
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                shape = GRadius.dialog,
+                color = Graphite.colors.raised,
+                border = BorderStroke(GSize.border, Graphite.colors.border),
                 content = {
                     BackHandler(
                         enabled = enableImplicitDismiss && remember { derivedStateOf { alpha > 0f } }.value,
@@ -180,8 +184,9 @@ fun AdaptiveSheet(
                     )
                     .navigationBarsPadding()
                     .statusBarsPadding(),
-                shape = MaterialTheme.shapes.extraLarge,
-                color = MaterialTheme.colorScheme.surfaceContainerHigh,
+                shape = GRadius.sheet,
+                color = Graphite.colors.raised,
+                border = BorderStroke(GSize.border, Graphite.colors.border),
                 content = {
                     BackHandler(
                         enabled = enableImplicitDismiss && anchoredDraggableState.targetValue == 0,

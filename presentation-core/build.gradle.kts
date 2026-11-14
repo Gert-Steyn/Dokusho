@@ -26,7 +26,7 @@ kotlin {
 dependencies {
     api(projects.core.common)
     api(projects.i18n)
-    implementation(projects.icons.materialSymbols)
+    implementation(projects.icons.lucide)
 
     // Compose
     implementation(libs.androidx.activity.compose)

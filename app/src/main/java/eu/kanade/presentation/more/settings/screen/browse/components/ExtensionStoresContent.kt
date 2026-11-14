@@ -7,25 +7,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import mihon.domain.extension.model.ExtensionStore
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.Label
-import mihon.icons.materialsymbols.rounded.ContentCopy
-import mihon.icons.materialsymbols.rounded.Delete
-import mihon.icons.materialsymbols.rounded.Public
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.Tag
+import mihon.icons.lucide.icons.Copy
+import mihon.icons.lucide.icons.Globe
+import mihon.icons.lucide.icons.Trash2
 import mihon.icons.simpleicons.Discord
 import mihon.icons.simpleicons.SimpleIcons
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GCard
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ExtensionStoresContent(
@@ -41,7 +41,7 @@ fun ExtensionStoresContent(
     LazyColumn(
         state = lazyListState,
         contentPadding = paddingValues,
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+        verticalArrangement = Arrangement.spacedBy(GSpace.s3),
         modifier = modifier,
     ) {
         repos.forEach {
@@ -68,24 +68,23 @@ private fun ExtensionStoresListItem(
     onDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    ElevatedCard(
+    GCard(
         modifier = modifier,
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = MaterialTheme.padding.medium,
-                    top = MaterialTheme.padding.medium,
-                    end = MaterialTheme.padding.medium,
-                ),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Icon(imageVector = MaterialSymbols.AutoMirroredRounded.Label, contentDescription = null)
+            Icon(
+                imageVector = Lucide.AutoMirrored.Tag,
+                contentDescription = null,
+                tint = Graphite.colors.textMuted,
+            )
             Text(
                 text = store.name,
-                modifier = Modifier.padding(start = MaterialTheme.padding.medium),
-                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(start = GSpace.s5),
+                style = Graphite.type.heading,
             )
         }
 
@@ -93,35 +92,31 @@ private fun ExtensionStoresListItem(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End,
         ) {
-            IconButton(onClick = onOpenWebsite) {
-                Icon(
-                    imageVector = MaterialSymbols.Rounded.Public,
-                    contentDescription = stringResource(MR.strings.action_open_in_browser),
-                )
-            }
+            GIconButton(
+                icon = Lucide.Icons.Globe,
+                contentDescription = stringResource(MR.strings.action_open_in_browser),
+                onClick = onOpenWebsite,
+            )
 
             if (store.contact.discord != null) {
-                IconButton(onClick = onOpenDiscord) {
-                    Icon(
-                        imageVector = SimpleIcons.Discord,
-                        contentDescription = null,
-                    )
-                }
-            }
-
-            IconButton(onClick = onCopy) {
-                Icon(
-                    imageVector = MaterialSymbols.Rounded.ContentCopy,
-                    contentDescription = stringResource(MR.strings.action_copy_to_clipboard),
+                GIconButton(
+                    icon = SimpleIcons.Discord,
+                    contentDescription = null,
+                    onClick = onOpenDiscord,
                 )
             }
 
-            IconButton(onClick = onDelete) {
-                Icon(
-                    imageVector = MaterialSymbols.Rounded.Delete,
-                    contentDescription = stringResource(MR.strings.action_delete),
-                )
-            }
+            GIconButton(
+                icon = Lucide.Icons.Copy,
+                contentDescription = stringResource(MR.strings.action_copy_to_clipboard),
+                onClick = onCopy,
+            )
+
+            GIconButton(
+                icon = Lucide.Icons.Trash2,
+                contentDescription = stringResource(MR.strings.action_delete),
+                onClick = onDelete,
+            )
         }
     }
 }

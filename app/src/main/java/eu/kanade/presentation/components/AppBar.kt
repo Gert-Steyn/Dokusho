@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
@@ -12,10 +13,8 @@ import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -26,7 +25,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberTooltipState
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -46,19 +44,20 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.drop
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowBack
-import mihon.icons.materialsymbols.rounded.Close
-import mihon.icons.materialsymbols.rounded.MoreVert
-import mihon.icons.materialsymbols.rounded.Search
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowLeft
+import mihon.icons.lucide.icons.EllipsisVertical
+import mihon.icons.lucide.icons.Search
+import mihon.icons.lucide.icons.X
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.clearFocusOnSoftKeyboardHide
 import tachiyomi.presentation.core.util.runOnEnterKeyPressed
 import tachiyomi.presentation.core.util.secondaryItemAlpha
@@ -134,32 +133,41 @@ fun AppBar(
     Column(
         modifier = modifier,
     ) {
+        val containerColor = backgroundColor ?: if (isActionMode) {
+            Graphite.colors.surface
+        } else {
+            Graphite.colors.canvas
+        }
         TopAppBar(
             navigationIcon = {
                 if (isActionMode) {
-                    IconButton(onClick = onCancelActionMode) {
-                        Icon(
-                            imageVector = MaterialSymbols.Rounded.Close,
-                            contentDescription = stringResource(MR.strings.action_cancel),
-                        )
-                    }
+                    GIconButton(
+                        icon = Lucide.Icons.X,
+                        contentDescription = stringResource(MR.strings.action_cancel),
+                        onClick = onCancelActionMode,
+                    )
                 } else {
                     navigateUp?.let {
-                        IconButton(onClick = it) {
-                            UpIcon(navigationIcon = navigationIcon)
-                        }
+                        GIconButton(
+                            icon = navigationIcon ?: Lucide.AutoMirrored.ArrowLeft,
+                            contentDescription = stringResource(MR.strings.action_bar_up_description),
+                            onClick = it,
+                        )
                     }
                 }
             },
             title = titleContent,
             actions = actions,
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = backgroundColor ?: MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    elevation = if (isActionMode) 3.dp else 0.dp,
-                ),
+                containerColor = containerColor,
+                scrolledContainerColor = containerColor,
+                titleContentColor = Graphite.colors.text,
+                navigationIconContentColor = Graphite.colors.textMuted,
+                actionIconContentColor = Graphite.colors.textMuted,
             ),
             scrollBehavior = scrollBehavior,
         )
+        HorizontalDivider(color = Graphite.colors.borderSubtle, thickness = GSize.border)
     }
 }
 
@@ -173,6 +181,8 @@ fun AppBarTitle(
         title?.let {
             Text(
                 text = it,
+                style = Graphite.type.heading,
+                color = Graphite.colors.text,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -180,7 +190,8 @@ fun AppBarTitle(
         subtitle?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.bodyMedium,
+                style = Graphite.type.small,
+                color = Graphite.colors.textMuted,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.basicMarquee(
@@ -208,16 +219,13 @@ fun AppBarActions(
             state = rememberTooltipState(),
             focusable = false,
         ) {
-            IconButton(
+            GIconButton(
+                icon = it.icon,
+                contentDescription = it.title,
                 onClick = it.onClick,
                 enabled = it.enabled,
-            ) {
-                Icon(
-                    imageVector = it.icon,
-                    tint = it.iconTint ?: LocalContentColor.current,
-                    contentDescription = it.title,
-                )
-            }
+                tint = it.iconTint ?: Graphite.colors.textMuted,
+            )
         }
     }
 
@@ -233,14 +241,11 @@ fun AppBarActions(
             state = rememberTooltipState(),
             focusable = false,
         ) {
-            IconButton(
+            GIconButton(
+                icon = Lucide.Icons.EllipsisVertical,
+                contentDescription = stringResource(MR.strings.action_menu_overflow_description),
                 onClick = { showMenu = !showMenu },
-            ) {
-                Icon(
-                    MaterialSymbols.Rounded.MoreVert,
-                    contentDescription = stringResource(MR.strings.action_menu_overflow_description),
-                )
-            }
+            )
         }
 
         DropdownMenu(
@@ -253,7 +258,7 @@ fun AppBarActions(
                         it.onClick()
                         showMenu = false
                     },
-                    text = { Text(it.title, fontWeight = FontWeight.Normal) },
+                    text = { Text(it.title, style = Graphite.type.body) },
                 )
             }
         }
@@ -324,15 +329,11 @@ fun SearchToolbar(
                     .runOnEnterKeyPressed(action = searchAndClearFocus)
                     .showSoftKeyboard(remember { searchQuery.isEmpty() })
                     .clearFocusOnSoftKeyboardHide(),
-                textStyle = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 18.sp,
-                ),
+                textStyle = Graphite.type.heading.copy(color = Graphite.colors.text),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 onKeyboardAction = { searchAndClearFocus() },
                 lineLimits = TextFieldLineLimits.SingleLine,
-                cursorBrush = SolidColor(MaterialTheme.colorScheme.onBackground),
+                cursorBrush = SolidColor(Graphite.colors.accent),
                 interactionSource = interactionSource,
                 decorator = TextFieldDefaults.decorator(
                     state = searchFieldState,
@@ -346,10 +347,8 @@ fun SearchToolbar(
                             text = (placeholderText ?: stringResource(MR.strings.action_search_hint)),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontSize = 18.sp,
-                                fontWeight = FontWeight.Normal,
-                            ),
+                            style = Graphite.type.heading,
+                            color = Graphite.colors.textMuted,
                         )
                     },
                     container = {},
@@ -374,14 +373,11 @@ fun SearchToolbar(
                         state = rememberTooltipState(),
                         focusable = false,
                     ) {
-                        IconButton(
+                        GIconButton(
+                            icon = Lucide.Icons.Search,
+                            contentDescription = stringResource(MR.strings.action_search),
                             onClick = onClick,
-                        ) {
-                            Icon(
-                                MaterialSymbols.Rounded.Search,
-                                contentDescription = stringResource(MR.strings.action_search),
-                            )
-                        }
+                        )
                     }
                 } else if (searchQuery.isNotEmpty()) {
                     TooltipBox(
@@ -394,18 +390,15 @@ fun SearchToolbar(
                         state = rememberTooltipState(),
                         focusable = false,
                     ) {
-                        IconButton(
+                        GIconButton(
+                            icon = Lucide.Icons.X,
+                            contentDescription = stringResource(MR.strings.action_reset),
                             onClick = {
                                 searchFieldState.clearText()
                                 onClick()
                                 focusRequester.requestFocus()
                             },
-                        ) {
-                            Icon(
-                                MaterialSymbols.Rounded.Close,
-                                contentDescription = stringResource(MR.strings.action_reset),
-                            )
-                        }
+                        )
                     }
                 }
             }
@@ -423,11 +416,12 @@ fun UpIcon(
     navigationIcon: ImageVector? = null,
 ) {
     val icon = navigationIcon
-        ?: MaterialSymbols.AutoMirroredRounded.ArrowBack
+        ?: Lucide.AutoMirrored.ArrowLeft
     Icon(
         imageVector = icon,
         contentDescription = stringResource(MR.strings.action_bar_up_description),
-        modifier = modifier,
+        modifier = modifier.size(GSize.icon),
+        tint = Graphite.colors.textMuted,
     )
 }
 

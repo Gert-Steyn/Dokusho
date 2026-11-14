@@ -6,9 +6,7 @@ import android.content.Intent
 import android.provider.Settings
 import android.webkit.WebStorage
 import android.webkit.WebView
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
@@ -56,6 +54,9 @@ import okhttp3.Headers
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.util.collectAsState
 import java.io.File
@@ -365,24 +366,24 @@ object SettingsAdvancedScreen : SearchableSettings {
 
         if (shizukuMissing) {
             val dismiss = { shizukuMissing = false }
-            AlertDialog(
+            GDialog(
                 onDismissRequest = dismiss,
                 title = { Text(text = stringResource(MR.strings.ext_installer_shizuku)) },
                 text = { Text(text = stringResource(MR.strings.ext_installer_shizuku_unavailable_dialog)) },
                 dismissButton = {
-                    TextButton(onClick = dismiss) {
-                        Text(text = stringResource(MR.strings.action_cancel))
-                    }
+                    GGhostButton(
+                        text = stringResource(MR.strings.action_cancel),
+                        onClick = dismiss,
+                    )
                 },
                 confirmButton = {
-                    TextButton(
+                    GPrimaryButton(
+                        text = stringResource(MR.strings.action_ok),
                         onClick = {
                             dismiss()
                             uriHandler.openUri("https://shizuku.rikka.app/download")
                         },
-                    ) {
-                        Text(text = stringResource(MR.strings.action_ok))
-                    }
+                    )
                 },
             )
         }

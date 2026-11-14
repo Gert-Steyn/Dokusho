@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,11 +16,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
-import mihon.icons.materialsymbols.rounded.KeyboardArrowUp
-import tachiyomi.presentation.core.theme.header
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ChevronDown
+import mihon.icons.lucide.icons.ChevronUp
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun CollapsibleBox(
@@ -34,22 +35,25 @@ fun CollapsibleBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { expanded = !expanded }
-                .padding(horizontal = 24.dp, vertical = 12.dp),
+                .padding(horizontal = GSize.pagePad, vertical = GSpace.s4),
         ) {
             Text(
                 text = heading,
-                style = MaterialTheme.typography.header,
+                style = Graphite.type.heading,
+                color = Graphite.colors.text,
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
             Icon(
                 imageVector = if (expanded) {
-                    MaterialSymbols.Rounded.KeyboardArrowUp
+                    Lucide.Icons.ChevronUp
                 } else {
-                    MaterialSymbols.Rounded.KeyboardArrowDown
+                    Lucide.Icons.ChevronDown
                 },
                 contentDescription = null,
+                tint = Graphite.colors.textMuted,
+                modifier = Modifier.size(GSize.icon),
             )
         }
 

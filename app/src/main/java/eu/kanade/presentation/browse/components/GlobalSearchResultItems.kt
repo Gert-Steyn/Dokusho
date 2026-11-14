@@ -12,20 +12,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.roundedfilled.Error
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.CircleAlert
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun GlobalSearchResultItem(
@@ -39,8 +39,8 @@ fun GlobalSearchResultItem(
         Row(
             modifier = Modifier
                 .padding(
-                    start = MaterialTheme.padding.medium,
-                    end = MaterialTheme.padding.extraSmall,
+                    start = GSpace.s5,
+                    end = GSpace.s2,
                 )
                 .fillMaxWidth()
                 .clickable(onClick = onClick),
@@ -50,13 +50,19 @@ fun GlobalSearchResultItem(
             Column {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = Graphite.type.heading,
                 )
-                Text(text = subtitle)
+                Text(
+                    text = subtitle,
+                    style = Graphite.type.small,
+                    color = Graphite.colors.textSecondary,
+                )
             }
-            IconButton(onClick = onClick) {
-                Icon(imageVector = MaterialSymbols.AutoMirroredRounded.ArrowForward, contentDescription = null)
-            }
+            GIconButton(
+                icon = Lucide.AutoMirrored.ArrowRight,
+                contentDescription = null,
+                onClick = onClick,
+            )
         }
         content()
     }
@@ -67,12 +73,13 @@ fun GlobalSearchLoadingResultItem() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = MaterialTheme.padding.medium),
+            .padding(vertical = GSpace.s5),
     ) {
         CircularProgressIndicator(
             modifier = Modifier
                 .size(16.dp)
                 .align(Alignment.Center),
+            color = Graphite.colors.textMuted,
             strokeWidth = 2.dp,
         )
     }
@@ -83,15 +90,19 @@ fun GlobalSearchErrorResultItem(message: String?) {
     Column(
         modifier = Modifier
             .padding(
-                horizontal = MaterialTheme.padding.medium,
-                vertical = MaterialTheme.padding.small,
+                horizontal = GSpace.s5,
+                vertical = GSpace.s3,
             )
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Icon(imageVector = MaterialSymbols.RoundedFilled.Error, contentDescription = null)
-        Spacer(Modifier.height(4.dp))
+        Icon(
+            imageVector = Lucide.Icons.CircleAlert,
+            contentDescription = null,
+            tint = Graphite.colors.danger,
+        )
+        Spacer(Modifier.height(GSpace.s2))
         Text(
             text = message ?: stringResource(MR.strings.unknown_error),
             textAlign = TextAlign.Center,

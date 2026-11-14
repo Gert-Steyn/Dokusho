@@ -33,11 +33,7 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,7 +48,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.unit.dp
 import androidx.core.animation.doOnEnd
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen
@@ -116,17 +111,21 @@ import mihon.core.migration.Migrator
 import mihon.data.cache.ChapterCache
 import mihon.domain.database.repository.DatabaseRepository
 import mihon.feature.support.SupportUsScreen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.OpenInNew
-import mihon.icons.materialsymbols.roundedfilled.VolunteerActivism
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ExternalLink
+import mihon.icons.lucide.icons.HandHeart
 import tachiyomi.core.common.Constants
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.domain.release.interactor.GetApplicationRelease
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.GSecondaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.collectAsState
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
@@ -221,7 +220,7 @@ class MainActivity : BaseActivity() {
                 indexing -> IndexingBannerBackgroundColor
                 downloadOnly -> DownloadedOnlyBannerBackgroundColor
                 incognito -> IncognitoModeBannerBackgroundColor
-                else -> MaterialTheme.colorScheme.surface
+                else -> Graphite.colors.canvas
             }
             LaunchedEffect(isSystemInDarkTheme, statusBarBackgroundColor) {
                 // Draw edge-to-edge and set system bars color to transparent
@@ -284,7 +283,7 @@ class MainActivity : BaseActivity() {
                                     .fillMaxWidth()
                                     .windowInsetsBottomHeight(WindowInsets.navigationBars)
                                     .alpha(0.8f)
-                                    .background(MaterialTheme.colorScheme.surfaceContainer),
+                                    .background(Graphite.colors.surface),
                             )
                         }
                     }
@@ -438,95 +437,65 @@ class MainActivity : BaseActivity() {
                 enableImplicitDismiss = false,
             ) {
                 Column {
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(GSpace.s5))
                     Column(
                         modifier = Modifier
                             .verticalScroll(rememberScrollState())
-                            .padding(16.dp)
+                            .padding(GSpace.s5)
                             .weight(1f, fill = false)
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(GSpace.s3),
                     ) {
                         Text(
                             text = stringResource(MR.strings.donationCampaign_title),
-                            color = MaterialTheme.colorScheme.primary,
-                            style = MaterialTheme.typography.headlineSmall,
+                            color = Graphite.colors.text,
+                            style = Graphite.type.title,
                         )
                         Text(
                             text = stringResource(MR.strings.donationCampaign_paragraph1),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Graphite.type.body,
                         )
                         Text(
                             text = stringResource(MR.strings.donationCampaign_paragraph2),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Graphite.type.body,
                         )
                         Text(
                             text = stringResource(MR.strings.donationCampaign_paragraph3),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = Graphite.type.body,
                         )
                     }
 
                     HorizontalDivider()
 
-                    Button(
-                        modifier = Modifier
-                            .padding(top = MaterialTheme.padding.small)
-                            .padding(horizontal = MaterialTheme.padding.medium)
-                            .fillMaxWidth(),
+                    GPrimaryButton(
+                        text = stringResource(MR.strings.label_support_us),
                         onClick = {
                             navigator.push(SupportUsScreen())
                             dismissSupportMessage()
                         },
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
-                        ) {
-                            Icon(
-                                imageVector = MaterialSymbols.RoundedFilled.VolunteerActivism,
-                                contentDescription = null,
-                            )
-                            Text(
-                                text = stringResource(MR.strings.label_support_us),
-                                color = MaterialTheme.colorScheme.onPrimary,
-                            )
-                        }
-                    }
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                        icon = Lucide.Icons.HandHeart,
                         modifier = Modifier
-                            .padding(bottom = MaterialTheme.padding.small)
-                            .padding(horizontal = MaterialTheme.padding.medium),
+                            .padding(top = GSpace.s3)
+                            .padding(horizontal = GSpace.s5)
+                            .fillMaxWidth(),
+                    )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
+                        modifier = Modifier
+                            .padding(bottom = GSpace.s3)
+                            .padding(horizontal = GSpace.s5),
                     ) {
-                        OutlinedButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
+                        GSecondaryButton(
+                            text = stringResource(MR.strings.donationCampaign_contactPlatform),
                             onClick = { uriHandler.openUri(Constants.URL_DISCORD) },
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
-                            ) {
-                                Text(
-                                    text = stringResource(MR.strings.donationCampaign_contactPlatform),
-                                )
-                                Icon(
-                                    imageVector = MaterialSymbols.AutoMirroredRounded.OpenInNew,
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                        OutlinedButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f),
+                            icon = Lucide.AutoMirrored.ExternalLink,
+                            modifier = Modifier.weight(1f),
+                        )
+                        GGhostButton(
+                            text = stringResource(MR.strings.donationCampaign_dismiss),
                             onClick = dismissSupportMessage,
-                        ) {
-                            Text(
-                                text = stringResource(MR.strings.donationCampaign_dismiss),
-                            )
-                        }
+                            modifier = Modifier.weight(1f),
+                        )
                     }
                 }
             }

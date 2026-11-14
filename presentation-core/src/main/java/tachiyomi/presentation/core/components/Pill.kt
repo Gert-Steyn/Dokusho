@@ -3,7 +3,6 @@ package tachiyomi.presentation.core.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,26 +11,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun Pill(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    color: Color = Graphite.colors.hover,
+    contentColor: Color = Graphite.colors.textSecondary,
     style: TextStyle = LocalTextStyle.current,
 ) {
     Surface(
         modifier = modifier
-            .padding(start = 4.dp),
-        shape = MaterialTheme.shapes.extraLarge,
+            .padding(start = GSpace.s2),
+        shape = GRadius.control,
         color = color,
         contentColor = contentColor,
     ) {
         Box(
             modifier = Modifier
-                .padding(6.dp, 1.dp),
+                .padding(horizontal = GSpace.s3, vertical = GSpace.s1),
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -47,8 +48,8 @@ fun Pill(
 fun Pill(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    color: Color = Graphite.colors.hover,
+    contentColor: Color = Graphite.colors.textSecondary,
     fontSize: TextUnit = LocalTextStyle.current.fontSize,
 ) {
     Pill(

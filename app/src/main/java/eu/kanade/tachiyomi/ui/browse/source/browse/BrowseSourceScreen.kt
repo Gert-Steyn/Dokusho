@@ -6,13 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -51,18 +46,20 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import mihon.feature.migration.dialog.MigrateMangaDialog
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.FilterList
-import mihon.icons.materialsymbols.rounded.Verified
-import mihon.icons.materialsymbols.roundedfilled.Favorite
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.BadgeCheck
+import mihon.icons.lucide.icons.Heart
+import mihon.icons.lucide.icons.ListFilter
 import mihon.presentation.core.util.collectAsLazyPagingItems
 import tachiyomi.core.common.Constants
 import tachiyomi.domain.source.model.StubSource
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GChip
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.source.local.LocalSource
 
 data class BrowseSourceScreen(
@@ -129,7 +126,7 @@ data class BrowseSourceScreen(
             topBar = {
                 Column(
                     modifier = Modifier
-                        .background(MaterialTheme.colorScheme.surface)
+                        .background(Graphite.colors.canvas)
                         .pointerInput(Unit) {},
                 ) {
                     BrowseSourceToolbar(
@@ -148,62 +145,35 @@ data class BrowseSourceScreen(
                     Row(
                         modifier = Modifier
                             .horizontalScroll(rememberScrollState())
-                            .padding(horizontal = MaterialTheme.padding.small),
-                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                            .padding(horizontal = GSpace.s3),
+                        horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
                     ) {
-                        FilterChip(
+                        GChip(
+                            text = stringResource(MR.strings.popular),
                             selected = state.listing == Listing.Popular,
                             onClick = {
                                 viewModel.resetFilters()
                                 viewModel.setListing(Listing.Popular)
                             },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = MaterialSymbols.RoundedFilled.Favorite,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(FilterChipDefaults.IconSize),
-                                )
-                            },
-                            label = {
-                                Text(text = stringResource(MR.strings.popular))
-                            },
+                            icon = Lucide.Icons.Heart,
                         )
                         if (source.supportsLatest) {
-                            FilterChip(
+                            GChip(
+                                text = stringResource(MR.strings.latest),
                                 selected = state.listing == Listing.Latest,
                                 onClick = {
                                     viewModel.resetFilters()
                                     viewModel.setListing(Listing.Latest)
                                 },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = MaterialSymbols.Rounded.Verified,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .size(FilterChipDefaults.IconSize),
-                                    )
-                                },
-                                label = {
-                                    Text(text = stringResource(MR.strings.latest))
-                                },
+                                icon = Lucide.Icons.BadgeCheck,
                             )
                         }
                         if (state.filters.isNotEmpty()) {
-                            FilterChip(
+                            GChip(
+                                text = stringResource(MR.strings.action_filter),
                                 selected = state.listing is Listing.Search,
                                 onClick = viewModel::openFilterSheet,
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = MaterialSymbols.Rounded.FilterList,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .size(FilterChipDefaults.IconSize),
-                                    )
-                                },
-                                label = {
-                                    Text(text = stringResource(MR.strings.action_filter))
-                                },
+                                icon = Lucide.Icons.ListFilter,
                             )
                         }
                     }

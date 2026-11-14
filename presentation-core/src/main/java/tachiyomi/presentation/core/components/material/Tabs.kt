@@ -1,31 +1,29 @@
 package tachiyomi.presentation.core.components.material
 
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.offset
-import androidx.compose.ui.unit.sp
 import tachiyomi.presentation.core.components.Pill
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TabText(text: String, badgeCount: Int? = null) {
-    val pillAlpha = if (isSystemInDarkTheme()) 0.12f else 0.08f
-
     Layout(
         content = {
             Text(
                 text = text,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
+                style = Graphite.type.label,
             )
             if (badgeCount != null) {
                 Pill(
                     text = "$badgeCount",
-                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = pillAlpha),
-                    fontSize = 10.sp,
+                    color = Graphite.colors.hover,
+                    contentColor = Graphite.colors.textSecondary,
+                    style = Graphite.type.caption,
                 )
             }
         },

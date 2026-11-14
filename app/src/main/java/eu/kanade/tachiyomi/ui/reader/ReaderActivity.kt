@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,7 +54,6 @@ import androidx.compose.ui.input.key.type
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.keepScreenOn
-import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.core.view.WindowInsetsCompat
@@ -73,6 +71,7 @@ import eu.kanade.presentation.reader.ReaderNavigationOverlayState
 import eu.kanade.presentation.reader.ReaderPageActionsDialog
 import eu.kanade.presentation.reader.ReaderPageIndicator
 import eu.kanade.presentation.reader.ReadingModeSelectDialog
+import eu.kanade.presentation.reader.TableOfContentsDialog
 import eu.kanade.presentation.reader.appbars.ReaderAppBars
 import eu.kanade.presentation.reader.components.ChapterNavigatorType
 import eu.kanade.presentation.reader.settings.ReaderSettingsDialog
@@ -85,8 +84,10 @@ import eu.kanade.tachiyomi.ui.main.MainActivity
 import eu.kanade.tachiyomi.ui.reader.ReaderViewModel.SetAsCoverResult.AddToLibraryFirst
 import eu.kanade.tachiyomi.ui.reader.ReaderViewModel.SetAsCoverResult.Error
 import eu.kanade.tachiyomi.ui.reader.ReaderViewModel.SetAsCoverResult.Success
+import eu.kanade.tachiyomi.ui.reader.loader.TextPageLoader
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import eu.kanade.tachiyomi.ui.reader.model.TextReaderPage
 import eu.kanade.tachiyomi.ui.reader.model.ViewerChapters
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderOrientation
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
@@ -96,6 +97,7 @@ import eu.kanade.tachiyomi.ui.reader.viewer.LocalPageColorFilter
 import eu.kanade.tachiyomi.ui.reader.viewer.Viewer
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerNavigation.Action
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerNavigation.NavigationRegion
+import eu.kanade.tachiyomi.ui.reader.viewer.text.TextViewer
 import eu.kanade.tachiyomi.ui.webview.WebViewActivity
 import eu.kanade.tachiyomi.util.system.openInBrowser
 import eu.kanade.tachiyomi.util.system.readerBackgroundColor
@@ -118,7 +120,9 @@ import tachiyomi.core.common.Constants
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GDialog
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
 import tachiyomi.presentation.core.util.collectAsState
 
 class ReaderActivity : BaseActivity() {
@@ -264,12 +268,12 @@ class ReaderActivity : BaseActivity() {
             }
 
             if (state.isLoadingAdjacentChapter) {
-                AlertDialog(
+                GDialog(
                     onDismissRequest = {},
                     confirmButton = {},
                     text = {
                         Row(
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             CircularProgressIndicator()
@@ -280,13 +284,14 @@ class ReaderActivity : BaseActivity() {
             }
 
             val onDismissRequest = viewModel::closeDialog
-            when (state.dialog) {
+            when (val dialog = state.dialog) {
                 is ReaderViewModel.Dialog.Settings -> {
                     ReaderSettingsDialog(
                         onDismissRequest = onDismissRequest,
                         onShowMenus = { setMenuVisibility(true) },
                         onHideMenus = { setMenuVisibility(false) },
                         viewModel = settingsViewModel,
+                        isTextBook = isTextChapter(state.viewerChapters),
                     )
                 }
                 is ReaderViewModel.Dialog.ReadingModeSelect -> {
@@ -317,6 +322,16 @@ class ReaderActivity : BaseActivity() {
                         onSetAsCover = viewModel::setAsCover,
                         onShare = viewModel::shareImage,
                         onSave = viewModel::saveImage,
+                    )
+                }
+                is ReaderViewModel.Dialog.TableOfContents -> {
+                    TableOfContentsDialog(
+                        entries = dialog.entries,
+                        onDismissRequest = onDismissRequest,
+                        onClickEntry = { entry ->
+                            viewModel.closeDialog()
+                            moveToPageIndex(entry.pageIndex)
+                        },
                     )
                 }
                 null -> {}
@@ -542,6 +557,7 @@ class ReaderActivity : BaseActivity() {
     @Composable
     fun AppBars(state: ReaderViewModel.State) {
         val isHttpSource = state.source is HttpSource
+        val tableOfContents = (state.currentChapter?.pageLoader as? TextPageLoader)?.toc.orEmpty()
         val readingMode = ReadingMode.fromPreference(viewModel.getMangaReadingMode())
 
         val cropBorderPaged by readerPreferences.cropBorders.collectAsState()
@@ -566,9 +582,13 @@ class ReaderActivity : BaseActivity() {
             onOpenInWebView = ::openChapterInWebView.takeIf { isHttpSource },
             onOpenInBrowser = ::openChapterInBrowser.takeIf { isHttpSource },
             onShare = ::shareChapter.takeIf { isHttpSource },
+            onOpenTableOfContents = tableOfContents.takeIf { it.isNotEmpty() }?.let { entries ->
+                { viewModel.openTableOfContents(entries) }
+            },
 
             chapterNavigatorType = if (!verticalNavigator) {
-                if (readingMode == ReadingMode.RIGHT_TO_LEFT) {
+                // A text book reads top to bottom whatever the manga's reading mode says.
+                if (readingMode == ReadingMode.RIGHT_TO_LEFT && !isTextChapter(state.viewerChapters)) {
                     ChapterNavigatorType.HORIZONTAL_RTL
                 } else {
                     ChapterNavigatorType.HORIZONTAL_LTR
@@ -610,6 +630,7 @@ class ReaderActivity : BaseActivity() {
                 menuToggleToast = toast(if (enabled) MR.strings.on else MR.strings.off)
             },
             onClickSettings = viewModel::openSettingsDialog,
+            isTextChapter = isTextChapter(state.viewerChapters),
         )
     }
 
@@ -631,8 +652,9 @@ class ReaderActivity : BaseActivity() {
     private fun updateViewer() {
         val prevViewer = viewer
         val readingMode = viewModel.getMangaReadingMode()
-        settingsViewModel.setViewerReadingMode(ReadingMode.fromPreference(readingMode))
-        val newViewer = ReadingMode.toViewer(readingMode, this)
+        val isText = isTextChapter(viewModel.state.value.viewerChapters)
+        settingsViewModel.setViewerReadingMode(if (isText) TextViewerMode else ReadingMode.fromPreference(readingMode))
+        val newViewer = if (isText) TextViewer(this) else ReadingMode.toViewer(readingMode, this)
 
         setOrientation(viewModel.getMangaOrientation())
 
@@ -640,11 +662,18 @@ class ReaderActivity : BaseActivity() {
         prevViewer?.destroy()
         viewerFlow.value = newViewer
 
-        if (readerPreferences.showReadingMode.get()) {
+        if (readerPreferences.showReadingMode.get() && !isText) {
             showReadingModeToast(viewModel.getMangaReadingMode())
         }
 
         isLoadingViewer = true
+    }
+
+    /**
+     * Whether [chapters] hold a text book, which is shown by [TextViewer] rather than the reading mode's viewer.
+     */
+    private fun isTextChapter(chapters: ViewerChapters?): Boolean {
+        return chapters?.currChapter?.pages?.firstOrNull() is TextReaderPage
     }
 
     private fun openMangaScreen() {
@@ -697,6 +726,18 @@ class ReaderActivity : BaseActivity() {
      */
     private fun setChapters(viewerChapters: ViewerChapters) {
         isLoadingViewer = false
+        val isText = isTextChapter(viewerChapters)
+        val current = viewer
+        if (isText && current !is TextViewer) {
+            current?.destroy()
+            settingsViewModel.setViewerReadingMode(TextViewerMode)
+            viewerFlow.value = TextViewer(this)
+        } else if (!isText && current is TextViewer) {
+            current.destroy()
+            val readingMode = viewModel.getMangaReadingMode()
+            settingsViewModel.setViewerReadingMode(ReadingMode.fromPreference(readingMode))
+            viewerFlow.value = ReadingMode.toViewer(readingMode, this)
+        }
         viewer?.setChapters(viewerChapters)
 
         lifecycleScope.launch(Dispatchers.IO) {
@@ -731,7 +772,7 @@ class ReaderActivity : BaseActivity() {
      * Tells the presenter to load the next chapter and mark it as active. The progress dialog
      * should be automatically shown.
      */
-    private fun loadNextChapter() {
+    fun loadNextChapter() {
         lifecycleScope.launch {
             viewModel.loadNextChapter()
             moveToPageIndex(0)
@@ -742,7 +783,7 @@ class ReaderActivity : BaseActivity() {
      * Tells the presenter to load the previous chapter and mark it as active. The progress dialog
      * should be automatically shown.
      */
-    private fun loadPreviousChapter() {
+    fun loadPreviousChapter() {
         lifecycleScope.launch {
             viewModel.loadPreviousChapter()
             moveToPageIndex(0)
@@ -898,3 +939,6 @@ private fun viewerColorFilter(grayscale: Boolean, invertedColors: Boolean): Colo
     }
     return ColorFilter.colorMatrix(matrix)
 }
+
+/** A text book scrolls down like a long strip, so it takes that mode's tap zones whatever the manga's mode is. */
+private val TextViewerMode = ReadingMode.WEBTOON

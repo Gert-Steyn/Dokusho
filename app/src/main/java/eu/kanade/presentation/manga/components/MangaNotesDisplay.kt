@@ -4,7 +4,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import com.mohamedrejeb.richeditor.model.rememberRichTextState
 import com.mohamedrejeb.richeditor.ui.material3.RichText
+import tachiyomi.presentation.core.theme.Graphite
 
 private val FADE_TIME = tween<Float>(500)
 
@@ -27,7 +27,7 @@ fun MangaNotesDisplay(
     var contentUpdatedOnce by remember { mutableStateOf(false) }
 
     val richTextState = rememberRichTextState()
-    val primaryColor = MaterialTheme.colorScheme.primary
+    val primaryColor = Graphite.colors.accent
     LaunchedEffect(content) {
         richTextState.setMarkdown(content)
 
@@ -53,7 +53,7 @@ fun MangaNotesDisplay(
                 // Only animate size if the notes changes
                 .then(if (contentUpdatedOnce) Modifier.animateContentSize() else Modifier)
                 .alpha(alpha.value),
-            style = MaterialTheme.typography.bodyMedium,
+            style = Graphite.type.body,
             state = richTextState,
         )
     }

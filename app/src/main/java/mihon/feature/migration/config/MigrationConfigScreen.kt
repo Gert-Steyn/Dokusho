@@ -8,14 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SmallExtendedFloatingActionButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -55,11 +52,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import mihon.feature.migration.list.MigrationListScreen
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.automirroredrounded.ArrowForward
-import mihon.icons.materialsymbols.rounded.Deselect
-import mihon.icons.materialsymbols.rounded.DragHandle
-import mihon.icons.materialsymbols.rounded.SelectAll
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.automirrored.ArrowRight
+import mihon.icons.lucide.icons.GripHorizontal
+import mihon.icons.lucide.icons.SquareCheckBig
+import mihon.icons.lucide.icons.SquareDashed
 import sh.calvin.reorderable.ReorderableCollectionItemScope
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.ReorderableLazyListState
@@ -69,10 +66,14 @@ import tachiyomi.domain.source.service.SourceManager
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
 import tachiyomi.presentation.core.components.Pill
+import tachiyomi.presentation.core.components.graphite.GFloatingPrimaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
-import tachiyomi.presentation.core.components.material.padding
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
+import tachiyomi.presentation.core.theme.graphiteCardBorder
 import tachiyomi.presentation.core.util.shouldExpandFAB
 
 class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
@@ -126,12 +127,12 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                             listOf(
                                 AppBar.Action(
                                     title = stringResource(MR.strings.migrationConfigScreen_selectAllLabel),
-                                    icon = MaterialSymbols.Rounded.SelectAll,
+                                    icon = Lucide.Icons.SquareCheckBig,
                                     onClick = { viewModel.toggleSelection(Model.SelectionConfig.All) },
                                 ),
                                 AppBar.Action(
                                     title = stringResource(MR.strings.migrationConfigScreen_selectNoneLabel),
-                                    icon = MaterialSymbols.Rounded.Deselect,
+                                    icon = Lucide.Icons.SquareDashed,
                                     onClick = { viewModel.toggleSelection(Model.SelectionConfig.None) },
                                 ),
                                 AppBar.OverflowAction(
@@ -148,10 +149,10 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                 )
             },
             floatingActionButton = {
-                SmallExtendedFloatingActionButton(
+                GFloatingPrimaryButton(
                     text = { Text(text = stringResource(MR.strings.migrationConfigScreen_continueButtonText)) },
                     icon = {
-                        Icon(imageVector = MaterialSymbols.AutoMirroredRounded.ArrowForward, contentDescription = null)
+                        Icon(imageVector = Lucide.AutoMirrored.ArrowRight, contentDescription = null)
                     },
                     onClick = {
                         viewModel.saveSources()
@@ -186,9 +187,9 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                                         MR.strings.migrationConfigScreen_availableHeader
                                     },
                                 ),
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = Graphite.type.body,
                                 modifier = Modifier
-                                    .padding(MaterialTheme.padding.medium)
+                                    .padding(GSpace.s5)
                                     .animateItem(),
                             )
                         }
@@ -235,21 +236,19 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
         key: (MigrationSource) -> Any,
         onClick: () -> Unit,
     ) {
-        val shape = remember(firstItem, lastItem) {
-            val top = if (firstItem) 12.dp else 0.dp
-            val bottom = if (lastItem) 12.dp else 0.dp
-            RoundedCornerShape(top, top, bottom, bottom)
-        }
-
         ReorderableItem(
             state = state,
             key = key(source),
             enabled = dragEnabled,
         ) { _ ->
-            ElevatedCard(
-                shape = shape,
+            Surface(
+                shape = GRadius.card,
+                color = Graphite.colors.surface,
+                border = graphiteCardBorder(),
+                tonalElevation = 0.dp,
+                shadowElevation = 0.dp,
                 modifier = Modifier
-                    .padding(horizontal = MaterialTheme.padding.medium)
+                    .padding(horizontal = GSpace.s5)
                     .animateItem(),
             ) {
                 SourceItem(
@@ -263,7 +262,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
         }
 
         if (!lastItem) {
-            HorizontalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium))
+            HorizontalDivider(modifier = Modifier.padding(horizontal = GSpace.s5))
         }
     }
 
@@ -280,7 +279,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
             trailingContent = if (dragEnabled) {
                 {
                     Icon(
-                        imageVector = MaterialSymbols.Rounded.DragHandle,
+                        imageVector = Lucide.Icons.GripHorizontal,
                         contentDescription = null,
                         modifier = with(scope) {
                             Modifier.draggableHandle()
@@ -293,7 +292,7 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 SourceIcon(source = source.source)
@@ -301,13 +300,13 @@ class MigrationConfigScreen(private val mangaIds: Collection<Long>) : Screen() {
                     text = source.name,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Graphite.type.body,
                     modifier = Modifier.weight(1f),
                 )
                 if (showLanguage) {
                     Pill(
-                        text = LocaleHelper.getShortDisplayName(source.shortLanguage, uppercase = true),
-                        style = MaterialTheme.typography.bodySmall,
+                        text = LocaleHelper.getShortDisplayName(source.shortLanguage, uppercase = false),
+                        style = Graphite.type.small,
                     )
                 }
             }

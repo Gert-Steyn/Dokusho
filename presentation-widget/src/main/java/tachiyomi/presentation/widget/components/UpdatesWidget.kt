@@ -68,7 +68,7 @@ fun UpdatesWidget(
                             coverRow.forEach { (mangaId, cover) ->
                                 Box(
                                     modifier = GlanceModifier
-                                        .padding(horizontal = 3.dp),
+                                        .padding(horizontal = 4.dp),
                                     contentAlignment = Alignment.Center,
                                 ) {
                                     val intent = Intent(

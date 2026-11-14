@@ -33,13 +33,15 @@ import androidx.compose.ui.util.fastMaxBy
 import dev.icerock.moko.resources.StringResource
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 val DownloadedOnlyBannerBackgroundColor
-    @Composable get() = MaterialTheme.colorScheme.tertiary
+    @Composable get() = Graphite.colors.warningSubtle
 val IncognitoModeBannerBackgroundColor
-    @Composable get() = MaterialTheme.colorScheme.primary
+    @Composable get() = Graphite.colors.accentSubtle
 val IndexingBannerBackgroundColor
-    @Composable get() = MaterialTheme.colorScheme.secondary
+    @Composable get() = Graphite.colors.hover
 
 @Composable
 fun WarningBanner(
@@ -50,10 +52,10 @@ fun WarningBanner(
         text = stringResource(textRes),
         modifier = modifier
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.error)
-            .padding(16.dp),
-        color = MaterialTheme.colorScheme.onError,
-        style = MaterialTheme.typography.bodyMedium,
+            .background(Graphite.colors.dangerSubtle)
+            .padding(GSpace.s5),
+        color = Graphite.colors.danger,
+        style = Graphite.type.body,
         textAlign = TextAlign.Center,
     )
 }
@@ -131,11 +133,11 @@ private fun DownloadedOnlyModeBanner(modifier: Modifier = Modifier) {
         modifier = Modifier
             .background(DownloadedOnlyBannerBackgroundColor)
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(GSpace.s2)
             .then(modifier),
-        color = MaterialTheme.colorScheme.onTertiary,
+        color = Graphite.colors.warning,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.labelMedium,
+        style = Graphite.type.caption,
     )
 }
 
@@ -146,11 +148,11 @@ private fun IncognitoModeBanner(modifier: Modifier = Modifier) {
         modifier = Modifier
             .background(IncognitoModeBannerBackgroundColor)
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(GSpace.s2)
             .then(modifier),
-        color = MaterialTheme.colorScheme.onPrimary,
+        color = Graphite.colors.accent,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.labelMedium,
+        style = Graphite.type.caption,
     )
 }
 
@@ -161,22 +163,22 @@ private fun IndexingDownloadBanner(modifier: Modifier = Modifier) {
         modifier = Modifier
             .background(color = IndexingBannerBackgroundColor)
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(GSpace.s3)
             .then(modifier),
         horizontalArrangement = Arrangement.Center,
     ) {
         var textHeight by remember { mutableStateOf(0.dp) }
         CircularProgressIndicator(
             modifier = Modifier.requiredSize(textHeight),
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = Graphite.colors.textMuted,
             strokeWidth = textHeight / 8,
         )
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(GSpace.s3))
         Text(
             text = stringResource(MR.strings.download_notifier_cache_renewal),
-            color = MaterialTheme.colorScheme.onSecondary,
+            color = Graphite.colors.text,
             textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.labelMedium,
+            style = Graphite.type.caption,
             onTextLayout = {
                 with(density) {
                     textHeight = it.size.height.toDp()

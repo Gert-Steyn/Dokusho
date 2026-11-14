@@ -12,7 +12,7 @@ import eu.kanade.tachiyomi.util.system.cancelNotification
 import eu.kanade.tachiyomi.util.system.notify
 import tachiyomi.core.common.i18n.pluralStringResource
 import tachiyomi.i18n.MR
-import mihon.icons.materialsymbols.R as MaterialSymbolsR
+import mihon.icons.lucide.R as LucideR
 
 @Inject
 @SingleIn(AppScope::class)
@@ -37,7 +37,7 @@ class ExtensionUpdateNotifier(
                 setContentText(extNames)
                 setStyle(NotificationCompat.BigTextStyle().bigText(extNames))
             }
-            setSmallIcon(MaterialSymbolsR.drawable.rounded_filled_extension)
+            setSmallIcon(LucideR.drawable.icons_puzzle)
             setContentIntent(NotificationReceiver.openExtensionsPendingActivity(context))
             setAutoCancel(true)
         }

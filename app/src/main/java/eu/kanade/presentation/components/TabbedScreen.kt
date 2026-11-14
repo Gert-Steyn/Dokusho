@@ -23,9 +23,11 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.zIndex
 import dev.icerock.moko.resources.StringResource
 import kotlinx.coroutines.launch
+import tachiyomi.presentation.core.components.material.GraphiteTabRow
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.components.material.TabText
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun TabbedScreen(
@@ -60,7 +62,7 @@ fun TabbedScreen(
                 end = contentPadding.calculateEndPadding(LocalLayoutDirection.current),
             ),
         ) {
-            PrimaryTabRow(
+            GraphiteTabRow(
                 selectedTabIndex = state.currentPage,
                 modifier = Modifier.zIndex(1f),
             ) {
@@ -69,7 +71,8 @@ fun TabbedScreen(
                         selected = state.currentPage == index,
                         onClick = { scope.launch { state.animateScrollToPage(index) } },
                         text = { TabText(text = stringResource(tab.titleRes), badgeCount = tab.badgeNumber) },
-                        unselectedContentColor = MaterialTheme.colorScheme.onSurface,
+                        selectedContentColor = Graphite.colors.text,
+                        unselectedContentColor = Graphite.colors.textSecondary,
                     )
                 }
             }

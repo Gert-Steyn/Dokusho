@@ -15,6 +15,7 @@ import eu.kanade.tachiyomi.util.system.LocaleHelper
 import tachiyomi.domain.source.model.Source
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.FastScrollLazyColumn
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
@@ -120,7 +121,11 @@ private fun SourcesFilterItem(
         showLanguageInContent = false,
         onClickItem = { onClickItem(source) },
         action = {
-            Checkbox(checked = enabled, onCheckedChange = null)
+            Checkbox(
+                checked = enabled,
+                onCheckedChange = null,
+                colors = graphiteCheckboxColors(),
+            )
         },
     )
 }

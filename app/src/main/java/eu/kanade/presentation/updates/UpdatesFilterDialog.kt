@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import eu.kanade.presentation.category.visualName
 import eu.kanade.presentation.components.TabbedDialog
@@ -32,9 +30,11 @@ import tachiyomi.domain.updates.service.UpdatesPreferences
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.SettingsItemsPaddings
 import tachiyomi.presentation.core.components.TriStateItem
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.graphiteSwitchColors
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.LoadingScreen
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.collectAsState
 
 @Composable
@@ -94,7 +94,7 @@ private fun ColumnScope.FilterSheet(
         onClick = { viewModel.toggleFilter(UpdatesPreferences::filterBookmarked) },
     )
 
-    HorizontalDivider(modifier = Modifier.padding(MaterialTheme.padding.small))
+    HorizontalDivider(modifier = Modifier.padding(GSpace.s3))
 
     val filterExcludedScanlators by viewModel.updatesPreferences.filterExcludedScanlators.collectAsState()
 
@@ -110,13 +110,14 @@ private fun ColumnScope.FilterSheet(
     ) {
         Text(
             text = stringResource(MR.strings.action_filter_excluded_scanlators),
-            color = MaterialTheme.colorScheme.onSurface,
-            style = MaterialTheme.typography.bodyMedium,
+            color = Graphite.colors.text,
+            style = Graphite.type.body,
         )
 
         Switch(
             checked = filterExcludedScanlators,
             onCheckedChange = { toggleScanlatorFilter() },
+            colors = graphiteSwitchColors(),
         )
     }
 }
@@ -135,13 +136,13 @@ private fun ColumnScope.CategoryFilterSheet(
             ),
     )
 
-    HorizontalDivider(modifier = Modifier.padding(MaterialTheme.padding.extraSmall))
+    HorizontalDivider(modifier = Modifier.padding(GSpace.s2))
 
     val allCategories by viewModel.getCategories.subscribe().collectAsState(initial = emptyList())
 
     if (allCategories.isEmpty()) {
         // since it includes the system category, this should only happen when loading is required
-        LoadingScreen(modifier = Modifier.padding(16.dp))
+        LoadingScreen(modifier = Modifier.padding(GSpace.s5))
         return
     }
 

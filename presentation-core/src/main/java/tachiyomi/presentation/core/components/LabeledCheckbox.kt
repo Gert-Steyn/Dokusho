@@ -6,15 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun LabeledCheckbox(
@@ -26,9 +28,9 @@ fun LabeledCheckbox(
 ) {
     Row(
         modifier = modifier
-            .clip(MaterialTheme.shapes.small)
+            .clip(GRadius.control)
             .fillMaxWidth()
-            .heightIn(min = 48.dp)
+            .heightIn(min = GSize.minTarget)
             .clickable(
                 role = Role.Checkbox,
                 onClick = {
@@ -38,14 +40,19 @@ fun LabeledCheckbox(
                 },
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+        horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
     ) {
         Checkbox(
             checked = checked,
             onCheckedChange = null,
             enabled = enabled,
+            colors = graphiteCheckboxColors(),
         )
 
-        Text(text = label)
+        Text(
+            text = label,
+            style = Graphite.type.body,
+            color = Graphite.colors.text,
+        )
     }
 }

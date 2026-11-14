@@ -6,6 +6,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
@@ -13,6 +14,6 @@ fun LoadingScreen(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        CircularProgressIndicator()
+        CircularProgressIndicator(color = Graphite.colors.textMuted)
     }
 }

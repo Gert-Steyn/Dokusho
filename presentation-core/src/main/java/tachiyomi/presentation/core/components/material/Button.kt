@@ -19,7 +19,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -38,6 +37,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import tachiyomi.presentation.core.theme.GButton
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.animateElevation
 import androidx.compose.material3.ButtonDefaults as M3ButtonDefaults
 
@@ -54,15 +56,15 @@ fun TextButton(
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     elevation: ButtonElevation? = null,
-    shape: Shape = M3ButtonDefaults.textShape,
+    shape: Shape = GButton.shape,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonColors(
         containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.primary,
+        contentColor = Graphite.colors.textSecondary,
         disabledContainerColor = Color.Transparent,
-        disabledContentColor = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLED_ALPHA),
+        disabledContentColor = Graphite.colors.textDisabled,
     ),
-    contentPadding: PaddingValues = M3ButtonDefaults.TextButtonContentPadding,
+    contentPadding: PaddingValues = GButton.padding,
     content: @Composable RowScope.() -> Unit,
 ) = Button(
     onClick = onClick,
@@ -90,11 +92,11 @@ fun Button(
     onLongClick: (() -> Unit)? = null,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-    elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
-    shape: Shape = M3ButtonDefaults.textShape,
+    elevation: ButtonElevation? = null,
+    shape: Shape = GButton.shape,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
-    contentPadding: PaddingValues = M3ButtonDefaults.ContentPadding,
+    contentPadding: PaddingValues = GButton.padding,
     content: @Composable RowScope.() -> Unit,
 ) {
     val containerColor = colors.containerColor(enabled).value
@@ -114,12 +116,9 @@ fun Button(
         enabled = enabled,
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor) {
-            ProvideTextStyle(value = MaterialTheme.typography.labelLarge) {
+            ProvideTextStyle(value = Graphite.type.label) {
                 Row(
-                    Modifier.defaultMinSize(
-                        minWidth = M3ButtonDefaults.MinWidth,
-                        minHeight = M3ButtonDefaults.MinHeight,
-                    )
+                    Modifier.defaultMinSize(minHeight = GSize.control)
                         .padding(contentPadding),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
@@ -142,10 +141,10 @@ object ButtonDefaults {
      */
     @Composable
     fun buttonColors(
-        containerColor: Color = MaterialTheme.colorScheme.primary,
-        contentColor: Color = MaterialTheme.colorScheme.onPrimary,
-        disabledContainerColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-        disabledContentColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = DISABLED_ALPHA),
+        containerColor: Color = Graphite.colors.accentFill,
+        contentColor: Color = Graphite.colors.onAccent,
+        disabledContainerColor: Color = Graphite.colors.hover,
+        disabledContentColor: Color = Graphite.colors.textDisabled,
     ): ButtonColors = ButtonColors(
         containerColor = containerColor,
         contentColor = contentColor,
@@ -169,7 +168,7 @@ object ButtonDefaults {
         defaultElevation: Dp = 0.dp,
         pressedElevation: Dp = 0.dp,
         focusedElevation: Dp = 0.dp,
-        hoveredElevation: Dp = 1.dp,
+        hoveredElevation: Dp = 0.dp,
         disabledElevation: Dp = 0.dp,
     ): ButtonElevation = ButtonElevation(
         defaultElevation = defaultElevation,

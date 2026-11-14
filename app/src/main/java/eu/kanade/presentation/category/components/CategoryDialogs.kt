@@ -1,19 +1,16 @@
 package eu.kanade.presentation.category.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,8 +27,14 @@ import eu.kanade.presentation.category.visualName
 import tachiyomi.core.common.preference.CheckboxState
 import tachiyomi.domain.category.model.Category
 import tachiyomi.i18n.MR
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GDangerButton
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
+import tachiyomi.presentation.core.components.graphite.graphiteCheckboxColors
+import tachiyomi.presentation.core.components.graphite.graphiteTextFieldColors
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSpace
 
 @Composable
 fun CategoryCreateDialog(
@@ -44,23 +47,23 @@ fun CategoryCreateDialog(
     val focusRequester = remember { FocusRequester() }
     val nameAlreadyExists = remember(name) { categories.contains(name) }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_add),
                 enabled = name.isNotEmpty() && !nameAlreadyExists,
                 onClick = {
                     onCreate(name)
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_add))
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.action_add_category))
@@ -84,6 +87,7 @@ fun CategoryCreateDialog(
                 },
                 isError = name.isNotEmpty() && nameAlreadyExists,
                 singleLine = true,
+                colors = graphiteTextFieldColors(),
             )
         },
     )
@@ -106,23 +110,23 @@ fun CategoryRenameDialog(
     val focusRequester = remember { FocusRequester() }
     val nameAlreadyExists = remember(name) { categories.contains(name) }
 
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
                 enabled = valueHasChanged && name.isNotEmpty() && !nameAlreadyExists,
                 onClick = {
                     onRename(name)
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.action_rename_category))
@@ -146,6 +150,7 @@ fun CategoryRenameDialog(
                 },
                 isError = valueHasChanged && nameAlreadyExists,
                 singleLine = true,
+                colors = graphiteTextFieldColors(),
             )
         },
     )
@@ -161,20 +166,22 @@ fun CategoryDeleteDialog(
     onDelete: () -> Unit,
     category: String,
 ) {
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         confirmButton = {
-            TextButton(onClick = {
-                onDelete()
-                onDismissRequest()
-            }) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            GDangerButton(
+                text = stringResource(MR.strings.action_ok),
+                onClick = {
+                    onDelete()
+                    onDismissRequest()
+                },
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
         title = {
             Text(text = stringResource(MR.strings.delete_category))
@@ -193,17 +200,16 @@ fun ChangeCategoryDialog(
     onConfirm: (List<Long>, List<Long>) -> Unit,
 ) {
     if (initialSelection.isEmpty()) {
-        AlertDialog(
+        GDialog(
             onDismissRequest = onDismissRequest,
             confirmButton = {
-                tachiyomi.presentation.core.components.material.TextButton(
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_edit_categories),
                     onClick = {
                         onDismissRequest()
                         onEditCategories()
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.action_edit_categories))
-                }
+                )
             },
             title = {
                 Text(text = stringResource(MR.strings.action_move_category))
@@ -215,21 +221,25 @@ fun ChangeCategoryDialog(
         return
     }
     var selection by remember { mutableStateOf(initialSelection) }
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
-        confirmButton = {
-            Row {
-                tachiyomi.presentation.core.components.material.TextButton(onClick = {
+        dismissButton = {
+            GGhostButton(
+                text = stringResource(MR.strings.action_edit),
+                onClick = {
                     onDismissRequest()
                     onEditCategories()
-                }) {
-                    Text(text = stringResource(MR.strings.action_edit))
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                tachiyomi.presentation.core.components.material.TextButton(onClick = onDismissRequest) {
-                    Text(text = stringResource(MR.strings.action_cancel))
-                }
-                tachiyomi.presentation.core.components.material.TextButton(
+                },
+            )
+        },
+        confirmButton = {
+            Row(horizontalArrangement = Arrangement.spacedBy(GSpace.s3)) {
+                GGhostButton(
+                    text = stringResource(MR.strings.action_cancel),
+                    onClick = onDismissRequest,
+                )
+                GPrimaryButton(
+                    text = stringResource(MR.strings.action_ok),
                     onClick = {
                         onDismissRequest()
                         onConfirm(
@@ -241,9 +251,7 @@ fun ChangeCategoryDialog(
                                 .map { it.value.id },
                         )
                     },
-                ) {
-                    Text(text = stringResource(MR.strings.action_ok))
-                }
+                )
             }
         },
         title = {
@@ -273,19 +281,21 @@ fun ChangeCategoryDialog(
                                 TriStateCheckbox(
                                     state = checkbox.asToggleableState(),
                                     onClick = { onChange(checkbox) },
+                                    colors = graphiteCheckboxColors(),
                                 )
                             }
                             is CheckboxState.State -> {
                                 Checkbox(
                                     checked = checkbox.isChecked,
                                     onCheckedChange = { onChange(checkbox) },
+                                    colors = graphiteCheckboxColors(),
                                 )
                             }
                         }
 
                         Text(
                             text = checkbox.value.visualName,
-                            modifier = Modifier.padding(horizontal = MaterialTheme.padding.medium),
+                            modifier = Modifier.padding(horizontal = GSpace.s5),
                         )
                     }
                 }

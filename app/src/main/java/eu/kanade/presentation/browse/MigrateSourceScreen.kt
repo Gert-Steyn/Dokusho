@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,25 +20,25 @@ import eu.kanade.presentation.browse.components.BaseSourceItem
 import eu.kanade.presentation.browse.components.SourceIcon
 import eu.kanade.tachiyomi.ui.browse.migration.sources.MigrateSourceViewModel
 import eu.kanade.tachiyomi.util.system.copyToClipboard
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.ArrowDownward
-import mihon.icons.materialsymbols.rounded.ArrowUpward
-import mihon.icons.materialsymbols.rounded.Numbers
-import mihon.icons.materialsymbols.rounded.SortByAlpha
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.ArrowDown
+import mihon.icons.lucide.icons.ArrowDownAZ
+import mihon.icons.lucide.icons.ArrowUp
+import mihon.icons.lucide.icons.Hash
 import tachiyomi.domain.source.model.Source
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.Badge
 import tachiyomi.presentation.core.components.BadgeGroup
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.Scroller.STICKY_HEADER_KEY_PREFIX
-import tachiyomi.presentation.core.components.material.padding
+import tachiyomi.presentation.core.components.graphite.GIconButton
 import tachiyomi.presentation.core.components.material.topSmallPaddingValues
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.EmptyScreen
 import tachiyomi.presentation.core.screens.LoadingScreen
-import tachiyomi.presentation.core.theme.header
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 import tachiyomi.presentation.core.util.plus
-import tachiyomi.presentation.core.util.secondaryItemAlpha
 
 @Composable
 fun MigrateSourceScreen(
@@ -92,40 +89,38 @@ private fun MigrateSourceList(
         stickyHeader(key = STICKY_HEADER_KEY_PREFIX) {
             Row(
                 modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(start = MaterialTheme.padding.medium),
+                    .background(Graphite.colors.canvas)
+                    .padding(start = GSpace.s5),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = stringResource(MR.strings.migration_selection_prompt),
                     modifier = Modifier.weight(1f),
-                    style = MaterialTheme.typography.header,
+                    style = Graphite.type.caption.copy(color = Graphite.colors.textMuted),
                 )
 
-                IconButton(onClick = onToggleSortingMode) {
-                    when (sortingMode) {
-                        SetMigrateSorting.Mode.ALPHABETICAL -> Icon(
-                            MaterialSymbols.Rounded.SortByAlpha,
-                            contentDescription = stringResource(MR.strings.action_sort_alpha),
-                        )
-                        SetMigrateSorting.Mode.TOTAL -> Icon(
-                            MaterialSymbols.Rounded.Numbers,
-                            contentDescription = stringResource(MR.strings.action_sort_count),
-                        )
-                    }
-                }
-                IconButton(onClick = onToggleSortingDirection) {
-                    when (sortingDirection) {
-                        SetMigrateSorting.Direction.ASCENDING -> Icon(
-                            MaterialSymbols.Rounded.ArrowUpward,
-                            contentDescription = stringResource(MR.strings.action_asc),
-                        )
-                        SetMigrateSorting.Direction.DESCENDING -> Icon(
-                            MaterialSymbols.Rounded.ArrowDownward,
-                            contentDescription = stringResource(MR.strings.action_desc),
-                        )
-                    }
-                }
+                GIconButton(
+                    icon = when (sortingMode) {
+                        SetMigrateSorting.Mode.ALPHABETICAL -> Lucide.Icons.ArrowDownAZ
+                        SetMigrateSorting.Mode.TOTAL -> Lucide.Icons.Hash
+                    },
+                    contentDescription = when (sortingMode) {
+                        SetMigrateSorting.Mode.ALPHABETICAL -> stringResource(MR.strings.action_sort_alpha)
+                        SetMigrateSorting.Mode.TOTAL -> stringResource(MR.strings.action_sort_count)
+                    },
+                    onClick = onToggleSortingMode,
+                )
+                GIconButton(
+                    icon = when (sortingDirection) {
+                        SetMigrateSorting.Direction.ASCENDING -> Lucide.Icons.ArrowUp
+                        SetMigrateSorting.Direction.DESCENDING -> Lucide.Icons.ArrowDown
+                    },
+                    contentDescription = when (sortingDirection) {
+                        SetMigrateSorting.Direction.ASCENDING -> stringResource(MR.strings.action_asc)
+                        SetMigrateSorting.Direction.DESCENDING -> stringResource(MR.strings.action_desc)
+                    },
+                    onClick = onToggleSortingDirection,
+                )
             }
         }
 
@@ -167,36 +162,35 @@ private fun MigrateSourceItem(
         content = { _, sourceLangString ->
             Column(
                 modifier = Modifier
-                    .padding(horizontal = MaterialTheme.padding.medium)
+                    .padding(horizontal = GSpace.s5)
                     .weight(1f),
             ) {
                 Text(
                     text = source.name.ifBlank { source.id.toString() },
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = Graphite.type.body,
                 )
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
+                    horizontalArrangement = Arrangement.spacedBy(GSpace.s3),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (sourceLangString != null) {
                         Text(
-                            modifier = Modifier.secondaryItemAlpha(),
                             text = sourceLangString,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodySmall,
+                            style = Graphite.type.small,
+                            color = Graphite.colors.textMuted,
                         )
                     }
                     if (source.isStub) {
                         Text(
-                            modifier = Modifier.secondaryItemAlpha(),
                             text = stringResource(MR.strings.not_installed),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.error,
+                            style = Graphite.type.small,
+                            color = Graphite.colors.danger,
                         )
                     }
                 }

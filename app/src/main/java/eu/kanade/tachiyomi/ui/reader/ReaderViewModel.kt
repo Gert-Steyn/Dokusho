@@ -38,6 +38,7 @@ import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.ui.reader.loader.ChapterLoader
 import eu.kanade.tachiyomi.ui.reader.loader.DownloadPageLoader
 import eu.kanade.tachiyomi.ui.reader.loader.HttpPageLoader
+import eu.kanade.tachiyomi.ui.reader.loader.TextTocEntry
 import eu.kanade.tachiyomi.ui.reader.model.InsertPage
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
@@ -928,6 +929,10 @@ class ReaderViewModel(
         mutableState.update { it.copy(dialog = Dialog.Settings) }
     }
 
+    fun openTableOfContents(entries: List<TextTocEntry>) {
+        mutableState.update { it.copy(dialog = Dialog.TableOfContents(entries)) }
+    }
+
     fun closeDialog() {
         mutableState.update { it.copy(dialog = null) }
     }
@@ -1109,6 +1114,7 @@ class ReaderViewModel(
         data object ReadingModeSelect : Dialog
         data object OrientationModeSelect : Dialog
         data class PageActions(val page: ReaderPage) : Dialog
+        data class TableOfContents(val entries: List<TextTocEntry>) : Dialog
     }
 
     sealed interface Event {

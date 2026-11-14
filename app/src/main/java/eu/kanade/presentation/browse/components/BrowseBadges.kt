@@ -1,15 +1,15 @@
 package eu.kanade.presentation.browse.components
 
 import androidx.compose.runtime.Composable
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.CollectionsBookmark
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.LibraryBig
 import tachiyomi.presentation.core.components.Badge
 
 @Composable
 internal fun InLibraryBadge(enabled: Boolean) {
     if (enabled) {
         Badge(
-            imageVector = MaterialSymbols.Rounded.CollectionsBookmark,
+            imageVector = Lucide.Icons.LibraryBig,
         )
     }
 }

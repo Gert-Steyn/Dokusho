@@ -10,8 +10,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.runtime.Composable
@@ -25,15 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import kotlinx.coroutines.launch
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.MoreVert
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.EllipsisVertical
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.components.graphite.GIconButton
+import tachiyomi.presentation.core.components.material.GraphiteTabRow
 import tachiyomi.presentation.core.components.material.TabText
 import tachiyomi.presentation.core.i18n.stringResource
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 object TabbedDialogPaddings {
-    val Horizontal = 24.dp
-    val Vertical = 8.dp
+    val Horizontal = GSize.pagePad
+    val Vertical = GSpace.s3
 }
 
 @Composable
@@ -53,17 +56,18 @@ fun TabbedDialog(
 
         Column {
             Row {
-                PrimaryTabRow(
+                GraphiteTabRow(
                     modifier = Modifier.weight(1f),
                     selectedTabIndex = pagerState.currentPage,
-                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                    containerColor = Graphite.colors.raised,
                 ) {
                     tabTitles.fastForEachIndexed { index, tab ->
                         Tab(
                             selected = pagerState.currentPage == index,
                             onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                             text = { TabText(text = tab) },
-                            unselectedContentColor = MaterialTheme.colorScheme.onSurface,
+                            selectedContentColor = Graphite.colors.text,
+                            unselectedContentColor = Graphite.colors.textSecondary,
                         )
                     }
                 }
@@ -87,12 +91,11 @@ private fun MoreMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(modifier = Modifier.wrapContentSize(Alignment.TopStart)) {
-        IconButton(onClick = { expanded = true }) {
-            Icon(
-                imageVector = MaterialSymbols.Rounded.MoreVert,
-                contentDescription = stringResource(MR.strings.label_more),
-            )
-        }
+        GIconButton(
+            icon = Lucide.Icons.EllipsisVertical,
+            contentDescription = stringResource(MR.strings.label_more),
+            onClick = { expanded = true },
+        )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },

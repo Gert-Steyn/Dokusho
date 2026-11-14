@@ -11,9 +11,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -66,6 +64,9 @@ import kotlinx.coroutines.withContext
 import mihon.app.di.appGraph
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.ScrollbarLazyColumn
+import tachiyomi.presentation.core.components.graphite.GDialog
+import tachiyomi.presentation.core.components.graphite.GGhostButton
+import tachiyomi.presentation.core.components.graphite.GPrimaryButton
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.stringResource
 import tachiyomi.presentation.core.screens.LoadingScreen
@@ -301,7 +302,7 @@ private fun EditTextPreferenceDialog(
     var draft by rememberSaveable { mutableStateOf<String?>(null) }
     var editText by remember { mutableStateOf<EditText?>(null) }
     var confirmEnabled by remember { mutableStateOf(true) }
-    AlertDialog(
+    GDialog(
         onDismissRequest = onDismissRequest,
         title = title?.let { { Text(text = it) } },
         text = {
@@ -344,7 +345,8 @@ private fun EditTextPreferenceDialog(
             }
         },
         confirmButton = {
-            TextButton(
+            GPrimaryButton(
+                text = stringResource(MR.strings.action_ok),
                 enabled = confirmEnabled,
                 onClick = {
                     val value = editText?.text?.toString()
@@ -353,14 +355,13 @@ private fun EditTextPreferenceDialog(
                     }
                     onDismissRequest()
                 },
-            ) {
-                Text(text = stringResource(MR.strings.action_ok))
-            }
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(MR.strings.action_cancel))
-            }
+            GGhostButton(
+                text = stringResource(MR.strings.action_cancel),
+                onClick = onDismissRequest,
+            )
         },
     )
 }

@@ -458,16 +458,8 @@
     <string name="action_display_language_badge">زبان</string>
     <string name="action_show_manga">نمایش ورودی</string>
     <string name="cancel_all_for_series">لغو همه برای این سری</string>
-    <string name="pref_dark_theme_pure_black">حالت تاریک مشکی خالص</string>
     <string name="action_close">بستن</string>
     <string name="pref_app_theme">تم برنامه</string>
-    <string name="theme_monet">پویا</string>
-    <string name="theme_greenapple">سیب سبز</string>
-    <string name="theme_midnightdusk">غروب نیمه‌شب</string>
-    <string name="theme_strawberrydaiquiri">داکری توت‌فرنگی</string>
-    <string name="theme_tealturquoise">آبی و فیروزه‌ای</string>
-    <string name="theme_yinyang">یین و یانگ</string>
-    <string name="theme_yotsuba">یوتسوبا</string>
     <string name="action_move_to_top_all_for_series">انتقال سری به بالا</string>
     <string name="action_start_downloading_now">همین الان شروع به دانلود کن</string>
     <string name="action_show_errors">برای دیدن جزئیات لمس کنید</string>
@@ -507,7 +499,6 @@
     <string name="pref_lowest">پایین‌ترین</string>
     <string name="pref_viewer_nav">مناطق قابل لمس</string>
     <string name="on">روشن</string>
-    <string name="theme_tako">تاکو</string>
     <string name="off">خاموش</string>
     <string name="pref_show_navigation_mode">مناطق قابل لمس را نشان بده</string>
     <string name="ext_installer_shizuku_unavailable_dialog">برای استفاده از Shizuku به عنوان یک نصب‌کننده‌ی افزونه، آن را نصب و اجرا کنید.</string>
@@ -526,8 +517,6 @@
     <string name="cancelled">لغو شد</string>
     <string name="pref_security_summary">قفل برنامه، صفحه امن</string>
     <string name="pref_advanced_summary">گزارش‌های خرابی، بهینه‌سازی باتری</string>
-    <string name="theme_lavender">ارغوانی</string>
-    <string name="theme_tidalwave">تم جزر و مدی</string>
     <string name="pref_app_language">زبان برنامه</string>
     <string name="invalid_location">مکان نامعتبر: %s</string>
     <string name="pref_download_new_categories_details">ورودی ها در دسته بندی های حذف شده حتی اگر در دسته بندی های در نظر گرفته شده نیز باشند، دانلود نخواهند شد.</string>
@@ -682,7 +671,6 @@
     <string name="migrationListScreen.migrateDialog.copyLabel">کپی کردن</string>
     <string name="pref_flash_style_white">سفید</string>
     <string name="appwidget_unavailable_locked">هنگامی که قفل برنامه فعال است، ابزارک در دسترس نیست</string>
-    <string name="theme_monochrome">تک‌رنگ</string>
     <string name="migrationConfigScreen.prioritizeByChaptersTitle">تطبیق بر اساس شماره چپتر</string>
     <string name="transition_animation_stack_down">پشته (پایین)</string>
     <string name="donationCampaign.dismiss">نادیده‌‎گرفتن</string>
@@ -846,7 +834,6 @@
     <string name="pref_update_library_manga_titles_summary">هشدار: اگر نام یک مانگا تغییر کند، آن مانگا از صف بارگیر (در صورت وجود) حذف خواهد شد.</string>
     <string name="pref_reset_viewer_flags_success">تمام تنظیمات خواندن بازنشانی شدند</string>
     <string name="migrationListScreen.migrateDialog.cancelLabel">لغو</string>
-    <string name="theme_tokyonight">شبِ توکیو</string>
     <string name="pref_verbose_logging">گزارش‌گیری طولانی</string>
     <string name="hour_short">%dساعت</string>
     <string name="migrationConfigScreen.availableHeader">در‌دسترس</string>
@@ -874,7 +861,6 @@
     <string name="migrationListScreen.migrateDialog.migrateLabel">مهاجرت</string>
     <string name="migrationListScreen.skipActionLabel">مهاجرت نکنید</string>
     <string name="track_finished_reading_date">تاریخ پایان</string>
-    <string name="theme_catppuccin">کت‌پاچین</string>
     <string name="pref_transition_animation">انیمیشن انتقال</string>
     <string name="storage_failed_to_create_directory">ایجاد دایرکتوری ناموفق بود: %s</string>
     <string name="pref_vertical_navigator_height">ارتفاع ناوبری عمودی</string>
@@ -928,5 +914,4 @@
     <string name="migrationConfigScreen.enhancedOptionsWarning">این گزینه‌ها کند و خطرناک هستند و ممکن است منجر به اعمال محدودیت‌هایی از سوی منابع شوند</string>
     <string name="migrationListScreen.progressDialog.cancelLabel">لغو</string>
     <string name="supportUsScreen.contactForDetailsMessage">برای گزینه‌های جایگزین یا هرگونه سؤال مرتبط، به سرور دیسکورد ما بپیوندید.</string>
-    <string name="theme_nord">نورد</string>
 </resources>

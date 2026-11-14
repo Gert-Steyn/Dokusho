@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
@@ -32,16 +32,19 @@ import androidx.compose.ui.unit.sp
 import eu.kanade.presentation.theme.TachiyomiPreviewTheme
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
-import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Info
-import mihon.icons.materialsymbols.roundedfilled.CheckCircle
-import mihon.icons.materialsymbols.roundedfilled.Warning
+import mihon.icons.lucide.Lucide
+import mihon.icons.lucide.icons.CircleCheck
+import mihon.icons.lucide.icons.Info
+import mihon.icons.lucide.icons.TriangleAlert
 import tachiyomi.domain.chapter.model.Chapter
 import tachiyomi.domain.chapter.service.calculateChapterGap
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
-import tachiyomi.presentation.core.util.secondaryItemAlpha
+import tachiyomi.presentation.core.theme.GRadius
+import tachiyomi.presentation.core.theme.GSize
+import tachiyomi.presentation.core.theme.GSpace
+import tachiyomi.presentation.core.theme.Graphite
 
 @Composable
 fun ChapterTransition(
@@ -52,7 +55,7 @@ fun ChapterTransition(
     val currChapter = transition.from.chapter
     val goingToChapter = transition.to?.chapter
 
-    ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
+    ProvideTextStyle(Graphite.type.body) {
         when (transition) {
             is ChapterTransition.Prev -> {
                 TransitionText(
@@ -146,23 +149,25 @@ private fun NoChapterNotification(
 ) {
     OutlinedCard(
         modifier = modifier,
+        shape = GRadius.card,
         colors = CardColor,
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+                .padding(horizontal = GSpace.s5, vertical = GSpace.s4),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.Rounded.Info,
-                tint = MaterialTheme.colorScheme.primary,
+                imageVector = Lucide.Icons.Info,
+                tint = Graphite.colors.accent,
                 contentDescription = null,
+                modifier = Modifier.size(GSize.icon),
             )
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyMedium,
+                style = Graphite.type.body,
             )
         }
     }
@@ -175,22 +180,24 @@ private fun ChapterGapWarning(
 ) {
     OutlinedCard(
         modifier = modifier,
+        shape = GRadius.card,
         colors = CardColor,
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.padding(horizontal = GSpace.s5, vertical = GSpace.s4),
+            horizontalArrangement = Arrangement.spacedBy(GSpace.s5),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = MaterialSymbols.RoundedFilled.Warning,
-                tint = MaterialTheme.colorScheme.error,
+                imageVector = Lucide.Icons.TriangleAlert,
+                tint = Graphite.colors.warning,
                 contentDescription = null,
+                modifier = Modifier.size(GSize.icon),
             )
 
             Text(
                 text = pluralStringResource(MR.plurals.missing_chapters_warning, count = gapCount, gapCount),
-                style = MaterialTheme.typography.bodyMedium,
+                style = Graphite.type.body,
             )
         }
     }
@@ -204,7 +211,7 @@ private fun ChapterHeaderText(
     Text(
         text = text,
         modifier = modifier,
-        style = MaterialTheme.typography.titleMedium,
+        style = Graphite.type.heading,
     )
 }
 
@@ -218,7 +225,7 @@ private fun ChapterText(
     Column {
         ChapterHeaderText(
             text = header,
-            modifier = Modifier.padding(bottom = 4.dp),
+            modifier = Modifier.padding(bottom = GSpace.s2),
         )
 
         Text(
@@ -229,10 +236,9 @@ private fun ChapterText(
                 }
                 append(name)
             },
-            fontSize = 20.sp,
             maxLines = 5,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.titleLarge,
+            style = Graphite.type.title,
             inlineContent = mapOf(
                 DOWNLOADED_ICON_ID to InlineTextContent(
                     Placeholder(
@@ -242,8 +248,9 @@ private fun ChapterText(
                     ),
                 ) {
                     Icon(
-                        imageVector = MaterialSymbols.RoundedFilled.CheckCircle,
+                        imageVector = Lucide.Icons.CircleCheck,
                         contentDescription = stringResource(MR.strings.label_downloaded),
+                        tint = Graphite.colors.success,
                     )
                 },
             ),
@@ -252,12 +259,11 @@ private fun ChapterText(
         scanlator?.let {
             Text(
                 text = it,
-                modifier = Modifier
-                    .secondaryItemAlpha()
-                    .padding(top = 2.dp),
+                modifier = Modifier.padding(top = GSpace.s1),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
+                style = Graphite.type.small,
+                color = Graphite.colors.textMuted,
             )
         }
     }
@@ -267,10 +273,10 @@ private val CardColor: CardColors
     @Composable
     get() = CardDefaults.outlinedCardColors(
         containerColor = Color.Transparent,
-        contentColor = MaterialTheme.colorScheme.onSurface,
+        contentColor = Graphite.colors.text,
     )
 
-private val VerticalSpacerSize = 24.dp
+private val VerticalSpacerSize = GSpace.s6
 private const val DOWNLOADED_ICON_ID = "downloaded"
 
 private fun previewChapter(name: String, scanlator: String, chapterNumber: Double) = Chapter.create().copy(
@@ -305,7 +311,7 @@ private val FakeChapterLongTitle = previewChapter(
 @Composable
 private fun TransitionTextPreview() {
     TachiyomiPreviewTheme {
-        Surface(modifier = Modifier.padding(48.dp)) {
+        Surface(modifier = Modifier.padding(GSpace.s8)) {
             ChapterTransition(
                 transition = ChapterTransition.Next(ReaderChapter(FakeChapter), ReaderChapter(FakeChapter)),
                 currChapterDownloaded = false,
@@ -319,7 +325,7 @@ private fun TransitionTextPreview() {
 @Composable
 private fun TransitionTextLongTitlePreview() {
     TachiyomiPreviewTheme {
-        Surface(modifier = Modifier.padding(48.dp)) {
+        Surface(modifier = Modifier.padding(GSpace.s8)) {
             ChapterTransition(
                 transition = ChapterTransition.Next(ReaderChapter(FakeChapterLongTitle), ReaderChapter(FakeChapter)),
                 currChapterDownloaded = true,
@@ -333,7 +339,7 @@ private fun TransitionTextLongTitlePreview() {
 @Composable
 private fun TransitionTextWithGapPreview() {
     TachiyomiPreviewTheme {
-        Surface(modifier = Modifier.padding(48.dp)) {
+        Surface(modifier = Modifier.padding(GSpace.s8)) {
             ChapterTransition(
                 transition = ChapterTransition.Next(ReaderChapter(FakeChapter), ReaderChapter(FakeGapChapter)),
                 currChapterDownloaded = true,
@@ -347,7 +353,7 @@ private fun TransitionTextWithGapPreview() {
 @Composable
 private fun TransitionTextNoNextPreview() {
     TachiyomiPreviewTheme {
-        Surface(modifier = Modifier.padding(48.dp)) {
+        Surface(modifier = Modifier.padding(GSpace.s8)) {
             ChapterTransition(
                 transition = ChapterTransition.Next(ReaderChapter(FakeChapter), null),
                 currChapterDownloaded = true,
@@ -361,7 +367,7 @@ private fun TransitionTextNoNextPreview() {
 @Composable
 private fun TransitionTextNoPreviousPreview() {
     TachiyomiPreviewTheme {
-        Surface(modifier = Modifier.padding(48.dp)) {
+        Surface(modifier = Modifier.padding(GSpace.s8)) {
             ChapterTransition(
                 transition = ChapterTransition.Prev(ReaderChapter(FakeChapter), null),
                 currChapterDownloaded = true,

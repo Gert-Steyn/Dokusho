@@ -6,6 +6,10 @@ import androidx.compose.ui.graphics.Color
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
 import tachiyomi.i18n.MR
+import tachiyomi.presentation.core.theme.GraphiteDark
+
+// Zone colours are translucent (80%) over the page, so they use the dark palette's fixed values.
+private const val ZONE_ALPHA = 0.8f
 
 /**
  * Tap zones of a viewer. [isReversed] is set for right to left books, where the right side of the
@@ -19,11 +23,11 @@ abstract class ViewerNavigation(
     enum class Action { MENU, FORWARD, BACKWARD }
 
     sealed class NavigationRegion(val nameRes: StringResource, val color: Color) {
-        data object MENU : NavigationRegion(MR.strings.action_menu, Color(0xCC95818D))
-        data object PREV : NavigationRegion(MR.strings.nav_zone_prev, Color(0xCCFF7733))
-        data object NEXT : NavigationRegion(MR.strings.nav_zone_next, Color(0xCC84E296))
-        data object LEFT : NavigationRegion(MR.strings.nav_zone_left, Color(0xCC7D1128))
-        data object RIGHT : NavigationRegion(MR.strings.nav_zone_right, Color(0xCCA6CFD5))
+        data object MENU : NavigationRegion(MR.strings.action_menu, GraphiteDark.textMuted.copy(alpha = ZONE_ALPHA))
+        data object PREV : NavigationRegion(MR.strings.nav_zone_prev, GraphiteDark.warning.copy(alpha = ZONE_ALPHA))
+        data object NEXT : NavigationRegion(MR.strings.nav_zone_next, GraphiteDark.success.copy(alpha = ZONE_ALPHA))
+        data object LEFT : NavigationRegion(MR.strings.nav_zone_left, GraphiteDark.danger.copy(alpha = ZONE_ALPHA))
+        data object RIGHT : NavigationRegion(MR.strings.nav_zone_right, GraphiteDark.accent.copy(alpha = ZONE_ALPHA))
     }
 
     data class Region(
